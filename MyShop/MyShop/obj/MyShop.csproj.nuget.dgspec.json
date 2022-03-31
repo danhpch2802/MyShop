@@ -47,6 +47,10 @@
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"
+            },
+            "Fluent.Ribbon": {
+              "target": "Package",
+              "version": "[9.0.4, )"
             }
           },
           "imports": [

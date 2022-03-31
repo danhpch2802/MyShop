@@ -9,14 +9,19 @@
 
   <ItemGroup>
     <None Remove="Images\logo.png" />
+    <None Remove="Images\plus.png" />
+    <None Remove="Images\remove.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Fluent.Ribbon" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\logo.png" />
+    <Resource Include="Images\plus.png" />
+    <Resource Include="Images\remove.png" />
   </ItemGroup>
 
 </Project>
