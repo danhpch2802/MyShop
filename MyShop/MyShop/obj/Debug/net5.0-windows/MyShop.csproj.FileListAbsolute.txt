@@ -22,3 +22,12 @@ C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\My
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\ref\MyShop.dll
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\MyShop.pdb
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\MyShop.genruntimeconfig.cache
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\EntityFramework.SqlServer.dll
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\EntityFramework.dll
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\System.Data.SqlClient.dll
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\runtimes\win-x64\native\sni.dll
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\runtimes\win-x86\native\sni.dll
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\MyShop.csproj.CopyComplete
