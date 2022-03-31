@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Oi1ujdhMGM09YgKMF54yX5cdeTn2LYLYsvsFa6IDr7VGzrHs79rspHL9XTPQa4+V4j636jn5JVjKS18TejSRbw==",
+  "dgSpecHash": "O2Eo0Kox3J8sf94rKsz2/ZeBvnoTaFTpFU/6scdGFbiaWe2U+fym36FgaFXrQRUF8afEZQpNwCmCYDiGIpJ85A==",
   "success": true,
-  "projectFilePath": "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\trant\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
+  ],
   "logs": []
 }

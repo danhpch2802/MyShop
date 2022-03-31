@@ -24,5 +24,14 @@ namespace MyShop
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var screen = new LoginWindow();
+            //screen.ShowInTaskbar = false;
+            screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            screen.Owner = this;
+            var result = screen.ShowDialog();
+        }
     }
 }

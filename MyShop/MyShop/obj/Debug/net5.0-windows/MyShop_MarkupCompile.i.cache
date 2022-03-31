@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\
 MyShop
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
-E:\Work\Github\MyShop\MyShop\MyShop\App.xaml
-11407045341
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\App.xaml
+2-216653475
 
-5653179016
+641873025
 193-1891726104
-MainWindow.xaml;
+LoginWindow.xaml;MainWindow.xaml;
 
-False
+True
 
