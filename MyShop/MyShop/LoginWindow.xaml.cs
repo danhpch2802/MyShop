@@ -47,8 +47,8 @@ namespace MyShop
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            /*var hwnd = new WindowInteropHelper(this).Handle;
-            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);*/
+            var hwnd = new WindowInteropHelper(this).Handle;
+            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -204,7 +204,6 @@ namespace MyShop
             SHA1CryptoServiceProvider sHA1 = new SHA1CryptoServiceProvider();
             byte[] password_byte = Encoding.ASCII.GetBytes(pass);
             byte[] salt_byte = sHA1.ComputeHash(password_byte);
-            MessageBox.Show(Convert.ToBase64String(salt_byte));
             return Convert.ToBase64String(salt_byte);
         }
 
