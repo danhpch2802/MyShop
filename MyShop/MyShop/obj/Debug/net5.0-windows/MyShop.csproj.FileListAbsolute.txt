@@ -36,3 +36,4 @@ C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\Fl
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\Microsoft.Xaml.Behaviors.dll
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\System.Text.Json.dll
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\App.baml
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\MyShop.dll.config

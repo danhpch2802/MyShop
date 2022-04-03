@@ -5,14 +5,9 @@
         Title="MainWindow" Height="450" Width="800" WindowState="Normal" Loaded="Window_Loaded">
     <DockPanel LastChildFill="True">
         <Fluent:Ribbon DockPanel.Dock="Top" Name="ribbon">
-            <Fluent:Ribbon.Menu>
-                <Fluent:Backstage>
-                    <Fluent:BackstageTabControl>
-                        <Fluent:BackstageTabItem Header="Task A" />
-                        <Fluent:Button Header="Task B" />
-                    </Fluent:BackstageTabControl>
-                </Fluent:Backstage>
-            </Fluent:Ribbon.Menu>
+            
+            
+            
             <Fluent:RibbonTabItem Header="Home" Name="TabHome">
 
             </Fluent:RibbonTabItem>
@@ -38,7 +33,7 @@
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
 
-        <Button DockPanel.Dock="Top" Content="Home" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}"/>
+        <Button DockPanel.Dock="Left" Content="Home" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}"/>
         <Button DockPanel.Dock="Top" Content="Orders" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}"/>
         <Button DockPanel.Dock="Top" Content="Products" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabProducts}"/>
     </DockPanel>

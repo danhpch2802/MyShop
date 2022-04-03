@@ -31,24 +31,33 @@ namespace MyShop
         public string password { get; set; }
 
     }
+    
     public partial class LoginWindow : Window
     {
-        
+
+        public string name { get; set; }
+        public string pass { get; set; }
+
         private const int GWL_STYLE = -16;
         private const int WS_SYSMENU = 0x80000;
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-        public LoginWindow()
+        public LoginWindow(string n, string p)
         {
             InitializeComponent();
+            name = n;
+            pass = p;
+            this.DataContext = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+            userNameTextBox.Text = name;
+            passWordBox.Password = pass;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -96,6 +105,9 @@ namespace MyShop
 
             if (check_account(userNameTextBox.Text, hashpass, taikhaons))
             {
+
+
+
                 DialogResult = true;
             }
             else
