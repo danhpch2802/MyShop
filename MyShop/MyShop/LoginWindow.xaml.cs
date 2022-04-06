@@ -188,8 +188,6 @@ namespace MyShop
                 connection.Open();
                 cmd.ExecuteNonQuery();
                 
-
-
                 DialogResult = true;
             }
             else
@@ -211,6 +209,7 @@ namespace MyShop
             }
             return true;
         }
+
         private string hashPassword(string pass)
         {
             SHA1CryptoServiceProvider sHA1 = new SHA1CryptoServiceProvider();

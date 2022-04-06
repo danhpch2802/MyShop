@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Filter.png" />
     <None Remove="Images\logo.png" />
     <None Remove="Images\plus.png" />
     <None Remove="Images\remove.png" />
@@ -16,9 +17,11 @@
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Fluent.Ribbon" Version="9.0.4" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Filter.png" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\plus.png" />
     <Resource Include="Images\remove.png" />

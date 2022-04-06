@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj": {}
+    "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\MyShop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj": {
+    "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\MyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
+        "projectUniqueName": "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
         "projectName": "MyShop",
-        "projectPath": "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
-        "packagesPath": "C:\\Users\\trant\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\obj\\",
+        "projectPath": "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
+        "packagesPath": "C:\\Users\\huuda\\.nuget\\packages\\",
+        "outputPath": "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\trant\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\huuda\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -51,6 +51,10 @@
             "Fluent.Ribbon": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "PropertyChanged.Fody": {
+              "target": "Package",
+              "version": "[3.4.0, )"
             }
           },
           "imports": [
@@ -63,12 +67,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[5.0.13, 5.0.13]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -77,7 +75,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

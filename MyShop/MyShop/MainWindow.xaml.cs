@@ -18,6 +18,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MyShop.Logic;
+using MyShop.Services;
+using MyShop.ViewModel;
+
 namespace MyShop
 {
     /// <summary>
@@ -25,125 +29,89 @@ namespace MyShop
     /// </summary>
     public partial class MainWindow : Fluent.RibbonWindow
     {
+        Business _bus = null;
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        class AppConfig
+        private void Load_Order()
         {
-            public static string Server = "Server";
-            public static string Instance = "Instance";
-            public static string Database = "Database";
-            public static string Username = "Username";
-            public static string Password = "Password";
-            public static string Entropy = "Entropy";
-            public static string? getValue(string key)
+            string? connectionString = AppConfig.ConnectionString();
+            var dao = new SqlDataAccess(connectionString!);
+
+            if (dao.CanConnect())
             {
-                string? value = ConfigurationManager.AppSettings[key];
-                return value;
+                dao.Connect();
+                _bus = new Business(dao);
+
+                List<Order> orders = _bus.GetOrders();
+                var orders_vm = OrderViewModel.loadOrders(orders);
+
+                ordersListView.ItemsSource = orders;
             }
-            public static void setValue(string key, string value)
+            else
             {
-                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                var settings = configFile.AppSettings.Settings;
-                settings[key].Value = value;
-                configFile.Save(ConfigurationSaveMode.Minimal);
-            }
-            public static string? ConnectionString()
-            {
-                string? result = "";
-
-                var builder = new SqlConnectionStringBuilder();
-                string? server = AppConfig.getValue(AppConfig.Server);
-                string? instance = AppConfig.getValue(AppConfig.Instance);
-                string? database = AppConfig.getValue(AppConfig.Database);
-                string? username = AppConfig.getValue(AppConfig.Username);
-                string? password = AppConfig.getValue(AppConfig.Password);
-
-
-                builder.DataSource = $"{server}\\{instance}";
-                builder.InitialCatalog = database;
-                builder.IntegratedSecurity = true;
-                builder.ConnectTimeout = 3; // s
-
-                result = builder.ToString();
-                return result;
-            }
-        }
-        class SqlDataAccess
-        {
-            private SqlConnection _connection;
-            public SqlDataAccess(string connectionString)
-            {
-                _connection = new SqlConnection(connectionString);
-            }
-
-            public bool CanConnect()
-            {
-                bool result = true;
-
-                try
-                {
-                    _connection.Open();
-                    _connection.Close();
-                }
-                catch (Exception ex)
-                {
-                    result = false;
-                }
-                return result;
-            }
-
-            public void Connect()
-            {
-                _connection.Open();
+                MessageBox.Show("Cannot connect to db");
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Load_Order();
+            //var password = "";
 
-            var cypherText = AppConfig.getValue(AppConfig.Password);
-            var cypherTextInBytes = Convert.FromBase64String(cypherText!);
+            //try
+            //{
+            //    var cypherText = AppConfig.getValue(AppConfig.Password);
+            //    var cypherTextInBytes = Convert.FromBase64String(cypherText!);
 
-            var entropyText = AppConfig.getValue(AppConfig.Entropy);
-            var entropyTextInBytes = Convert.FromBase64String(entropyText);
+            //    var entropyText = AppConfig.getValue(AppConfig.Entropy);
+            //    var entropyTextInBytes = Convert.FromBase64String(entropyText);
 
-            var passwordInBytes = ProtectedData.Unprotect(cypherTextInBytes,
-                entropyTextInBytes, DataProtectionScope.CurrentUser);
+            //    var passwordInBytes = ProtectedData.Unprotect(cypherTextInBytes,
+            //        entropyTextInBytes, DataProtectionScope.CurrentUser);
+            //    password = Encoding.UTF8.GetString(passwordInBytes);
+            //} catch (Exception ex)
+            //{
+            //  MessageBox.Show(ex.Message);
+            //}
+            //var screen = new LoginWindow(AppConfig.getValue(AppConfig.Username), password);
 
-            var password = Encoding.UTF8.GetString(passwordInBytes);
+            //screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            //screen.Owner = this;
+            //var result = screen.ShowDialog();
+
+            //if (result == true)
+            //{
+            //    var passwordInBytesSave = Encoding.UTF8.GetBytes(password);
+
+            //    var entropy = new byte[20];
+            //    using (var rng = new RNGCryptoServiceProvider())
+            //    {
+            //        rng.GetBytes(entropy);
+            //    }
+            //    var entropyBase64 = Convert.ToBase64String(entropy);
+
+            //    var cypherTextSave = ProtectedData.Protect(passwordInBytesSave, entropy,
+            //        DataProtectionScope.CurrentUser);
+            //    var cypherTextBase64 = Convert.ToBase64String(cypherTextSave);
+
+            //    AppConfig.setValue(AppConfig.Password, cypherTextBase64);
+            //    AppConfig.setValue(AppConfig.Entropy, entropyBase64);
+            //}
+        }
 
 
-            var screen = new LoginWindow(AppConfig.getValue(AppConfig.Username), password);
+        private void filterClick(object sender, RoutedEventArgs e)
+        {
+            var screen = new FilterWindow();
 
             screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             screen.Owner = this;
             var result = screen.ShowDialog();
-
-            if (result == true)
-            {
-                
-
-                var passwordInBytesSave = Encoding.UTF8.GetBytes(password);
-
-                var entropy = new byte[20];
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    rng.GetBytes(entropy);
-                }
-                var entropyBase64 = Convert.ToBase64String(entropy);
-
-                var cypherTextSave = ProtectedData.Protect(passwordInBytesSave, entropy,
-                    DataProtectionScope.CurrentUser);
-                var cypherTextBase64 = Convert.ToBase64String(cypherTextSave);
-
-                AppConfig.setValue(AppConfig.Password, cypherTextBase64);
-                AppConfig.setValue(AppConfig.Entropy, entropyBase64);
-            }
-
-            
+            if (result == true) { }
         }
     }
 }
