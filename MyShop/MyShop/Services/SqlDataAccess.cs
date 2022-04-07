@@ -38,6 +38,10 @@ namespace MyShop.Services
             _connection.Open();
         }
 
+        public void Disconnect()
+        {
+            _connection.Close();
+        }
         public List<Order> GetOrders()
         {
             var sql = "select * from [DonHang]";
@@ -106,7 +110,6 @@ namespace MyShop.Services
 
         public void addDataToDatabase(string img, string name, string pcat, int price, int amount)
         {
-            Connect();
             // Send to database
             var sql = "SET IDENTITY_INSERT [dbo].[HangHoa] OFF; " +
                 "BEGIN " +
@@ -122,12 +125,10 @@ namespace MyShop.Services
             command.Parameters.Add("@_price", SqlDbType.Decimal).Value = price;
             command.Parameters.Add("@_amount", SqlDbType.Int).Value = amount;
             command.ExecuteNonQuery();
-            _connection.Close();
         }
 
         public void deleteDataFromDatabase(string img, string name, string pcat, int price, int amount)
         {
-            Connect();
             // Delete from database
             var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name) " +
                 "BEGIN " +
@@ -141,12 +142,10 @@ namespace MyShop.Services
             command.Parameters.Add("@_price", SqlDbType.Decimal).Value = price;
             command.Parameters.Add("@_amount", SqlDbType.Int).Value = amount;
             command.ExecuteNonQuery();
-            _connection.Close();
         }
 
         public void editDataInDatabase(string img, string name, string pcat, int price, int amount)
         {
-            Connect();
             // Edit data in database
             var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name) " +
                 "BEGIN " +
@@ -159,7 +158,23 @@ namespace MyShop.Services
             command.Parameters.Add("@_price", SqlDbType.Decimal).Value = price;
             command.Parameters.Add("@_amount", SqlDbType.Int).Value = amount;
             command.ExecuteNonQuery();
-            _connection.Close();
+        }
+
+        public void removeOrder(Order order)
+        {
+                removeDetailOrder(order);
+                var sql = "delete from DonHang where DonHang_id = @_orderid ";
+                var command = new SqlCommand(sql, _connection);
+                command.Parameters.Add("@_orderid", SqlDbType.Int).Value = order.OrderID;
+                command.ExecuteNonQuery();
+        }
+
+        public void removeDetailOrder(Order order)
+        {
+            var sql = "delete from ChiTietDonHang where DonHang_id = @_orderid ";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_orderid", SqlDbType.Int).Value = order.OrderID;
+            command.ExecuteNonQuery();
         }
     }
 }

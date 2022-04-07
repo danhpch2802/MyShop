@@ -19,9 +19,25 @@ namespace MyShop
     /// </summary>
     public partial class FilterWindow : Window
     {
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
         public FilterWindow()
         {
             InitializeComponent();
+        }
+        private void okButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (startDP.SelectedDate == null || endDP.SelectedDate == null)
+            {
+                MessageBox.Show("Please choose both start and end date");
+            }
+
+            else
+            {
+                startDate = (DateTime)startDP.SelectedDate;
+                endDate = (DateTime)endDP.SelectedDate;
+                DialogResult = true;
+            }
         }
     }
 }

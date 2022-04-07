@@ -8,10 +8,10 @@
         Title="FilterWindow" Height="250" Width="400">
     <Canvas>
         <TextBlock Text="From:" Canvas.Left="50" Canvas.Top="40" FontSize="15"/>
-        <DatePicker x:Name="fromDP" Canvas.Left="150" Canvas.Top="40" FontSize="15"/>
+        <DatePicker x:Name="startDP" Canvas.Left="150" Canvas.Top="40" FontSize="15"/>
         <TextBlock Text="To:" Canvas.Left="50" Canvas.Top="80" FontSize="15"/>
-        <DatePicker x:Name="toDP" Canvas.Left="150" Canvas.Top="80" FontSize="15"/>
-        <Button x:Name="submitBtn" Content="Submit" Canvas.Left="50" Canvas.Top="140" Height="34" Width="72" Background="White" HorizontalAlignment="Left" VerticalAlignment="Center" >
+        <DatePicker x:Name="endDP" Canvas.Left="150" Canvas.Top="80" FontSize="15"/>
+        <Button x:Name="submitBtn" Click="okButton_Click" Content="Submit" Canvas.Left="50" Canvas.Top="140" Height="34" Width="72" Background="White" HorizontalAlignment="Left" VerticalAlignment="Center" >
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>

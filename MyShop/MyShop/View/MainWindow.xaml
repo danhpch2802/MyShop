@@ -4,7 +4,8 @@
         xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
         Title="MainWindow" Height="500" Width="800" WindowState="Normal"
                      Loaded="Window_Loaded"
-                     WindowStartupLocation="CenterScreen">
+                     WindowStartupLocation="CenterScreen"
+                     Closing="DataWindow_Closing"  >
     <DockPanel LastChildFill="True">
         <Fluent:Ribbon DockPanel.Dock="Top" Name="ribbon">
                  
@@ -28,7 +29,14 @@
                                    Height="100"
                                    Click="filterClick"/>
                 </Fluent:RibbonGroupBox>
-
+                <Fluent:RibbonGroupBox>
+                    <Fluent:Button Header="Refresh"
+                                LargeIcon="/Images/refresh.png" 
+                                   Width="50"
+                                   Padding="0,20,0,0"
+                                   Height="100"
+                                   Click="refreshClick"/>
+                </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
                         
             <Fluent:RibbonTabItem Header="Products" Name="TabProducts">
@@ -42,8 +50,9 @@
         </Fluent:Ribbon>
 
         <Button DockPanel.Dock="Left" Content="Home" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}"/>
+        
         <Grid VerticalAlignment="Center" DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}">
-            <DataGrid VerticalAlignment="Center" ColumnWidth="*" CanUserResizeColumns="False" IsReadOnly="True" Name="orderDateGrid" AutoGenerateColumns="False">
+            <DataGrid  VerticalAlignment="Center" ColumnWidth="*" CanUserResizeColumns="False" IsReadOnly="True" Name="orderDateGrid" AutoGenerateColumns="False">
                 <DataGrid.Columns>
 
                     <DataGridTextColumn  Header="DonHang_id" Width="*" Binding="{Binding OrderID}" />
@@ -51,6 +60,13 @@
                     <DataGridTextColumn Header="TongGia" Width="*" Binding="{Binding OrderTotal}" />
 
                 </DataGrid.Columns>
+
+                <DataGrid.ContextMenu >
+                    <ContextMenu>
+                        <MenuItem Header="Delete" Click="deleteOrderClick"/>
+                        <MenuItem Header="Edit"  Click="editOrderClick"  />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
         </Grid>
 

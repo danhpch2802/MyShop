@@ -15,6 +15,7 @@
     <None Remove="Images\macbook_pro_14.jpg" />
     <None Remove="Images\mac_mini_m1.jpg" />
     <None Remove="Images\plus.png" />
+    <None Remove="Images\refresh.png" />
     <None Remove="Images\remove.png" />
     <None Remove="Images\xps_13_pro.jpg" />
     <None Remove="Images\zenbook_duo.jpg" />
@@ -42,6 +43,7 @@
     <Resource Include="Images\macbook_pro_14.jpg" />
     <Resource Include="Images\mac_mini_m1.jpg" />
     <Resource Include="Images\plus.png" />
+    <Resource Include="Images\refresh.png" />
     <Resource Include="Images\remove.png" />
     <Resource Include="Images\xps_13_pro.jpg" />
     <Resource Include="Images\zenbook_duo.jpg" />

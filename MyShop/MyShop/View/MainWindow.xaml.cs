@@ -23,6 +23,7 @@ using MyShop.Services;
 using MyShop.ViewModel;
 using Microsoft.Win32;
 using Aspose.Cells;
+using System.ComponentModel;
 
 namespace MyShop
 {
@@ -32,7 +33,8 @@ namespace MyShop
     public partial class MainWindow : Fluent.RibbonWindow
     {
         Business _bus = null;
-
+        OrderViewModel orders_vm;
+        SqlDataAccess dao;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,7 +43,7 @@ namespace MyShop
         private void Load_Order()
         {
             string? connectionString = AppConfig.ConnectionString();
-            var dao = new SqlDataAccess(connectionString!);
+            dao = new SqlDataAccess(connectionString!);
 
             if (dao.CanConnect())
             {
@@ -49,7 +51,7 @@ namespace MyShop
                 _bus = new Business(dao);
 
                 List<Order> orders = _bus.GetOrders();
-                var orders_vm = OrderViewModel.loadOrders(orders);
+                orders_vm = OrderViewModel.loadOrders(orders);
 
                 orderDateGrid.ItemsSource = orders;
             }
@@ -73,6 +75,28 @@ namespace MyShop
             }
         }
 
+        private void filterClick(object sender, RoutedEventArgs e)
+        {
+            var filterWindow = new FilterWindow();
+
+            filterWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            filterWindow.Owner = this;
+            var result = filterWindow.ShowDialog();
+            if (result == true)
+            {
+                var startDP = filterWindow.startDate;
+                var endDP = filterWindow.endDate;
+
+            }
+        }
+
+        private void refreshClick(object sender, RoutedEventArgs e)
+        {
+            List<Order> orders = _bus.GetOrders();
+            orders_vm = OrderViewModel.loadOrders(orders);
+
+            orderDateGrid.ItemsSource = orders;
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Load_Order();
@@ -120,17 +144,6 @@ namespace MyShop
             //}
         }
 
-
-        private void filterClick(object sender, RoutedEventArgs e)
-        {
-            var screen = new FilterWindow();
-
-            screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            screen.Owner = this;
-            var result = screen.ShowDialog();
-            if (result == true) { }
-        }
-
         // Product Tab
         List<Category>? _categories = null; // Không biết fix sao
         ProductViewModel _vm = new ProductViewModel();
@@ -156,7 +169,7 @@ namespace MyShop
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             _categories = new List<Category>();
             string? connectionString = AppConfig.ConnectionString();
-            var dao = new SqlDataAccess(connectionString!);
+            var dao = new SqlDataAccess(connectionString!); // dao gọi rồi
             var datascreen = new OpenFileDialog();
             if (datascreen.ShowDialog() == true)
             {
@@ -243,6 +256,24 @@ namespace MyShop
             AddProduct addWindow = new AddProduct();
             addWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             addWindow.Show();
+        }
+
+        private void deleteOrderClick(object sender, RoutedEventArgs e)
+        {
+            var order = (Order)orderDateGrid.SelectedItem;
+            orders_vm.Orders.Remove(order);
+            orderDateGrid.Items.Refresh();
+            _bus.removeOrder(order);
+
+        }
+
+        private void editOrderClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            dao.Disconnect();
         }
     }
 }

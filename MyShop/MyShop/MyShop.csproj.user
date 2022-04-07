@@ -2,24 +2,24 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="AddProduct.xaml.cs">
+    <Compile Update="View\AddProduct.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="FilterWindow.xaml.cs">
+    <Compile Update="View\FilterWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="LoginWindow.xaml.cs">
+    <Compile Update="View\LoginWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="AddProduct.xaml">
+    <Page Update="View\AddProduct.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="FilterWindow.xaml">
+    <Page Update="View\FilterWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="LoginWindow.xaml">
+    <Page Update="View\LoginWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

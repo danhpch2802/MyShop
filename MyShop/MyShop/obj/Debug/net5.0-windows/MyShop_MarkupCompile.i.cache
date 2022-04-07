@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\bbxmi\OneDrive\Documents\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\
 MyShop
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
-C:\Users\bbxmi\OneDrive\Documents\MyShop\MyShop\MyShop\App.xaml
-4-1545164053
+E:\Work\Github\MyShop\MyShop\MyShop\App.xaml
+41459224048
 
-151644526932
-2101365804836
-AddProduct.xaml;FilterWindow.xaml;LoginWindow.xaml;MainWindow.xaml;
+15-491625595
+2101669257519
+View\AddProduct.xaml;View\FilterWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;
 
 False
 

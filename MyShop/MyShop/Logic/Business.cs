@@ -1,15 +1,11 @@
 ﻿using MyShop.Services;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyShop.Logic
 {
     internal class Business
     {
-        SqlDataAccess _dao;
+        public SqlDataAccess _dao ;
 
         public Business(SqlDataAccess dao)
         {
@@ -27,5 +23,11 @@ namespace MyShop.Logic
 
             return result;
         }
+
+        public void removeOrder(Order order)
+        {
+             _dao.removeOrder(order);
+        }
+
     }
 }
