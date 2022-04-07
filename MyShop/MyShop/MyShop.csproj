@@ -8,10 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\alienware_m15.jpg" />
     <None Remove="Images\Filter.png" />
+    <None Remove="Images\imac_24.jpg" />
     <None Remove="Images\logo.png" />
+    <None Remove="Images\macbook_pro_14.jpg" />
+    <None Remove="Images\mac_mini_m1.jpg" />
     <None Remove="Images\plus.png" />
     <None Remove="Images\remove.png" />
+    <None Remove="Images\xps_13_pro.jpg" />
+    <None Remove="Images\zenbook_duo.jpg" />
+    <None Remove="Images\zenbook_fold.jpg" />
+    <None Remove="Images\zenbook_vivobook.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +29,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>Aspose.Cells.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\alienware_m15.jpg" />
     <Resource Include="Images\Filter.png" />
+    <Resource Include="Images\imac_24.jpg" />
     <Resource Include="Images\logo.png" />
+    <Resource Include="Images\macbook_pro_14.jpg" />
+    <Resource Include="Images\mac_mini_m1.jpg" />
     <Resource Include="Images\plus.png" />
     <Resource Include="Images\remove.png" />
+    <Resource Include="Images\xps_13_pro.jpg" />
+    <Resource Include="Images\zenbook_duo.jpg" />
+    <Resource Include="Images\zenbook_fold.jpg" />
+    <Resource Include="Images\zenbook_vivobook.jpg" />
   </ItemGroup>
 
 </Project>

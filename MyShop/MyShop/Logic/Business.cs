@@ -21,5 +21,11 @@ namespace MyShop.Logic
 
             return result;
         }
+        public List<Product> GetProducts()
+        {
+            List<Product> result = _dao.GetProducts();
+
+            return result;
+        }
     }
 }

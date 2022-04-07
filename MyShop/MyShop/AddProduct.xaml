@@ -1,0 +1,153 @@
+﻿<Window x:Class="MyShop.AddProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyShop"
+        mc:Ignorable="d"
+        Title="AddProduct" Height="600" Width="400">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border CornerRadius="10" Grid.RowSpan="3">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#ffafbd" Offset="0.5"/>
+                        <GradientStop Color="#ffc3a0" Offset="0.1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Product Manager"
+                           FontWeight="DemiBold"
+                           FontFamily="helvetica"
+                           FontSize="40"
+                           Foreground="White"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" >
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center" Text="Product Name:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e"/>
+                            <TextBox FontFamily="Helvetica"
+                             Name="productNameTextBox"
+                             FontWeight="Light"
+                             Text=""
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Width="150"
+                             HorizontalContentAlignment="Left"
+                             Height="25"
+                             Margin="35,0,35,0"/>
+                            <Border Width="150"
+                        Height="2"
+                        Background="White"
+                        Opacity="0.5"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0 10 0 0">
+                            <TextBlock HorizontalAlignment="Center" Text="Price:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e"/>
+                            <TextBox FontFamily="Helvetica"
+                             Name="productPriceTextBox"
+                             FontWeight="Light"
+                             Text=""
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Width="150"
+                             HorizontalContentAlignment="Left"
+                             Height="25"
+                             Margin="35,0,35,0"/>
+                            <Border Width="150"
+                        Height="2"
+                        Background="White"
+                                    Opacity="0.5"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0 10 0 0">
+                            <TextBlock HorizontalAlignment="Center" Text="Category:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e"/>
+                            <TextBox FontFamily="Helvetica"
+                             Name="productCategoryTextBox"
+                             FontWeight="Light"
+                             Text=""
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Width="150"
+                             HorizontalContentAlignment="Left"
+                             Height="25"
+                                     Margin="35,0,35,0"/>
+                            <Border Width="150"
+                        Height="2"
+                        Background="White"
+                        Opacity="0.5"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center" Text="Image (Optional):" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e" Margin="0 0 20 0"/>
+                            <Button Name="browseImage" Content="Browse..." Width="50" Height="25" VerticalAlignment="Center" Margin="-15 0 0 0" Background="#cc2b5e" Foreground="White"
+                                    Click="browseImage_Click"/>
+                        </StackPanel>
+                        <TextBox FontFamily="Helvetica"
+                             Name="productImageTextBox"
+                             FontWeight="Light"
+                             Text=""
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Width="150"
+                             HorizontalContentAlignment="Left"
+                             Height="25"
+                             Margin="0,10,0,0"/>
+                        <Border Width="170"
+                        Height="2"
+                        Background="White"
+                        Opacity="0.5" Margin="0 5 0 0"/>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock VerticalAlignment="Center" Text="Amount:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e" Margin="0 10 0 0"/>
+                            <TextBox FontFamily="Helvetica"
+                             Name="productAmountTextBox"
+                             FontWeight="Light"
+                             Text=""
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Width="150"
+                             HorizontalContentAlignment="Left"
+                             Height="25"
+                             Margin="0,10,0,0"/>
+                            <Border Width="170"
+                        Height="2"
+                        Background="White"
+                        Opacity="0.5"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="2">
+                <StackPanel Orientation="Vertical" Margin="0,30,0,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Width="100" Height="40" Click="addButton_Click" Foreground="White" Background="#cc2b5e" Content="Add Product" Margin="0 0 0 0"/>
+                    </StackPanel>
+                    <TextBlock Text="Edit Category..." HorizontalAlignment="Center" Padding="0 10 0 0" Foreground="White" FontSize="13" 
+                               FontWeight="Medium" PreviewMouseDown="editCategory" TextDecorations="Underline"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
