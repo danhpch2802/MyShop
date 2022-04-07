@@ -7,13 +7,10 @@
                      >
     <DockPanel LastChildFill="True">
         <Fluent:Ribbon DockPanel.Dock="Top" Name="ribbon">
-            
-            
-            
+                 
             <Fluent:RibbonTabItem Header="Home" Name="TabHome">
 
             </Fluent:RibbonTabItem>
-            
             
             <Fluent:RibbonTabItem Header="Orders" Name="TabOrders">
                 <Fluent:RibbonGroupBox>
@@ -33,8 +30,7 @@
                 </Fluent:RibbonGroupBox>
 
             </Fluent:RibbonTabItem>
-            
-            
+                        
             <Fluent:RibbonTabItem Header="Products" Name="TabProducts">
                 <Fluent:RibbonGroupBox>
                     <Fluent:Button Header="Add"
@@ -47,7 +43,7 @@
 
         <Button DockPanel.Dock="Left" Content="Home" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}"/>
         <!--<Button DockPanel.Dock="Top" Content="Orders" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}"/>-->
-        <ListView DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Name="ordersListView">
+        <!--<ListView DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Name="ordersListView">
             <ListView.View>
                 <GridView>
 
@@ -78,7 +74,19 @@
                     <Setter Property="ContextMenu" Value="{StaticResource orderContextMenu}" />
                 </Style>
             </ListView.ItemContainerStyle>
-        </ListView>
+        </ListView>-->
+
+        <Grid VerticalAlignment="Center" DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}">
+            <DataGrid VerticalAlignment="Center" ColumnWidth="*" CanUserResizeColumns="False" IsReadOnly="True" Name="orderDateGrid" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn  Header="DonHang_id" Width="*" Binding="{Binding OrderID}" />
+                    <DataGridTextColumn Header="NgayMua" Width="*" Binding="{Binding OrderDate.Date}" />
+                    <DataGridTextColumn Header="TongGia" Width="*" Binding="{Binding OrderTotal}" />
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
         
         <Button DockPanel.Dock="Top" Content="Products" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabProducts}"/>
     </DockPanel>

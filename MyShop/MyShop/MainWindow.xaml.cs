@@ -49,7 +49,7 @@ namespace MyShop
                 List<Order> orders = _bus.GetOrders();
                 var orders_vm = OrderViewModel.loadOrders(orders);
 
-                ordersListView.ItemsSource = orders;
+                orderDateGrid.ItemsSource = orders;
             }
             else
             {
