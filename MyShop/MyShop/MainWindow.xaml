@@ -42,46 +42,12 @@
         </Fluent:Ribbon>
 
         <Button DockPanel.Dock="Left" Content="Home" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}"/>
-        <!--<Button DockPanel.Dock="Top" Content="Orders" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}"/>-->
-        <!--<ListView DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Name="ordersListView">
-            <ListView.View>
-                <GridView>
-
-                    <GridViewColumn Header="DonHangID" Width="200"
-                                     DisplayMemberBinding="{Binding OrderID}"/>
-                    <GridViewColumn Header="NgayMua" Width="400"
-                                    DisplayMemberBinding="{Binding OrderDate}"/>
-                    <GridViewColumn Header="TongGia" Width="300"
-                                    DisplayMemberBinding="{Binding OrderTotal}"/>
-                </GridView>
-                
-            </ListView.View>
-      
-            <ListView.Resources>
-                <ContextMenu x:Key="orderContextMenu">
-                    <MenuItem Header="Delete" >
-                    </MenuItem>
-                    <MenuItem Header="Edit" />
-                </ContextMenu>
-
-            </ListView.Resources>
-
-            
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}" >
-                    <Setter Property="Margin" Value="20"/>
-                    <Setter Property="Padding" Value="20"/>
-                    <Setter Property="ContextMenu" Value="{StaticResource orderContextMenu}" />
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>-->
-
         <Grid VerticalAlignment="Center" DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}">
             <DataGrid VerticalAlignment="Center" ColumnWidth="*" CanUserResizeColumns="False" IsReadOnly="True" Name="orderDateGrid" AutoGenerateColumns="False">
                 <DataGrid.Columns>
 
                     <DataGridTextColumn  Header="DonHang_id" Width="*" Binding="{Binding OrderID}" />
-                    <DataGridTextColumn Header="NgayMua" Width="*" Binding="{Binding OrderDate.Date}" />
+                    <DataGridTextColumn Header="NgayMua" Width="*" Binding="{Binding OrderDate , StringFormat={}{0:MM/dd/yyyy}}" />
                     <DataGridTextColumn Header="TongGia" Width="*" Binding="{Binding OrderTotal}" />
 
                 </DataGrid.Columns>
