@@ -88,3 +88,5 @@ E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\MainWindow.g.c
 E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\AddProduct.baml
 E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\FilterWindow.baml
 E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\LoginWindow.baml
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\DetailOrderWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\DetailOrderWindow.baml

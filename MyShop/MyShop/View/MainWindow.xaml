@@ -52,12 +52,17 @@
         <Button DockPanel.Dock="Left" Content="Home" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}"/>
         
         <Grid VerticalAlignment="Center" DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}">
-            <DataGrid  VerticalAlignment="Center" ColumnWidth="*" CanUserResizeColumns="False" IsReadOnly="True" Name="orderDateGrid" AutoGenerateColumns="False">
+            <DataGrid Name="orderDateGrid"
+                      VerticalAlignment="Center" ColumnWidth="*" 
+                      CanUserResizeColumns="False" 
+                      IsReadOnly="True" 
+                      AutoGenerateColumns="False"
+                      MouseDoubleClick="viewDetailOrderClick">
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn  Header="DonHang_id" Width="*" Binding="{Binding OrderID}" />
-                    <DataGridTextColumn Header="NgayMua" Width="*" Binding="{Binding OrderDate , StringFormat={}{0:MM/dd/yyyy}}" />
-                    <DataGridTextColumn Header="TongGia" Width="*" Binding="{Binding OrderTotal}" />
+                    <DataGridTextColumn  Header="OrderID" Width="*" Binding="{Binding OrderID}" />
+                    <DataGridTextColumn Header="CreateDate" Width="*" Binding="{Binding OrderDate , StringFormat={}{0:MM/dd/yyyy}}" />
+                    <DataGridTextColumn Header="Total" Width="*" Binding="{Binding OrderTotal}" />
 
                 </DataGrid.Columns>
 

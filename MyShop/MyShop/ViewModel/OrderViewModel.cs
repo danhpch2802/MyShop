@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyShop.ViewModel
+namespace MyShop
 {
     internal class OrderViewModel : INotifyPropertyChanged
     {

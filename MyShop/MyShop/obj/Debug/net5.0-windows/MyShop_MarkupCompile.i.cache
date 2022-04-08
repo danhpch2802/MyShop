@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 E:\Work\Github\MyShop\MyShop\MyShop\App.xaml
-41459224048
+5-1211465273
 
-15-491625595
+17-1766815968
 2101669257519
-View\AddProduct.xaml;View\FilterWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;
+View\AddProduct.xaml;View\DetailOrderWindow.xaml;View\FilterWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;
 
-False
+True
 

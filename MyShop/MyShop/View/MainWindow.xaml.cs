@@ -18,9 +18,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using MyShop.Logic;
-using MyShop.Services;
-using MyShop.ViewModel;
 using Microsoft.Win32;
 using Aspose.Cells;
 using System.ComponentModel;
@@ -274,6 +271,23 @@ namespace MyShop
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             dao.Disconnect();
+        }
+
+        private void viewDetailOrderClick(object sender, MouseButtonEventArgs e)
+        {
+            var order = (Order)orderDateGrid.SelectedItem;
+            List<DetailOrder> detailOrders = _bus.loadDetailOrdersfromID(order);
+
+           var detailOrderWindow = new DetailOrderWindow(order, detailOrders);
+
+            detailOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            detailOrderWindow.Owner = this;
+            this.Hide(); ;
+            var result = detailOrderWindow.ShowDialog();
+            if (result == true)
+            {
+                this.Show();
+            }
         }
     }
 }

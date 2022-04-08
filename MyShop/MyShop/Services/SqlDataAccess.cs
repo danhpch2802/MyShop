@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyShop.Services
+namespace MyShop
 {
     internal class SqlDataAccess
     {
@@ -175,6 +175,46 @@ namespace MyShop.Services
             var command = new SqlCommand(sql, _connection);
             command.Parameters.Add("@_orderid", SqlDbType.Int).Value = order.OrderID;
             command.ExecuteNonQuery();
+        }
+
+        public List<DetailOrder> loadDetailOrdersfromID(Order order)
+        {
+
+            var sql = "select CTDH.DonHang_id,HH.HangHoa_id,HH.HangHoa_hieu,HH.HangHoa_img,HH.HangHoa_ten,CTDH.SoLuong,CTDH.Gia " +
+                "from MyShop.dbo.ChiTietDonHang CTDH join MyShop.dbo.HangHoa HH on CTDH.HangHoa_id = HH.HangHoa_id" +
+                " where CTDH.DonHang_id = @_orderid";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_orderid", SqlDbType.Int).Value = order.OrderID;
+
+            var reader = command.ExecuteReader();
+
+            List<DetailOrder> result = new List<DetailOrder>();
+
+            while (reader.Read())
+            {
+                var OrderID = (int)reader["DonHang_id"];
+                var ProductId = (int)reader["HangHoa_id"];
+                var ProductImg = (string)reader["HangHoa_img"];
+                var ProductCat = (string)reader["HangHoa_hieu"];
+                var ProductName = (string)reader["HangHoa_ten"];
+                var Quantity = (int)reader["SoLuong"];
+                var Total = (int)reader["Gia"];
+
+
+                result.Add(new DetailOrder()
+                {
+                    OrderID = OrderID,
+                    ProductId = ProductId,
+                    ProductImg= ProductImg,
+                    ProductCat= ProductCat,
+                    ProductName = ProductName,
+                    Quantity = Quantity,
+                    Total = Total,
+
+                });
+            }
+
+            return result;
         }
     }
 }

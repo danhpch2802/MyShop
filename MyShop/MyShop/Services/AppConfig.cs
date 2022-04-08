@@ -6,8 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyShop.Services
-{
+namespace MyShop { 
     internal class AppConfig
     {
         public static string Server = "Server";

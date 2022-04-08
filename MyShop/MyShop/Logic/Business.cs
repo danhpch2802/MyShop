@@ -1,7 +1,6 @@
-﻿using MyShop.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MyShop.Logic
+namespace MyShop
 {
     internal class Business
     {
@@ -29,5 +28,10 @@ namespace MyShop.Logic
              _dao.removeOrder(order);
         }
 
+        public List<DetailOrder> loadDetailOrdersfromID(Order order)
+        {
+            List<DetailOrder> result = _dao.loadDetailOrdersfromID(order);
+            return result;
+        }
     }
 }

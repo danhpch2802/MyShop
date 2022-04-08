@@ -5,6 +5,9 @@
     <Compile Update="View\AddProduct.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\DetailOrderWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\FilterWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -14,6 +17,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="View\AddProduct.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\DetailOrderWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FilterWindow.xaml">

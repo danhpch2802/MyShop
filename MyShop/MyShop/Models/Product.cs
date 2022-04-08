@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MyShop
 {
-    internal class Category
+    public class Category
     {
         public string Name { get; set; }
         public List<Product> Products { get; set; }
     }
-    internal class Product
+    public class Product
     {
         public int productID { get; set; }
         public string Name { get; set; }
