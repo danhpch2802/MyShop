@@ -69,6 +69,44 @@ namespace MyShop
             return result;
         }
 
+        public void updateProductQuantity(List<DetailOrder> listDetailOrder)
+        {
+            foreach (var order in listDetailOrder)
+            {
+                var sql =
+                   "UPDATE HangHoa " +
+                   "SET HangHoa_soluong = @_amount where HangHoa_id=@_product_id";
+                var command = new SqlCommand(sql, _connection);
+                var NewAmount = order.Product.Amount - order.Quantity;
+                command.Parameters.Add("@_amount", SqlDbType.Int).Value = NewAmount;
+                command.Parameters.Add("@_product_id", SqlDbType.Int).Value = order.Product.productID;
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void addNewDetailOrders(List<DetailOrder> listDetailOrder)
+        {
+            foreach(DetailOrder item in listDetailOrder)
+            {
+                var sql = "insert into ChiTietDonHang(DonHang_id,HangHoa_id,SoLuong,Gia) Values (@_orderid,@_productid,@_quantity,@_total)";
+                var command = new SqlCommand(sql, _connection);
+                command.Parameters.Add("@_orderid", SqlDbType.Int).Value = item.OrderID;
+                command.Parameters.Add("@_productid", SqlDbType.Int).Value = item.Product.productID;
+                command.Parameters.Add("@_quantity", SqlDbType.Int).Value = item.Quantity;
+                command.Parameters.Add("@_total", SqlDbType.Int).Value = item.Total;
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void addNewOrder(Order newOrder)
+        {
+            var sql = "insert into DonHang(NgayMua,TongGia) Values(@_orderdate,@_ordertotal)";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_orderdate", SqlDbType.DateTime).Value = newOrder.OrderDate;
+            command.Parameters.Add("@_ordertotal", SqlDbType.Int).Value = newOrder.OrderTotal;
+            command.ExecuteNonQuery();
+        }
+
         public List<Product> GetProducts()
         {
             var sql = "select * from [HangHoa]";
@@ -177,10 +215,60 @@ namespace MyShop
             command.ExecuteNonQuery();
         }
 
+        public Product getProductFromID(int ProductID)
+        {
+            var sql = "select * from [HangHoa] where DonHang_id = @_orderid ";
+            var command = new SqlCommand(sql, _connection);
+
+            var reader = command.ExecuteReader();
+            command.Parameters.Add("@_orderid", SqlDbType.Int).Value = ProductID;
+
+            var result = new Product();
+
+            if(reader.Read())
+            {
+                var productID = (int)reader["HangHoa_id"];
+                var productImg = (string)reader["HangHoa_img"];
+                var productName = (string)reader["HangHoa_ten"];
+                var productCat = (string)reader["HangHoa_hieu"];
+                var productPrice = (decimal)reader["HangHoa_gia"];
+                var productAmount = (int)reader["HangHoa_soluong"];
+
+                var categories = new Category()
+                {
+                    Name = productCat
+                };
+
+                result = new Product
+                {
+                    productID = productID,
+                    Image = productImg,
+                    Name = productName,
+                    Category = categories,
+                    Price = (int)productPrice,
+                    Amount = (int)productAmount,
+                };
+            }
+            return result;
+
+
+        }
+
+        public int getNewestOrderID()
+        {
+            var sql = "select max(DonHang_id) as 'ID' from DonHang";
+            var command = new SqlCommand(sql, _connection);
+            var reader = command.ExecuteReader();
+            if(reader.Read()) return (int)reader["ID"]+1;
+            else return 0;
+        }
+
         public List<DetailOrder> loadDetailOrdersfromID(Order order)
         {
 
-            var sql = "select CTDH.DonHang_id,HH.HangHoa_id,HH.HangHoa_hieu,HH.HangHoa_img,HH.HangHoa_ten,CTDH.SoLuong,CTDH.Gia " +
+            var sql = "select CTDH.DonHang_id,HH.HangHoa_id,HH.HangHoa_img,HH.HangHoa_ten,HH.HangHoa_hieu,HH.HangHoa_gia" +
+                ",HH.HangHoa_soluong," +
+                "CTDH.SoLuong,CTDH.Gia " +
                 "from MyShop.dbo.ChiTietDonHang CTDH join MyShop.dbo.HangHoa HH on CTDH.HangHoa_id = HH.HangHoa_id" +
                 " where CTDH.DonHang_id = @_orderid";
             var command = new SqlCommand(sql, _connection);
@@ -194,20 +282,35 @@ namespace MyShop
             {
                 var OrderID = (int)reader["DonHang_id"];
                 var ProductId = (int)reader["HangHoa_id"];
-                var ProductImg = (string)reader["HangHoa_img"];
-                var ProductCat = (string)reader["HangHoa_hieu"];
-                var ProductName = (string)reader["HangHoa_ten"];
                 var Quantity = (int)reader["SoLuong"];
                 var Total = (int)reader["Gia"];
 
+                var productID = (int)reader["HangHoa_id"];
+                var productImg = (string)reader["HangHoa_img"];
+                var productName = (string)reader["HangHoa_ten"];
+                var productCat = (string)reader["HangHoa_hieu"];
+                var productPrice = (decimal)reader["HangHoa_gia"];
+                var productAmount = (int)reader["HangHoa_soluong"];
+
+                var categories = new Category()
+                {
+                    Name = productCat
+                };
+
+                var product = new Product
+                {
+                    productID = productID,
+                    Image = productImg,
+                    Name = productName,
+                    Category = categories,
+                    Price = (int)productPrice,
+                    Amount = (int)productAmount,
+                };
 
                 result.Add(new DetailOrder()
                 {
                     OrderID = OrderID,
-                    ProductId = ProductId,
-                    ProductImg= ProductImg,
-                    ProductCat= ProductCat,
-                    ProductName = ProductName,
+                    Product = product,
                     Quantity = Quantity,
                     Total = Total,
 

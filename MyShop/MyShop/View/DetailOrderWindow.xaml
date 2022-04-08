@@ -7,26 +7,23 @@
         mc:Ignorable="d"
         Title="DetailOrderWindow" Height="700" Width="800">
     <StackPanel Orientation="Vertical">
-
-
-
-    <ListView x:Name="detailOrderListView" Height="400" >
+        <ListView x:Name="detailOrderListView" Width="800" Height="400" >
             <ListView.ItemTemplate >
                 <DataTemplate >
-                    <DockPanel  >
-                        <Image Source="{Binding ProductImg}" Width="100" Height="100" HorizontalAlignment="Left"/>
+                    <DockPanel Width="770"  >
+                        <Image Source="{Binding Product.Image}" Width="100" Height="100" HorizontalAlignment="Left"/>
                         <StackPanel Orientation="Vertical" Margin="0,0,0,10" >
                             <TextBlock TextWrapping="Wrap" FontSize="17" Foreground="LightSlateGray" FontStyle="Oblique" FontWeight="Bold">
                                 <Run Text="ID:"/>
-                                <Run Text="{Binding ProductId}"/>
+                                <Run Text="{Binding Product.productID}"/>
                             </TextBlock>
                             <TextBlock TextWrapping="Wrap" FontSize="15" >
                                 <Run Text="Category:"/>
-                                <Run Text="{Binding ProductCat}"/>
+                                <Run Text="{Binding Product.Category.Name}"/>
                             </TextBlock>
                             <TextBlock TextWrapping="Wrap" FontSize="15" >
                                 <Run Text="Name:"/>
-                                <Run Text="{Binding ProductName}"/>    
+                                <Run Text="{Binding Product.Name}"/>    
                              </TextBlock>
                             </StackPanel>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="0,0,0,10" >
@@ -53,7 +50,7 @@
                     </TextBlock>
                     <TextBlock FontSize="15" >
                         <Run Foreground="CadetBlue" FontWeight="DemiBold" Text="CreatedAt:"/>
-                        <Run Text="{Binding OrderDate}"/>
+                        <Run Text="{Binding OrderDate,StringFormat={}{0:MM/dd/yyyy}}"/>
                     </TextBlock>
                     <TextBlock FontSize="15" >
                         <Run Foreground="CadetBlue" FontWeight="DemiBold" Text="Total:"/>

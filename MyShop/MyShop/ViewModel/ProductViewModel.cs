@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyShop
 {
-    internal class ProductViewModel : INotifyPropertyChanged
+    public class ProductViewModel : INotifyPropertyChanged,ICloneable
     {
         public List<Product> Products { get; set; } = new List<Product>();
         public List<Product> SelectedProducts { get; set; } = new List<Product>();
@@ -22,6 +22,11 @@ namespace MyShop
 
             return _vm;
 
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

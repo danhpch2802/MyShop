@@ -8,13 +8,15 @@ namespace MyShop
     /// </summary>
     public partial class DetailOrderWindow : Window
     {
-        public Order DetailOrder;
+        public DetailOrderViewModel DetailViewModel;
+
         public DetailOrderWindow(Order order, List<DetailOrder> detailOrder)
         {
             InitializeComponent();
-            DetailOrder = (Order)order.Clone();
-            this.DataContext = DetailOrder;
-            detailOrderListView.ItemsSource = detailOrder;
+            DetailViewModel = new DetailOrderViewModel();
+            DetailViewModel.Orders = detailOrder;
+            this.DataContext = order;
+            detailOrderListView.ItemsSource = DetailViewModel.Orders;
         }
 
         public void exitBtnEvent(object sender,RoutedEventArgs e)
@@ -22,9 +24,5 @@ namespace MyShop
             DialogResult = true;
         }
 
-        private void deleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

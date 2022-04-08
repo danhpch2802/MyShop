@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyShop
 {
-    internal class OrderViewModel : INotifyPropertyChanged
+    public class OrderViewModel : INotifyPropertyChanged
     {
         public List<Order> Orders { get; set; } = new List<Order>();
         public List<Order> FilterOrders { get; set; } = new List<Order>();

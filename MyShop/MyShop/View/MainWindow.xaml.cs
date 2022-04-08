@@ -31,6 +31,7 @@ namespace MyShop
     {
         Business _bus = null;
         OrderViewModel orders_vm;
+        List<Product> products;
         SqlDataAccess dao;
         public MainWindow()
         {
@@ -66,9 +67,9 @@ namespace MyShop
             {
                 dao.Connect();
                 _bus = new Business(dao);
-                List<Product> products = _bus.GetProducts();
-                var products_vm = ProductViewModel.loadProducts(products);
-                productsListView.ItemsSource = products;
+                products = _bus.GetProducts();
+                _vm = ProductViewModel.loadProducts(products);
+                productsListView.ItemsSource = _vm.Products;
             }
         }
 
@@ -87,6 +88,40 @@ namespace MyShop
             }
         }
 
+        private void addNewOrderClick(object sender, RoutedEventArgs e)
+        {
+            _vm = ProductViewModel.loadProducts(products);
+            var id=_bus.getNewestOrderID();
+            var AddOrderWindow = new AddOrderWindow(_vm, id);
+
+            AddOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            AddOrderWindow.Owner = this;
+            this.Hide();
+            var result = AddOrderWindow.ShowDialog();
+
+            if(result == true) { 
+                this.Show();
+                if(AddOrderWindow.CreateDetailOrder.Count==0)
+                {
+                    MessageBox.Show("Empty product! Abort create new order!");
+                }
+                else
+                {
+                    var NewOrder = AddOrderWindow.CreateOrder;
+                    var ListDetailOrder = AddOrderWindow.CreateDetailOrder;
+
+                    _bus.addNewOrder(NewOrder);
+                    _bus.addNewDetailOrders(ListDetailOrder);
+                    _bus.updateProductQuantity(ListDetailOrder);
+
+                    List<Order> orders = _bus.GetOrders();
+                    orders_vm = OrderViewModel.loadOrders(orders);
+                    Load_Product();
+                    _vm = ProductViewModel.loadProducts(products);
+                    orderDateGrid.ItemsSource = orders;
+                }
+            }
+        }
         private void refreshClick(object sender, RoutedEventArgs e)
         {
             List<Order> orders = _bus.GetOrders();
@@ -94,6 +129,7 @@ namespace MyShop
 
             orderDateGrid.ItemsSource = orders;
         }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Load_Order();
@@ -268,6 +304,7 @@ namespace MyShop
         {
 
         }
+
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             dao.Disconnect();

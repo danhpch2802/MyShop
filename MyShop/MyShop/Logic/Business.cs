@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MyShop
 {
@@ -32,6 +33,26 @@ namespace MyShop
         {
             List<DetailOrder> result = _dao.loadDetailOrdersfromID(order);
             return result;
+        }
+
+        public int getNewestOrderID()
+        {
+            return _dao.getNewestOrderID();
+        }
+
+        public void addNewOrder(Order newOrder)
+        {
+            _dao.addNewOrder(newOrder);
+        }
+
+        public void addNewDetailOrders(List<DetailOrder> listDetailOrder)
+        {
+            _dao.addNewDetailOrders(listDetailOrder);
+        }
+
+        public void updateProductQuantity(List<DetailOrder> listDetailOrder)
+        {
+            _dao.updateProductQuantity(listDetailOrder);
         }
     }
 }
