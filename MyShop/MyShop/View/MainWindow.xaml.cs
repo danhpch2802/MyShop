@@ -34,6 +34,7 @@ namespace MyShop
         Business _bus = null;
         
         SqlDataAccess dao;
+        DashViewModel dashViewModel;
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +47,7 @@ namespace MyShop
         int _currentOrderPage = 0;
         int _totalOrderPages = 0;
         int _rowsOrderPerPage = 10;
+        List<Order> orders;
         private void Load_Order()
         {
             string? connectionString = AppConfig.ConnectionString();
@@ -56,7 +58,7 @@ namespace MyShop
                 dao.Connect();
                 _bus = new Business(dao);
 
-                List<Order> orders = _bus.GetOrders();
+                orders = _bus.GetOrders();
                 orders_vm = OrderViewModel.loadOrders(orders);
 
                 orders_vm.FilterOrders = orders_vm.Orders
@@ -133,7 +135,12 @@ namespace MyShop
 
                     List<Order> orders = _bus.GetOrders();
                     orders_vm = OrderViewModel.loadOrders(orders);
+                    List<Product> products = _bus.GetProducts();
+                    dashViewModel = DashViewModel.load(orders, products);
+                    this.DataContext = dashViewModel;
                     orders_vm.FilterOrders = orders_vm.Orders
+
+
                 .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
                 .Take(_rowsOrderPerPage)
                 .ToList();
@@ -673,6 +680,8 @@ namespace MyShop
         {
             Load_Order();
             Load_Product();
+            dashViewModel = DashViewModel.load(orders, products);
+            this.DataContext = dashViewModel;
             RevenueChart.Series = new SeriesCollection();
             var password = "";
             var username = "";

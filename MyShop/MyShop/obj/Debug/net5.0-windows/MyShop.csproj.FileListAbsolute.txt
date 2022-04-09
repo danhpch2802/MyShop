@@ -206,3 +206,11 @@ E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartMo
 E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartMonthWindow.baml
 E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartYearWindow.g.cs
 E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartYearWindow.baml
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartDateWindow.g.cs
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartMonthWindow.g.cs
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartWeekWindow.g.cs
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartYearWindow.g.cs
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartDateWindow.baml
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartMonthWindow.baml
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartWeekWindow.baml
+C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartYearWindow.baml

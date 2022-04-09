@@ -9,11 +9,11 @@
                      Closing="DataWindow_Closing"  >
     <DockPanel LastChildFill="True">
         <Fluent:Ribbon DockPanel.Dock="Top" Name="ribbon">
-                 
+
             <Fluent:RibbonTabItem Header="Home" Name="TabHome">
 
             </Fluent:RibbonTabItem>
-            
+
             <Fluent:RibbonTabItem Header="Orders" Name="TabOrders">
                 <Fluent:RibbonGroupBox>
                     <Fluent:Button Header="Add"
@@ -40,7 +40,7 @@
                                    Click="refreshClick"/>
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
-                        
+
             <Fluent:RibbonTabItem Header="Products" Name="TabProducts">
                 <Fluent:RibbonGroupBox>
                     <Fluent:Button Header="Add" Click="addNewProductManager"
@@ -78,10 +78,14 @@
                     </Fluent:DropDownButton>
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
-            
+
         </Fluent:Ribbon>
 
-        <Button DockPanel.Dock="Left" Content="Home" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}"/>
+        <Canvas DockPanel.Dock="Top" Height="350" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}">
+            <TextBlock FontSize="40" FontWeight="Bold" Text="{Binding ordersInWeek}" Canvas.Left="180" Canvas.Top="103" Width="84"/>
+            <TextBlock FontSize="40" FontWeight="Bold" Text="{Binding ordersInMonth}" Canvas.Left="541" Canvas.Top="103" Width="84"/>
+            <TextBlock FontSize="40" FontWeight="Bold" Text="{Binding totalProduct}" Canvas.Left="330" Canvas.Top="10" Width="140"/>
+        </Canvas>
 
         <StackPanel Orientation="Vertical" DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}">
             <Grid VerticalAlignment="Center" >
@@ -91,22 +95,22 @@
                       IsReadOnly="True" 
                       AutoGenerateColumns="False"
                       MouseDoubleClick="viewDetailOrderClick">
-                <DataGrid.Columns>
+                    <DataGrid.Columns>
 
-                    <DataGridTextColumn  Header="OrderID" Width="*" Binding="{Binding OrderID}" />
-                    <DataGridTextColumn Header="CreateDate" Width="*" Binding="{Binding OrderDate , StringFormat={}{0:MM/dd/yyyy}}" />
-                    <DataGridTextColumn Header="Total" Width="*" Binding="{Binding OrderTotal}" />
+                        <DataGridTextColumn  Header="OrderID" Width="*" Binding="{Binding OrderID}" />
+                        <DataGridTextColumn Header="CreateDate" Width="*" Binding="{Binding OrderDate , StringFormat={}{0:MM/dd/yyyy}}" />
+                        <DataGridTextColumn Header="Total" Width="*" Binding="{Binding OrderTotal}" />
 
-                </DataGrid.Columns>
+                    </DataGrid.Columns>
 
-                <DataGrid.ContextMenu >
-                    <ContextMenu>
-                        <MenuItem Header="Delete" Click="deleteOrderClick"/>
-                        <MenuItem Header="Edit"  Click="editOrderClick"  />
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
-            </DataGrid>
-        </Grid>
+                    <DataGrid.ContextMenu >
+                        <ContextMenu>
+                            <MenuItem Header="Delete" Click="deleteOrderClick"/>
+                            <MenuItem Header="Edit"  Click="editOrderClick"  />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                 <Button x:Name="previousOrderButton" Width="80" Height="35" Content="&lt;" Click="prevOrderButton_Click" Background="White">
                     <Button.Resources>
@@ -125,7 +129,7 @@
                 </Button>
             </StackPanel>
         </StackPanel>
-        
+
         <DockPanel Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabProducts}" Height="419">
             <StackPanel Margin="30 0 0 0" Height="385">
                 <ComboBox SelectionChanged="categoriesComboBox_SelectionChanged"  Name="categoriesComboBox" Width="100" Height="35" Canvas.Left="10" Canvas.Top="63">
@@ -173,6 +177,6 @@
             </StackPanel>
         </DockPanel>
     </DockPanel>
-    
-    
+
+
 </Fluent:RibbonWindow>
