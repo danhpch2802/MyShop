@@ -30,14 +30,20 @@ namespace MyShop
     public partial class MainWindow : Fluent.RibbonWindow
     {
         Business _bus = null;
-        OrderViewModel orders_vm;
-        List<Product> products;
+        
         SqlDataAccess dao;
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        // Order tab start here
+        OrderViewModel orders_vm;
+        List<Product> products;
+        int _totalOrder = 0;
+        int _currentOrderPage = 0;
+        int _totalOrderPages = 0;
+        int _rowsOrderPerPage = 10;
         private void Load_Order()
         {
             string? connectionString = AppConfig.ConnectionString();
@@ -51,25 +57,22 @@ namespace MyShop
                 List<Order> orders = _bus.GetOrders();
                 orders_vm = OrderViewModel.loadOrders(orders);
 
+                orders_vm.FilterOrders = orders_vm.Orders
+                    .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                    .Take(_rowsOrderPerPage)
+                    .ToList();
+                _currentOrderPage = 1;
+
+                _totalOrder = orders_vm.Orders.Count;
+                _totalOrderPages = orders_vm.Orders.Count / _rowsOrderPerPage +
+                    (orders_vm.Orders.Count % _rowsOrderPerPage == 0 ? 0 : 1);
+                currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+
                 orderDateGrid.ItemsSource = orders_vm.FilterOrders;
             }
             else
             {
                 MessageBox.Show("Cannot connect to db");
-            }
-        }
-
-        private void Load_Product()
-        {
-            string? connectionString = AppConfig.ConnectionString();
-            var dao = new SqlDataAccess(connectionString!);
-            if (dao.CanConnect())
-            {
-                dao.Connect();
-                _bus = new Business(dao);
-                products = _bus.GetProducts();
-                _vm = ProductViewModel.loadProducts(products);
-                productsListView.ItemsSource = _vm.Products;
             }
         }
         private void filterClick(object sender, RoutedEventArgs e)
@@ -83,16 +86,25 @@ namespace MyShop
             {
                 var startDP = filterWindow.startDate;
                 var endDP = filterWindow.endDate;
-                orders_vm.FilterOrders = orders_vm.Orders.FindAll(x=> startDP <= x.OrderDate&&x.OrderDate <=endDP);
+                orders_vm.FilterOrders = orders_vm.Orders.FindAll(x => startDP <= x.OrderDate && x.OrderDate <= endDP);
+                orders_vm.FilterOrders = orders_vm.FilterOrders
+                                .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                                .Take(_rowsOrderPerPage)
+                                .ToList();
+                _currentOrderPage = 1;
+
+                _totalOrder = orders_vm.FilterOrders.Count;
+                _totalOrderPages = orders_vm.FilterOrders.Count / _rowsOrderPerPage +
+                    (orders_vm.Orders.Count % _rowsOrderPerPage == 0 ? 0 : 1);
+                currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
                 orderDateGrid.ItemsSource = orders_vm.FilterOrders;
-                orderDateGrid.Items.Refresh();
             }
         }
 
         private void addNewOrderClick(object sender, RoutedEventArgs e)
         {
             _vm = ProductViewModel.loadProducts(products);
-            var id=_bus.getNewestOrderID();
+            var id = _bus.getNewestOrderID();
             var AddOrderWindow = new AddOrderWindow(_vm, id);
 
             AddOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -100,9 +112,10 @@ namespace MyShop
             this.Hide();
             var result = AddOrderWindow.ShowDialog();
 
-            if(result == true) { 
+            if (result == true)
+            {
                 this.Show();
-                if(AddOrderWindow.CreateDetailOrder.Count==0)
+                if (AddOrderWindow.CreateDetailOrder.Count == 0)
                 {
                     MessageBox.Show("Empty product! Abort create new order!");
                 }
@@ -119,17 +132,163 @@ namespace MyShop
                     orders_vm = OrderViewModel.loadOrders(orders);
                     Load_Product();
                     _vm = ProductViewModel.loadProducts(products);
-                    orderDateGrid.ItemsSource = orders;
+                    orders_vm.FilterOrders = orders_vm.Orders
+                .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                .Take(_rowsOrderPerPage)
+                .ToList();
+            _currentOrderPage = 1;
+
+            _totalOrder = orders_vm.Orders.Count;
+            _totalOrderPages = orders_vm.Orders.Count / _rowsOrderPerPage +
+                (orders_vm.Orders.Count % _rowsOrderPerPage == 0 ? 0 : 1);
+            currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+            orderDateGrid.ItemsSource = orders_vm.FilterOrders;
                 }
             }
         }
+
         private void refreshClick(object sender, RoutedEventArgs e)
         {
             List<Order> orders = _bus.GetOrders();
             orders_vm = OrderViewModel.loadOrders(orders);
 
-            orderDateGrid.ItemsSource = orders;
+            orders_vm.FilterOrders = orders_vm.Orders
+                .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                .Take(_rowsOrderPerPage)
+                .ToList();
+            _currentOrderPage = 1;
+
+            _totalOrder = orders_vm.Orders.Count;
+            _totalOrderPages = orders_vm.Orders.Count / _rowsOrderPerPage +
+                (orders_vm.Orders.Count % _rowsOrderPerPage == 0 ? 0 : 1);
+            currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+            orderDateGrid.ItemsSource = orders_vm.FilterOrders;
         }
+
+        private void deleteOrderClick(object sender, RoutedEventArgs e)
+        {
+            var order = (Order)orderDateGrid.SelectedItem;
+            orders_vm.Orders.Remove(order);
+            orderDateGrid.Items.Refresh();
+            _bus.removeOrder(order);
+
+            orders_vm.FilterOrders = orders_vm.Orders
+                .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                .Take(_rowsOrderPerPage)
+                .ToList();
+            _currentOrderPage = 1;
+
+            _totalOrder = orders_vm.Orders.Count;
+            _totalOrderPages = orders_vm.Orders.Count / _rowsOrderPerPage +
+                (orders_vm.Orders.Count % _rowsOrderPerPage == 0 ? 0 : 1);
+            currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+            orderDateGrid.ItemsSource = orders_vm.FilterOrders;
+
+        }
+
+        private void editOrderClick(object sender, RoutedEventArgs e)
+        {
+            _vm = ProductViewModel.loadProducts(products);
+            var Order = (Order)orderDateGrid.SelectedItem;
+            var DetailOrder = _bus.loadDetailOrdersfromID(Order);
+            var EditOrderWindow = new EditOrderWindow(_vm, Order, DetailOrder);
+
+            EditOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            EditOrderWindow.Owner = this;
+            this.Hide();
+            var result = EditOrderWindow.ShowDialog();
+
+            if (result == true)
+            {
+                this.Show();
+                var UpdateOrder = EditOrderWindow.EditOrder;
+                var ListDetailOrder = EditOrderWindow.EditDetailOrder;
+
+                _bus.updateOrder(UpdateOrder);
+                _bus.updateProductQuantityRemovedOrder(ListDetailOrder, UpdateOrder);
+                _bus.updateProductQuantity(ListDetailOrder);
+                _bus.updateDetailOrder(ListDetailOrder);
+
+                List<Order> orders = _bus.GetOrders();
+                orders_vm = OrderViewModel.loadOrders(orders);
+                Load_Product();
+                _vm = ProductViewModel.loadProducts(products);
+
+                orders_vm.FilterOrders = orders_vm.Orders
+                                .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                                .Take(_rowsOrderPerPage)
+                                .ToList();
+                _currentOrderPage = 1;
+
+                _totalOrder = orders_vm.Orders.Count;
+                _totalOrderPages = orders_vm.Orders.Count / _rowsOrderPerPage +
+                    (orders_vm.Orders.Count % _rowsOrderPerPage == 0 ? 0 : 1);
+                currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+                orderDateGrid.ItemsSource = orders_vm.FilterOrders;
+            }
+            else
+            {
+                this.Show();
+            }
+        }
+
+        private void viewDetailOrderClick(object sender, MouseButtonEventArgs e)
+        {
+            var order = (Order)orderDateGrid.SelectedItem;
+            List<DetailOrder> detailOrders = _bus.loadDetailOrdersfromID(order);
+
+            var detailOrderWindow = new DetailOrderWindow(order, detailOrders);
+
+            detailOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            detailOrderWindow.Owner = this;
+            this.Hide(); ;
+            var result = detailOrderWindow.ShowDialog();
+            if (result == true)
+            {
+                this.Show();
+            }
+        }
+        public void prevOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentOrderPage > 1)
+                _currentOrderPage--;
+            orders_vm.FilterOrders = orders_vm.Orders
+                 .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                 .Take(_rowsOrderPerPage)
+                 .ToList();
+            // ép cập nhật giao diện
+            currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+            orderDateGrid.ItemsSource = orders_vm.FilterOrders;
+        }
+        public void nextOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentOrderPage < _totalOrderPages)
+                _currentOrderPage++;
+            orders_vm.FilterOrders = orders_vm.Orders
+                 .Skip((_currentOrderPage-1) * _rowsOrderPerPage)
+                 .Take(_rowsOrderPerPage)
+                 .ToList();
+            // ép cập nhật giao diện
+            currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+            orderDateGrid.ItemsSource = orders_vm.FilterOrders;
+        }
+        //Order tab End here
+
+        //Product
+        private void Load_Product()
+        {
+            string? connectionString = AppConfig.ConnectionString();
+            var dao = new SqlDataAccess(connectionString!);
+            if (dao.CanConnect())
+            {
+                dao.Connect();
+                _bus = new Business(dao);
+                products = _bus.GetProducts();
+                _vm = ProductViewModel.loadProducts(products);
+                productsListView.ItemsSource = _vm.Products;
+            }
+        }
+        
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -292,69 +451,13 @@ namespace MyShop
             addWindow.Show();
         }
 
-        private void deleteOrderClick(object sender, RoutedEventArgs e)
-        {
-            var order = (Order)orderDateGrid.SelectedItem;
-            orders_vm.Orders.Remove(order);
-            orderDateGrid.Items.Refresh();
-            _bus.removeOrder(order);
-
-        }
-
-        private void editOrderClick(object sender, RoutedEventArgs e)
-        {
-            _vm = ProductViewModel.loadProducts(products);
-            var Order = (Order)orderDateGrid.SelectedItem;
-            var DetailOrder = _bus.loadDetailOrdersfromID(Order);
-            var EditOrderWindow = new EditOrderWindow(_vm, Order, DetailOrder);
-
-            EditOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            EditOrderWindow.Owner = this;
-            this.Hide();
-            var result = EditOrderWindow.ShowDialog();
-
-            if (result == true)
-            {
-                this.Show();
-                var UpdateOrder = EditOrderWindow.EditOrder;
-                var ListDetailOrder = EditOrderWindow.EditDetailOrder;
-
-                _bus.updateOrder(UpdateOrder);
-                _bus.updateProductQuantityRemovedOrder(ListDetailOrder, UpdateOrder);
-                _bus.updateProductQuantity(ListDetailOrder);
-                _bus.updateDetailOrder(ListDetailOrder);
-
-                List<Order> orders = _bus.GetOrders();
-                orders_vm = OrderViewModel.loadOrders(orders);
-                Load_Product();
-                _vm = ProductViewModel.loadProducts(products);
-                orderDateGrid.ItemsSource = orders;
-            }
-            else {
-                this.Show();
-            }
-        }
+        
 
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             dao.Disconnect();
         }
 
-        private void viewDetailOrderClick(object sender, MouseButtonEventArgs e)
-        {
-            var order = (Order)orderDateGrid.SelectedItem;
-            List<DetailOrder> detailOrders = _bus.loadDetailOrdersfromID(order);
-
-           var detailOrderWindow = new DetailOrderWindow(order, detailOrders);
-
-            detailOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            detailOrderWindow.Owner = this;
-            this.Hide(); ;
-            var result = detailOrderWindow.ShowDialog();
-            if (result == true)
-            {
-                this.Show();
-            }
-        }
+        
     }
 }

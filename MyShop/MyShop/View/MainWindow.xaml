@@ -51,9 +51,10 @@
         </Fluent:Ribbon>
 
         <Button DockPanel.Dock="Left" Content="Home" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}"/>
-        
-        <Grid VerticalAlignment="Center" DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}">
-            <DataGrid Name="orderDateGrid"
+
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}">
+            <Grid VerticalAlignment="Center" >
+                <DataGrid Name="orderDateGrid"
                       VerticalAlignment="Center" ColumnWidth="*" 
                       CanUserResizeColumns="False" 
                       IsReadOnly="True" 
@@ -75,7 +76,25 @@
                 </DataGrid.ContextMenu>
             </DataGrid>
         </Grid>
-
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button x:Name="previousOrderButton" Width="80" Height="35" Content="&lt;" Click="prevOrderButton_Click" Background="White">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <TextBlock Name="currentOrderPagingTextBlock" Width="80" Text="0/0" TextAlignment="Center" VerticalAlignment="Center"/>
+                <Button x:Name="nextOrderButton" Width="80" Height="35" Content="&gt;" Click="nextOrderButton_Click" Background="White">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        
         <DockPanel Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabProducts}" Height="419">
             <StackPanel Margin="30 0 0 0" Height="385">
                 <ComboBox SelectionChanged="categoriesComboBox_SelectionChanged"  Name="categoriesComboBox" Width="100" Height="35" Canvas.Left="10" Canvas.Top="63">
