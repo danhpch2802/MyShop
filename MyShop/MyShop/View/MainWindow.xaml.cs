@@ -278,7 +278,7 @@ namespace MyShop
         }
         //Order tab End here
         //Revenue tab Start here
-        //Revenue
+        //Revenue Chart
         RevenueSeries rs = null;
         
        public void DateRevenueChart(object sender, RoutedEventArgs e)
@@ -416,7 +416,7 @@ namespace MyShop
             }
             axisLabel.Labels = formatDate;
         }
-        //Product
+        //Product Chart
         public void DateProductChart(object sender, RoutedEventArgs e)
         {
             var GetProduct = _bus.GetProducts();
@@ -542,7 +542,7 @@ namespace MyShop
         //Revenue tab End here
 
         //Product
-        private void Load_Product()
+        private void Load_Product() //dao da duoc khai bao o tren
         {
             string? connectionString = AppConfig.ConnectionString();
             var dao = new SqlDataAccess(connectionString!);
@@ -552,71 +552,9 @@ namespace MyShop
                 _bus = new Business(dao);
                 products = _bus.GetProducts();
                 _vm = ProductViewModel.loadProducts(products);
-                productsListView.ItemsSource = _vm.Products;
+                productsListView.ItemsSource = _vm.Products; // Chua phan trang
             }
         }
-        
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Load_Order();
-            Load_Product();
-            RevenueChart.Series = new SeriesCollection();
-            var password = "";
-            var username = "";
-            int lastScreen = 0;
-            try
-            {
-                var cypherText = AppConfig.getValue(AppConfig.Password);
-                var cypherTextInBytes = Convert.FromBase64String(cypherText!);
-
-                var entropyText = AppConfig.getValue(AppConfig.Entropy);
-                var entropyTextInBytes = Convert.FromBase64String(entropyText);
-
-                var passwordInBytes = ProtectedData.Unprotect(cypherTextInBytes,
-                    entropyTextInBytes, DataProtectionScope.CurrentUser);
-
-                password = Encoding.UTF8.GetString(passwordInBytes);
-                username = AppConfig.getValue(AppConfig.Username);
-                lastScreen = Int32.Parse(AppConfig.getValue(AppConfig.LastScreen));
-                
-
-            }
-            catch (Exception ex)
-            {
-            }
-
-            var screen = new LoginWindow(username, password);
-
-            screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            screen.Owner = this;
-            var result = screen.ShowDialog();
-
-            ribbon.SelectedTabIndex = lastScreen;
-
-            if (result == true)
-            {
-
-                var passwordInBytesSave = Encoding.UTF8.GetBytes(screen.pass);
-
-                var entropy = new byte[20];
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    rng.GetBytes(entropy);
-                }
-                var entropyBase64 = Convert.ToBase64String(entropy);
-
-                var cypherTextSave = ProtectedData.Protect(passwordInBytesSave, entropy,
-                    DataProtectionScope.CurrentUser);
-                var cypherTextBase64 = Convert.ToBase64String(cypherTextSave);
-                AppConfig.setValue(AppConfig.Username, screen.name);
-                AppConfig.setValue(AppConfig.Password, cypherTextBase64);
-                AppConfig.setValue(AppConfig.Entropy, entropyBase64);
-                
-            }
-        }
-
-        // Product Tab
         List<Category>? _categories = null; // Không biết fix sao
         ProductViewModel _vm = new ProductViewModel();
         int _totalItems = 0;
@@ -730,6 +668,67 @@ namespace MyShop
             addWindow.Show();
         }
 
+        //Window
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Load_Order();
+            Load_Product();
+            RevenueChart.Series = new SeriesCollection();
+            var password = "";
+            var username = "";
+            int lastScreen = 0;
+            try
+            {
+                var cypherText = AppConfig.getValue(AppConfig.Password);
+                var cypherTextInBytes = Convert.FromBase64String(cypherText!);
+
+                var entropyText = AppConfig.getValue(AppConfig.Entropy);
+                var entropyTextInBytes = Convert.FromBase64String(entropyText);
+
+                var passwordInBytes = ProtectedData.Unprotect(cypherTextInBytes,
+                    entropyTextInBytes, DataProtectionScope.CurrentUser);
+
+                password = Encoding.UTF8.GetString(passwordInBytes);
+                username = AppConfig.getValue(AppConfig.Username);
+                lastScreen = Int32.Parse(AppConfig.getValue(AppConfig.LastScreen));
+                
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+            var screen = new LoginWindow(username, password);
+
+            screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            screen.Owner = this;
+            var result = screen.ShowDialog();
+
+            ribbon.SelectedTabIndex = lastScreen;
+
+            if (result == true)
+            {
+
+                var passwordInBytesSave = Encoding.UTF8.GetBytes(screen.pass);
+
+                var entropy = new byte[20];
+                using (var rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(entropy);
+                }
+                var entropyBase64 = Convert.ToBase64String(entropy);
+
+                var cypherTextSave = ProtectedData.Protect(passwordInBytesSave, entropy,
+                    DataProtectionScope.CurrentUser);
+                var cypherTextBase64 = Convert.ToBase64String(cypherTextSave);
+                AppConfig.setValue(AppConfig.Username, screen.name);
+                AppConfig.setValue(AppConfig.Password, cypherTextBase64);
+                AppConfig.setValue(AppConfig.Entropy, entropyBase64);
+                
+            }
+        }
+
+        
         
 
         void DataWindow_Closing(object sender, CancelEventArgs e)
