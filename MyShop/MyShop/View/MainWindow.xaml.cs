@@ -454,7 +454,7 @@ namespace MyShop
                 password = Encoding.UTF8.GetString(passwordInBytes);
                 username = AppConfig.getValue(AppConfig.Username);
                 lastScreen = Int32.Parse(AppConfig.getValue(AppConfig.LastScreen));
-                MessageBox.Show(lastScreen + "");
+                
 
             }
             catch (Exception ex)
@@ -467,7 +467,7 @@ namespace MyShop
             screen.Owner = this;
             var result = screen.ShowDialog();
 
-            
+            ribbon.SelectedTabIndex = lastScreen;
 
             if (result == true)
             {
@@ -487,7 +487,7 @@ namespace MyShop
                 AppConfig.setValue(AppConfig.Username, screen.name);
                 AppConfig.setValue(AppConfig.Password, cypherTextBase64);
                 AppConfig.setValue(AppConfig.Entropy, entropyBase64);
-                ribbon.SelectedTabIndex = 1;
+                
             }
         }
 
@@ -609,6 +609,7 @@ namespace MyShop
 
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
+            AppConfig.setValue(AppConfig.LastScreen, ribbon.SelectedTabIndex+"");
             dao.Disconnect();
         }
 
