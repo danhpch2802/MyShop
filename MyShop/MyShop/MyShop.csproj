@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Images\alienware_m15.jpg" />
+    <None Remove="Images\chart.png" />
     <None Remove="Images\Filter.png" />
     <None Remove="Images\imac_24.jpg" />
     <None Remove="Images\logo.png" />
@@ -27,6 +28,7 @@
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.3.0" />
     <PackageReference Include="Fluent.Ribbon" Version="9.0.4" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 
@@ -44,6 +46,7 @@
 
   <ItemGroup>
     <Resource Include="Images\alienware_m15.jpg" />
+    <Resource Include="Images\chart.png" />
     <Resource Include="Images\Filter.png" />
     <Resource Include="Images\imac_24.jpg" />
     <Resource Include="Images\logo.png" />
@@ -56,6 +59,19 @@
     <Resource Include="Images\zenbook_duo.jpg" />
     <Resource Include="Images\zenbook_fold.jpg" />
     <Resource Include="Images\zenbook_vivobook.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="View\RevenueChartDateWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="View\RevenueChartDateWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

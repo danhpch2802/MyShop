@@ -20,6 +20,12 @@
     <Compile Update="View\LoginWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\MonthRevenueWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\WeekRevenueWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="View\AddOrderWindow.xaml">
@@ -34,10 +40,19 @@
     <Page Update="View\EditOrderWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\MonthRevenueWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RevenueChartDateWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\FilterWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\WeekRevenueWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

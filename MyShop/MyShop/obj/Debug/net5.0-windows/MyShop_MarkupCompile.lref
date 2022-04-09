@@ -1,9 +1,12 @@
 ﻿
-FC:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\App.xaml;;
-FC:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\View\AddOrderWindow.xaml;;
-FC:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\View\AddProduct.xaml;;
-FC:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\View\DetailOrderWindow.xaml;;
-FC:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\View\EditOrderWindow.xaml;;
-FC:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\View\FilterWindow.xaml;;
-FC:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\View\LoginWindow.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\App.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\AddOrderWindow.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\AddProduct.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\DetailOrderWindow.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\EditOrderWindow.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\FilterWindow.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\LoginWindow.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\MonthRevenueWindow.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\RevenueChartDateWindow.xaml;;
+FE:\Work\Github\MyShop\MyShop\MyShop\View\WeekRevenueWindow.xaml;;
 

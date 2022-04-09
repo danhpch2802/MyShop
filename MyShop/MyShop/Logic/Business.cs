@@ -69,5 +69,29 @@ namespace MyShop
         {
             _dao.updateProductQuantityRemovedOrder(listDetailOrder, updateOrder);
         }
+
+        public RevenueSeries loadRevenueDate(DateTime startDP, DateTime endDP)
+        {
+            var result = _dao.loadRevenueDate(startDP, endDP);
+            return result;
+        }
+
+        public RevenueSeries loadRevenueWeek(int month, int year)
+        {
+            var result = _dao.loadRevenueWeek(month, year);
+            return result;
+        }
+
+        public RevenueSeries loadRevenueMonth(int year)
+        {
+            var result = _dao.loadRevenueMonth( year);
+            return result;
+        }
+
+        public RevenueSeries loadRevenueYear()
+        {
+            var result = _dao.loadRevenueYear();
+            return result;
+        }
     }
 }

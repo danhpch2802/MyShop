@@ -143,14 +143,7 @@
             </StackPanel>
 
         </StackPanel>
-        <StackPanel Orientation="Vertical" >
-            <DockPanel Height="600"  >
 
-            </DockPanel>
-        </StackPanel>
-        <DockPanel Height="600">
-
-        </DockPanel>
     </StackPanel>
 
 </Window>

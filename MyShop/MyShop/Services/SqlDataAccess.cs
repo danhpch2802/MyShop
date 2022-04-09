@@ -94,6 +94,122 @@ namespace MyShop
             
         }
 
+        public RevenueSeries loadRevenueYear()
+        {
+            var sql = "select Year(DonHang.NgayMua) as 'Year', sum(DonHang.TongGia) as 'Revenue', 0.15 * sum(DonHang.TongGia) as 'Profit'" +
+                " from DonHang" +
+                " group by Year(DonHang.NgayMua)";
+            var command = new SqlCommand(sql, _connection);
+            var reader = command.ExecuteReader();
+
+            var result = new RevenueSeries()
+            {
+                Revenue = new List<int>(),
+                Profit = new List<int>(),
+                Year = new List<int>(),
+            };
+            while (reader.Read())
+            {
+                var year = (int)reader["Year"];
+                var revenue = (int)reader["Revenue"];
+                var profit = (decimal)reader["Profit"];
+                result.Year.Add(year);
+                result.Profit.Add((int)profit);
+                result.Revenue.Add(revenue);
+            }
+            reader.Close();
+            return result;
+        }
+
+        public RevenueSeries loadRevenueMonth(int year)
+        {
+            var sql = "select Month(DonHang.NgayMua) as 'Month', sum(DonHang.TongGia) as 'Revenue', 0.15 * sum(DonHang.TongGia) as 'Profit'" +
+                " from DonHang" +
+                " where Year(DonHang.NgayMua) = @_year " +
+                " group by Month(DonHang.NgayMua)";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_year", SqlDbType.Int).Value = year;
+            var reader = command.ExecuteReader();
+
+            var result = new RevenueSeries()
+            {
+                Revenue = new List<int>(),
+                Profit = new List<int>(),
+                Month = new List<int>(),
+            };
+            while (reader.Read())
+            {
+                var month = (int)reader["Month"];
+                var revenue = (int)reader["Revenue"];
+                var profit = (decimal)reader["Profit"];
+                result.Month.Add(month);
+                result.Profit.Add((int)profit);
+                result.Revenue.Add(revenue);
+            }
+            reader.Close();
+            return result;
+        }
+
+        public RevenueSeries loadRevenueWeek(int month, int year)
+        {
+            var sql = "select DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, DonHang.NgayMua), 0), DonHang.NgayMua) + 1 as'Week', sum(DonHang.TongGia) as 'Revenue', 0.15 * sum(DonHang.TongGia) as 'Profit' " +
+                "from DonHang " +
+                "where Year(DonHang.NgayMua) = @_year and MONTH(DonHang.NgayMua)= @_month " +
+                "group by DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, DonHang.NgayMua), 0), DonHang.NgayMua) + 1" ;
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_year", SqlDbType.Int).Value = year;
+            command.Parameters.Add("@_month", SqlDbType.Int).Value = month;
+            var reader = command.ExecuteReader();
+
+            var result = new RevenueSeries()
+            {
+                Revenue = new List<int>(),
+                Profit = new List<int>(),
+                Week = new List<int>(),
+            };
+            while (reader.Read())
+            {
+                var week = (int)reader["Week"];
+                var revenue = (int)reader["Revenue"];
+                var profit = (decimal)reader["Profit"];
+                result.Week.Add(week);
+                result.Profit.Add((int)profit);
+                result.Revenue.Add(revenue);
+            }
+            reader.Close();
+            return result;
+        }
+
+        public RevenueSeries loadRevenueDate(DateTime startDP, DateTime endDP)
+        {
+            var sql = "select DonHang.NgayMua as 'Date', sum(DonHang.TongGia) as 'Revenue', 0.15 * sum(DonHang.TongGia) as 'Profit'" +
+                " from DonHang " +
+                " where @_startdate <= DonHang.NgayMua and @_enddate >= DonHang.NgayMua " +
+                " group by DonHang.NgayMua";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_startdate", SqlDbType.DateTime).Value = startDP;
+            command.Parameters.Add("@_enddate", SqlDbType.DateTime).Value = endDP;
+            var reader = command.ExecuteReader();
+
+            var result = new RevenueSeries()
+                {
+                Date = new List<DateTime>(),
+                Revenue= new List<int>(),
+                Profit = new List<int>(),
+            };
+            while (reader.Read())
+            {
+                var date =  (DateTime)reader["Date"];
+                var revenue = (int)reader["Revenue"];
+                var profit = (decimal)reader["Profit"];
+                result.Date.Add(date);
+                result.Profit.Add((int)profit);
+                result.Revenue.Add(revenue);
+            }
+            reader.Close();
+            return result;
+        }
+
         public void updateProductQuantity(List<DetailOrder> listDetailOrder) { 
             foreach (var order in listDetailOrder)
             {

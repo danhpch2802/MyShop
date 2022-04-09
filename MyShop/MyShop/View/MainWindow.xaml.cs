@@ -21,6 +21,8 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using Aspose.Cells;
 using System.ComponentModel;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace MyShop
 {
@@ -274,6 +276,146 @@ namespace MyShop
         }
         //Order tab End here
 
+        //Revenue tab Start here
+       RevenueSeries rs = null;
+
+       public void DateRevenueChart(object sender, RoutedEventArgs e)
+        {
+            var RevenueChartDateWindow = new RevenueChartDateWindow();
+
+            RevenueChartDateWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            RevenueChartDateWindow.Owner = this;
+            var result = RevenueChartDateWindow.ShowDialog();
+            if (result == true)
+            {
+                var startDP = RevenueChartDateWindow.startDate;
+                var endDP = RevenueChartDateWindow.endDate;
+                rs = _bus.loadRevenueDate(startDP, endDP);
+
+                var series1 = new ColumnSeries
+                {
+                    Title = "Revenue",
+                    Values = new LiveCharts.ChartValues<int>(rs.Revenue)
+                };
+
+                var series2 = new LiveCharts.Wpf.ColumnSeries()
+                {
+                    Title = "Profit",
+                    Values = new LiveCharts.ChartValues<int>(rs.Profit)
+                };
+
+                RevenueChart.Series.Clear();
+                RevenueChart.Series.Add(series1);
+                RevenueChart.Series.Add(series2);
+                var formatDate = new List<string>();
+                foreach (var date in rs.Date)
+                {
+                    var onlyDate = date.Date;
+                    formatDate.Add(onlyDate.ToString("d"));
+                }
+                axisLabel.Labels = formatDate;
+            }
+        }
+        public void WeekRevenueChart(object sender, RoutedEventArgs e)
+        {
+            var RevenueChartWeekWindow = new WeekRevenueWindow();
+
+            RevenueChartWeekWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            RevenueChartWeekWindow.Owner = this;
+            var result = RevenueChartWeekWindow.ShowDialog();
+            if (result == true)
+            {
+                var Month = RevenueChartWeekWindow.Month;
+                var Year = RevenueChartWeekWindow.Year;
+                rs = _bus.loadRevenueWeek(Month, Year);
+
+                var series1 = new ColumnSeries
+                {
+                    Title = "Revenue",
+                    Values = new LiveCharts.ChartValues<int>(rs.Revenue)
+                };
+
+                var series2 = new LiveCharts.Wpf.ColumnSeries()
+                {
+                    Title = "Profit",
+                    Values = new LiveCharts.ChartValues<int>(rs.Profit)
+                };
+
+                RevenueChart.Series.Clear();
+                RevenueChart.Series.Add(series1);
+                RevenueChart.Series.Add(series2);
+                var formatDate = new List<string>();
+                foreach (var date in rs.Week)
+                {
+                    formatDate.Add(date.ToString());
+                }
+                axisLabel.Labels = formatDate;
+            }
+        }
+
+        public void MonthRevenueChart(object sender, RoutedEventArgs e)
+        {
+            var RevenueChartMonthWindow = new MonthRevenueWindow();
+
+            RevenueChartMonthWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            RevenueChartMonthWindow.Owner = this;
+            var result = RevenueChartMonthWindow.ShowDialog();
+            if (result == true)
+            {
+                var Year = RevenueChartMonthWindow.Year;
+                rs = _bus.loadRevenueMonth( Year);
+
+                var series1 = new ColumnSeries
+                {
+                    Title = "Revenue",
+                    Values = new LiveCharts.ChartValues<int>(rs.Revenue)
+                };
+
+                var series2 = new LiveCharts.Wpf.ColumnSeries()
+                {
+                    Title = "Profit",
+                    Values = new LiveCharts.ChartValues<int>(rs.Profit)
+                };
+
+                RevenueChart.Series.Clear();
+                RevenueChart.Series.Add(series1);
+                RevenueChart.Series.Add(series2);
+                var formatDate = new List<string>();
+                foreach (var date in rs.Month)
+                {
+                    formatDate.Add(date.ToString());
+                }
+                axisLabel.Labels = formatDate;
+            }
+        }
+        public void YearRevenueChar(object sender,RoutedEventArgs e)
+        {
+            rs = _bus.loadRevenueYear();
+
+            var series1 = new ColumnSeries
+            {
+                Title = "Revenue",
+                Values = new LiveCharts.ChartValues<int>(rs.Revenue)
+            };
+
+            var series2 = new LiveCharts.Wpf.ColumnSeries()
+            {
+                Title = "Profit",
+                Values = new LiveCharts.ChartValues<int>(rs.Profit)
+            };
+
+            RevenueChart.Series.Clear();
+            RevenueChart.Series.Add(series1);
+            RevenueChart.Series.Add(series2);
+            var formatDate = new List<string>();
+            foreach (var date in rs.Year)
+            {
+                formatDate.Add(date.ToString());
+            }
+            axisLabel.Labels = formatDate;
+        }
+        //Revenue tab End here
+
         //Product
         private void Load_Product()
         {
@@ -294,10 +436,10 @@ namespace MyShop
         {
             Load_Order();
             Load_Product();
+            RevenueChart.Series = new SeriesCollection();
             var password = "";
             var username = "";
             int lastScreen = 0;
-
             try
             {
                 var cypherText = AppConfig.getValue(AppConfig.Password);
@@ -470,6 +612,6 @@ namespace MyShop
             dao.Disconnect();
         }
 
-        
+
     }
 }

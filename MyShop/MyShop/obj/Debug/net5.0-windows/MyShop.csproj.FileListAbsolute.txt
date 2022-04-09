@@ -111,6 +111,7 @@ E:\Work\Github\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\sv\Xceed.Wpf.Avalon
 E:\Work\Github\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\EditOrderWindow.g.cs
 E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\EditOrderWindow.baml
+<<<<<<< Updated upstream
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\MyShop.exe
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\MyShop.dll.config
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\MyShop.deps.json
@@ -179,3 +180,13 @@ C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\My
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\ref\MyShop.dll
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\MyShop.pdb
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\MyShop.genruntimeconfig.cache
+=======
+E:\Work\Github\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\LiveCharts.dll
+E:\Work\Github\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\LiveCharts.Wpf.dll
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\RevenueChartDateWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\RevenueChartDateWindow.baml
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\WeekRevenueWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\WeekRevenueWindow.baml
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\MonthRevenueWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\MonthRevenueWindow.baml
+>>>>>>> Stashed changes
