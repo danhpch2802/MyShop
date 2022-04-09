@@ -19,7 +19,9 @@ namespace MyShop
             OrderViewModel _vm=new OrderViewModel();
 
             _vm.Orders = orders;
-               
+            _vm.FilterOrders = orders;
+
+
         return _vm;
 
         }

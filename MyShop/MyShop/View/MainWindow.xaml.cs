@@ -51,7 +51,7 @@ namespace MyShop
                 List<Order> orders = _bus.GetOrders();
                 orders_vm = OrderViewModel.loadOrders(orders);
 
-                orderDateGrid.ItemsSource = orders;
+                orderDateGrid.ItemsSource = orders_vm.FilterOrders;
             }
             else
             {
@@ -72,7 +72,6 @@ namespace MyShop
                 productsListView.ItemsSource = _vm.Products;
             }
         }
-
         private void filterClick(object sender, RoutedEventArgs e)
         {
             var filterWindow = new FilterWindow();
@@ -84,7 +83,9 @@ namespace MyShop
             {
                 var startDP = filterWindow.startDate;
                 var endDP = filterWindow.endDate;
-
+                orders_vm.FilterOrders = orders_vm.Orders.FindAll(x=> startDP <= x.OrderDate&&x.OrderDate <=endDP);
+                orderDateGrid.ItemsSource = orders_vm.FilterOrders;
+                orderDateGrid.Items.Refresh();
             }
         }
 
