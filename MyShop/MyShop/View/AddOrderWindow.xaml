@@ -14,11 +14,21 @@
             <StackPanel Margin="30 30 0 0" >
                 <Label Content="Select product" FontSize="40" Foreground="PowderBlue" FontWeight="Bold"/>
                 <StackPanel Orientation="Horizontal" Margin="0,20">
-                    <TextBox Name="searchByName" Width="200" Height="30"/>
-                    <ComboBox SelectedIndex="0">
-                        <ComboBoxItem Content="Search by ID"/>
-                        <ComboBoxItem Content="Search by Name"/>
-                    </ComboBox>
+                    <DockPanel Width="500">
+                        <TextBox Name="searchBox" Width="200" Height="30" KeyDown="EnterClicked"/>
+                        <ComboBox Name ="searchComboBox" SelectedIndex="0" Background="White">
+                            <ComboBoxItem Name="searchById" Content="Search by ID"/>
+                            <ComboBoxItem Name="searchByName" Content="Search by Name"/>
+                        </ComboBox>
+                        <Button Content="Reload" HorizontalAlignment="Right" Width="80" Background="White" Click="reloadProduct">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                    </DockPanel>
                 </StackPanel>
                 <ListView x:Name="productsListView" Width="500" Height="300" Canvas.Left="156" Canvas.Top="17"
                           MouseDoubleClick="addProductToOrder">
@@ -50,18 +60,14 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="previousButton" Width="80" Height="35" Content="&lt;" />
-                    <TextBlock Name="currentPagingTextBlock" Width="80" Text="0/0" TextAlignment="Center" VerticalAlignment="Center"/>
-                    <Button x:Name="nextButton" Width="80" Height="35" Content="&gt;" />
-                </StackPanel>
+                
             </StackPanel>
             
         </DockPanel>
 
         <StackPanel Orientation="Vertical" Margin="0,30">
             <Label Content="Order" FontSize="40" Foreground="PowderBlue" FontWeight="Bold"/>
-            <ListView x:Name="detailOrderListView" Height="300" Width="510" Margin="30,50,0,0"
+            <ListView x:Name="detailOrderListView" Height="300" Width="510" Margin="30,70,0,0"
                      >
                 <ListView.ItemTemplate >
                     <DataTemplate >

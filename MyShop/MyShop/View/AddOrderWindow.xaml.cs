@@ -40,21 +40,12 @@ namespace MyShop
             this.DataContext = CreateOrder; ;
             detailOrderListView.ItemsSource = DetailOrder_vm.Orders;
         }
-
+        //Product Fragment
         public void LoadProduct()
         {
-            products_vm.SelectedProducts = products_vm.Products
-                .Skip((_currentPage - 1) * _rowsPerPage)
-                .Take(_rowsPerPage)
-                .ToList();
-            _currentPage = 1; // Quay lại trang đầu tiên
-                              // Tính toán lại thông số phân trang
-            _totalItems = products_vm.Products.Count;
-            _totalPages = _totalItems / _rowsPerPage +
-                (products_vm.Products.Count % _rowsPerPage == 0 ? 0 : 1);
-            currentPagingTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            products_vm.SelectedProducts = products_vm.Products;
             // ép cập nhật giao diện
-            productsListView.ItemsSource = products_vm.Products;
+            productsListView.ItemsSource = products_vm.SelectedProducts;
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -102,6 +93,63 @@ namespace MyShop
             }
 
         }
+        public void EnterClicked(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (searchBox.Text != "")
+                {
+                    var selectedSearch = searchComboBox.SelectedIndex;
+                    if (selectedSearch == 0)
+                    {
+                        try
+                        {
+                            var id = int.Parse(searchBox.Text);
+                            productSearchByID(id);
+
+                        }
+                        catch (Exception)
+                        {
+                            System.Windows.MessageBox.Show("ID must be a number");
+                        };
+
+                    }
+                    else
+                    {
+                        productSearchByName(searchBox.Text);
+
+                    }
+
+                }
+            }
+        }
+        public void productSearchByID(int id)
+        {
+            var product = products_vm.Products.Find(x => x.productID == id);
+            products_vm.SelectedProducts.Clear();
+            products_vm.SelectedProducts.Add(product);
+
+            // ép cập nhật giao diện
+            productsListView.ItemsSource = products_vm.SelectedProducts;
+        }
+
+        public void productSearchByName(string name)
+        {
+            var product = products_vm.Products.FindAll(x => x.Name.ToLower().Contains(name.ToLower()));
+            products_vm.SelectedProducts = product;
+           
+            // ép cập nhật giao diện
+            productsListView.ItemsSource = products_vm.SelectedProducts;
+        }
+
+        public void reloadProduct(object sender, RoutedEventArgs e)
+        {
+            products_vm.SelectedProducts = products_vm.Products;
+            // ép cập nhật giao diện
+            productsListView.ItemsSource = products_vm.SelectedProducts;
+        }
+
+        //Order Fragment
         private void updateTotal()
         {
             CreateOrder.OrderTotal = 0;
