@@ -109,3 +109,5 @@ E:\Work\Github\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\ro\Xceed.Wpf.Avalon
 E:\Work\Github\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\ru\Xceed.Wpf.AvalonDock.resources.dll
 E:\Work\Github\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\sv\Xceed.Wpf.AvalonDock.resources.dll
 E:\Work\Github\MyShop\MyShop\MyShop\bin\Debug\net5.0-windows\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\EditOrderWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\EditOrderWindow.baml

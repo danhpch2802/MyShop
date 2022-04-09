@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,22 +66,116 @@ namespace MyShop
                     ;
             }
 
+            reader.Close();
 
             return result;
         }
 
-        public void updateProductQuantity(List<DetailOrder> listDetailOrder)
+        public void updateProductQuantityRemovedOrder(List<DetailOrder> listDetailOrder, Order updateOrder)
         {
+            var OldListOrder = loadDetailOrdersfromID(updateOrder);
+            var RemovedProducts = OldListOrder.Except(listDetailOrder) // Items in the first list but not in the second
+    .       Concat(listDetailOrder.Except(listDetailOrder))      // Items in the second list but not in the first
+            .ToList();
+
+            foreach (var order in RemovedProducts)
+            {
+                   var sql =
+                       "UPDATE HangHoa " +
+                       "SET HangHoa_soluong = @_amount where HangHoa_id=@_product_id";
+                   var command = new SqlCommand(sql, _connection);
+                    int NewAmount = order.Product.Amount+order.Quantity;
+
+                    command.Parameters.Add("@_amount", SqlDbType.Int).Value = NewAmount;
+                    command.Parameters.Add("@_product_id", SqlDbType.Int).Value = order.Product.productID;
+                    command.ExecuteNonQuery();
+                }
+               
+            
+        }
+
+        public void updateProductQuantity(List<DetailOrder> listDetailOrder) { 
             foreach (var order in listDetailOrder)
             {
-                var sql =
-                   "UPDATE HangHoa " +
-                   "SET HangHoa_soluong = @_amount where HangHoa_id=@_product_id";
+                var sql = "select * from [ChiTietDonHang] where DonHang_id=@_orderid and HangHoa_id=@_product_id";
                 var command = new SqlCommand(sql, _connection);
-                var NewAmount = order.Product.Amount - order.Quantity;
-                command.Parameters.Add("@_amount", SqlDbType.Int).Value = NewAmount;
+                command.Parameters.Add("@_orderid", SqlDbType.Int).Value = order.OrderID;
                 command.Parameters.Add("@_product_id", SqlDbType.Int).Value = order.Product.productID;
-                command.ExecuteNonQuery();
+
+                var reader = command.ExecuteReader();
+                int quantity=0;
+                //Check increase or decrease quantity
+                if (reader.Read())
+                {
+                    quantity = (int)reader["SoLuong"];
+                    reader.Close();
+                    sql =
+                       "UPDATE HangHoa " +
+                       "SET HangHoa_soluong = @_amount where HangHoa_id=@_product_id";
+                    command = new SqlCommand(sql, _connection);
+                    int NewAmount = 0;
+                    //Increase
+                    if (order.Quantity > quantity)
+                    {
+                        NewAmount = order.Product.Amount - order.Quantity;
+
+                    }
+                    //Decrase
+                    else if (order.Quantity < quantity)
+                    {
+                        NewAmount = order.Product.Amount + (quantity - order.Quantity);
+                    }
+
+                    command.Parameters.Add("@_amount", SqlDbType.Int).Value = NewAmount;
+                    command.Parameters.Add("@_product_id", SqlDbType.Int).Value = order.Product.productID;
+                    command.ExecuteNonQuery();
+                }
+                else
+                {
+                    reader.Close();
+                    sql =
+                       "UPDATE HangHoa " +
+                       "SET HangHoa_soluong = @_amount where HangHoa_id=@_product_id";
+                    command = new SqlCommand(sql, _connection);
+                    var NewAmount = order.Product.Amount - order.Quantity;
+
+                    command.Parameters.Add("@_amount", SqlDbType.Int).Value = NewAmount;
+                    command.Parameters.Add("@_product_id", SqlDbType.Int).Value = order.Product.productID;
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        public void updateOrder(Order newOrder)
+        {
+            var sql = "UPDATE DonHang " +
+                               "SET TongGia = @_ordertotal where DonHang_id=@_orderid";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_ordertotal", SqlDbType.Int).Value = newOrder.OrderTotal;
+            command.Parameters.Add("@_orderid", SqlDbType.Int).Value = newOrder.OrderID;
+            command.ExecuteNonQuery();
+        }
+        public void updateDetailOrder(List<DetailOrder> listDetailOrder)
+        {
+            foreach (DetailOrder item in listDetailOrder)
+            {
+
+                var sql = "update ChiTietDonHang set SoLuong=@_quantity,Gia=@_total " +
+                    " where DonHang_id=@_orderid and HangHoa_id=@_productid ";
+                var command = new SqlCommand(sql, _connection);
+                command.Parameters.Add("@_orderid", SqlDbType.Int).Value = item.OrderID;
+                command.Parameters.Add("@_productid", SqlDbType.Int).Value = item.Product.productID;
+                command.Parameters.Add("@_quantity", SqlDbType.Int).Value = item.Quantity;
+                command.Parameters.Add("@_total", SqlDbType.Int).Value = item.Total;
+                if (command.ExecuteNonQuery() == 0)
+                {
+                    sql = "insert into ChiTietDonHang(DonHang_id,HangHoa_id,SoLuong,Gia) Values (@_orderid,@_productid,@_quantity,@_total)";
+                    command = new SqlCommand(sql, _connection);
+                    command.Parameters.Add("@_orderid", SqlDbType.Int).Value = item.OrderID;
+                    command.Parameters.Add("@_productid", SqlDbType.Int).Value = item.Product.productID;
+                    command.Parameters.Add("@_quantity", SqlDbType.Int).Value = item.Quantity;
+                    command.Parameters.Add("@_total", SqlDbType.Int).Value = item.Total;
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
@@ -142,6 +237,7 @@ namespace MyShop
                     ;
             }
 
+            reader.Close();
 
             return result;
         }
@@ -249,6 +345,8 @@ namespace MyShop
                     Amount = (int)productAmount,
                 };
             }
+            reader.Close();
+
             return result;
 
 
@@ -259,8 +357,17 @@ namespace MyShop
             var sql = "select max(DonHang_id) as 'ID' from DonHang";
             var command = new SqlCommand(sql, _connection);
             var reader = command.ExecuteReader();
-            if(reader.Read()) return (int)reader["ID"]+1;
-            else return 0;
+            if (reader.Read())
+            {
+                var result= (int)reader["ID"] + 1;
+                reader.Close();
+                return result;
+            }
+            else
+            {
+                reader.Close();
+                return 0;
+            }
         }
 
         public List<DetailOrder> loadDetailOrdersfromID(Order order)
@@ -316,7 +423,7 @@ namespace MyShop
 
                 });
             }
-
+            reader.Close();
             return result;
         }
     }

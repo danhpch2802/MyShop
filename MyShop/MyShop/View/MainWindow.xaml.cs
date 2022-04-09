@@ -111,8 +111,8 @@ namespace MyShop
                     var ListDetailOrder = AddOrderWindow.CreateDetailOrder;
 
                     _bus.addNewOrder(NewOrder);
-                    _bus.addNewDetailOrders(ListDetailOrder);
                     _bus.updateProductQuantity(ListDetailOrder);
+                    _bus.addNewDetailOrders(ListDetailOrder);
 
                     List<Order> orders = _bus.GetOrders();
                     orders_vm = OrderViewModel.loadOrders(orders);
@@ -302,7 +302,36 @@ namespace MyShop
 
         private void editOrderClick(object sender, RoutedEventArgs e)
         {
+            _vm = ProductViewModel.loadProducts(products);
+            var Order = (Order)orderDateGrid.SelectedItem;
+            var DetailOrder = _bus.loadDetailOrdersfromID(Order);
+            var EditOrderWindow = new EditOrderWindow(_vm, Order, DetailOrder);
 
+            EditOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            EditOrderWindow.Owner = this;
+            this.Hide();
+            var result = EditOrderWindow.ShowDialog();
+
+            if (result == true)
+            {
+                this.Show();
+                var UpdateOrder = EditOrderWindow.EditOrder;
+                var ListDetailOrder = EditOrderWindow.EditDetailOrder;
+
+                _bus.updateOrder(UpdateOrder);
+                _bus.updateProductQuantityRemovedOrder(ListDetailOrder, UpdateOrder);
+                _bus.updateProductQuantity(ListDetailOrder);
+                _bus.updateDetailOrder(ListDetailOrder);
+
+                List<Order> orders = _bus.GetOrders();
+                orders_vm = OrderViewModel.loadOrders(orders);
+                Load_Product();
+                _vm = ProductViewModel.loadProducts(products);
+                orderDateGrid.ItemsSource = orders;
+            }
+            else {
+                this.Show();
+            }
         }
 
         void DataWindow_Closing(object sender, CancelEventArgs e)

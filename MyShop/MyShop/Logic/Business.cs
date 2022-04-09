@@ -54,5 +54,20 @@ namespace MyShop
         {
             _dao.updateProductQuantity(listDetailOrder);
         }
+
+        public void updateOrder(Order newOrder)
+        {
+            _dao.updateOrder(newOrder);
+        }
+
+        public void updateDetailOrder(List<DetailOrder> listDetailOrder)
+        {
+            _dao.updateDetailOrder(listDetailOrder);
+        }
+
+        public void updateProductQuantityRemovedOrder(List<DetailOrder> listDetailOrder, Order updateOrder)
+        {
+            _dao.updateProductQuantityRemovedOrder(listDetailOrder, updateOrder);
+        }
     }
 }
