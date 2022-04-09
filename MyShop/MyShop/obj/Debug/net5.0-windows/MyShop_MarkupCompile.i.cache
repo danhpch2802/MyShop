@@ -16,5 +16,5 @@ E:\Work\Github\MyShop\MyShop\MyShop\App.xaml
 217878633332
 View\AddOrderWindow.xaml;View\AddProduct.xaml;View\DetailOrderWindow.xaml;View\EditOrderWindow.xaml;View\FilterWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\MonthRevenueWindow.xaml;View\ProductChartDateWindow.xaml;View\ProductChartMonthWindow.xaml;View\ProductChartWeekWindow.xaml;View\ProductChartYearWindow.xaml;View\RevenueChartDateWindow.xaml;View\WeekRevenueWindow.xaml;
 
-False
+True
 
