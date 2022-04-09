@@ -294,47 +294,59 @@ namespace MyShop
         {
             Load_Order();
             Load_Product();
-            //var password = "";
+            var password = "";
+            var username = "";
+            int lastScreen = 0;
 
-            //try
-            //{
-            //    var cypherText = AppConfig.getValue(AppConfig.Password);
-            //    var cypherTextInBytes = Convert.FromBase64String(cypherText!);
+            try
+            {
+                var cypherText = AppConfig.getValue(AppConfig.Password);
+                var cypherTextInBytes = Convert.FromBase64String(cypherText!);
 
-            //    var entropyText = AppConfig.getValue(AppConfig.Entropy);
-            //    var entropyTextInBytes = Convert.FromBase64String(entropyText);
+                var entropyText = AppConfig.getValue(AppConfig.Entropy);
+                var entropyTextInBytes = Convert.FromBase64String(entropyText);
 
-            //    var passwordInBytes = ProtectedData.Unprotect(cypherTextInBytes,
-            //        entropyTextInBytes, DataProtectionScope.CurrentUser);
-            //    password = Encoding.UTF8.GetString(passwordInBytes);
-            //} catch (Exception ex)
-            //{
-            //  MessageBox.Show(ex.Message);
-            //}
-            //var screen = new LoginWindow(AppConfig.getValue(AppConfig.Username), password);
+                var passwordInBytes = ProtectedData.Unprotect(cypherTextInBytes,
+                    entropyTextInBytes, DataProtectionScope.CurrentUser);
 
-            //screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            //screen.Owner = this;
-            //var result = screen.ShowDialog();
+                password = Encoding.UTF8.GetString(passwordInBytes);
+                username = AppConfig.getValue(AppConfig.Username);
+                lastScreen = Int32.Parse(AppConfig.getValue(AppConfig.LastScreen));
+                MessageBox.Show(lastScreen + "");
 
-            //if (result == true)
-            //{
-            //    var passwordInBytesSave = Encoding.UTF8.GetBytes(password);
+            }
+            catch (Exception ex)
+            {
+            }
 
-            //    var entropy = new byte[20];
-            //    using (var rng = new RNGCryptoServiceProvider())
-            //    {
-            //        rng.GetBytes(entropy);
-            //    }
-            //    var entropyBase64 = Convert.ToBase64String(entropy);
+            var screen = new LoginWindow(username, password);
 
-            //    var cypherTextSave = ProtectedData.Protect(passwordInBytesSave, entropy,
-            //        DataProtectionScope.CurrentUser);
-            //    var cypherTextBase64 = Convert.ToBase64String(cypherTextSave);
+            screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            screen.Owner = this;
+            var result = screen.ShowDialog();
 
-            //    AppConfig.setValue(AppConfig.Password, cypherTextBase64);
-            //    AppConfig.setValue(AppConfig.Entropy, entropyBase64);
-            //}
+            
+
+            if (result == true)
+            {
+
+                var passwordInBytesSave = Encoding.UTF8.GetBytes(screen.pass);
+
+                var entropy = new byte[20];
+                using (var rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(entropy);
+                }
+                var entropyBase64 = Convert.ToBase64String(entropy);
+
+                var cypherTextSave = ProtectedData.Protect(passwordInBytesSave, entropy,
+                    DataProtectionScope.CurrentUser);
+                var cypherTextBase64 = Convert.ToBase64String(cypherTextSave);
+                AppConfig.setValue(AppConfig.Username, screen.name);
+                AppConfig.setValue(AppConfig.Password, cypherTextBase64);
+                AppConfig.setValue(AppConfig.Entropy, entropyBase64);
+                ribbon.SelectedTabIndex = 1;
+            }
         }
 
         // Product Tab

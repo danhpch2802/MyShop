@@ -105,9 +105,8 @@ namespace MyShop
 
             if (check_account(userNameTextBox.Text, hashpass, taikhaons))
             {
-
-
-
+                name = userNameTextBox.Text;
+                pass = passWordBox.Password;
                 DialogResult = true;
             }
             else

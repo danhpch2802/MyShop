@@ -10,6 +10,7 @@ namespace MyShop {
     internal class AppConfig
     {
         public static string Server = "Server";
+        public static string LastScreen = "Screen";
         public static string Instance = "Instance";
         public static string Database = "Database";
         public static string Username = "Username";
@@ -33,6 +34,7 @@ namespace MyShop {
 
             var builder = new SqlConnectionStringBuilder();
             string? server = AppConfig.getValue(AppConfig.Server);
+            string? lastscreen = AppConfig.getValue(AppConfig.LastScreen);
             string? instance = AppConfig.getValue(AppConfig.Instance);
             string? database = AppConfig.getValue(AppConfig.Database);
             string? username = AppConfig.getValue(AppConfig.Username);
