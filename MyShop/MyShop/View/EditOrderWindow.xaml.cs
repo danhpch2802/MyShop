@@ -119,9 +119,10 @@ namespace MyShop
         public void productSearchByID(int id)
         {
             var product = products_vm.Products.Find(x => x.productID == id);
-            products_vm.SelectedProducts.Clear();
+            products_vm.SelectedProducts = new List<Product>();
             products_vm.SelectedProducts.Add(product);
-            
+            productsListView.Items.Refresh();
+
             productsListView.ItemsSource = products_vm.SelectedProducts;
         }
 
@@ -129,8 +130,9 @@ namespace MyShop
         {
             var product= products_vm.Products.FindAll(x=> x.Name.ToLower().Contains(name.ToLower()));
             products_vm.SelectedProducts = product;
-            
+
             // ép cập nhật giao diện
+            productsListView.Items.Refresh();
             productsListView.ItemsSource = products_vm.SelectedProducts;
         }
 
@@ -138,6 +140,7 @@ namespace MyShop
         {
             products_vm.SelectedProducts = products_vm.Products;
             // ép cập nhật giao diện
+            productsListView.Items.Refresh();
             productsListView.ItemsSource = products_vm.SelectedProducts;
         }
 

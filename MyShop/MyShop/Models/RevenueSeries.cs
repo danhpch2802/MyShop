@@ -15,7 +15,7 @@ namespace MyShop
         public List<int> Year { get; set; }
         public List<int> Month { get; set; }
         public List<int> Week { get; set; }
-
+        public List<int> Quantity { get; set; }
         public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

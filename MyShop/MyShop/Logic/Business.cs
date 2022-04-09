@@ -93,5 +93,29 @@ namespace MyShop
             var result = _dao.loadRevenueYear();
             return result;
         }
+
+        public RevenueSeries loadProductDate(DateTime startDP, DateTime endDP, Product product)
+        {
+            var result = _dao.loadProductDate(startDP, endDP, product);
+            return result;
+        }
+
+        public RevenueSeries loadProductWeek(int month, int year, Product product)
+        {
+            var result = _dao.loadProductWeek(month, year, product);
+            return result;
+        }
+
+        public RevenueSeries loadProductMonth(int year, Product product)
+        {
+            var result = _dao.loadProductMonth( year, product);
+            return result;
+        }
+
+        public RevenueSeries loadProductYear(Product product)
+        {
+            var result = _dao.loadProductYear( product);
+            return result;
+        }
     }
 }

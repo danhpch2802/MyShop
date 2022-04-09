@@ -14,7 +14,7 @@ namespace MyShop
 
         public event PropertyChangedEventHandler? PropertyChanged;
     }
-    public class Product: INotifyPropertyChanged,ICloneable
+    public class Product: INotifyPropertyChanged
     {
         public int productID { get; set; }
         public string Name { get; set; }
@@ -24,10 +24,5 @@ namespace MyShop
         public Category Category { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
     }
 }

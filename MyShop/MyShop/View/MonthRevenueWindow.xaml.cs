@@ -29,7 +29,7 @@ namespace MyShop
         {
             if (_YearIntegerUpDown.Value == null )
             {
-                MessageBox.Show("Please choose month and year");
+                MessageBox.Show("Please choose year");
             }
 
             else
@@ -37,6 +37,11 @@ namespace MyShop
                 Year = (int)_YearIntegerUpDown.Value;
                 DialogResult = true;
             }
+        }
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+
         }
     }
 }

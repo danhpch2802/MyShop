@@ -23,6 +23,18 @@
     <Compile Update="View\MonthRevenueWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\ProductChartDateWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\ProductChartMonthWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\ProductChartWeekWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\ProductChartYearWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\WeekRevenueWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -41,6 +53,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\MonthRevenueWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\ProductChartDateWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\ProductChartMonthWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\ProductChartWeekWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\ProductChartYearWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\RevenueChartDateWindow.xaml">

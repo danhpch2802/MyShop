@@ -12,6 +12,7 @@
     <None Remove="Images\chart.png" />
     <None Remove="Images\Filter.png" />
     <None Remove="Images\imac_24.jpg" />
+    <None Remove="Images\laptop.png" />
     <None Remove="Images\logo.png" />
     <None Remove="Images\macbook_pro_14.jpg" />
     <None Remove="Images\mac_mini_m1.jpg" />
@@ -49,6 +50,7 @@
     <Resource Include="Images\chart.png" />
     <Resource Include="Images\Filter.png" />
     <Resource Include="Images\imac_24.jpg" />
+    <Resource Include="Images\laptop.png" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\macbook_pro_14.jpg" />
     <Resource Include="Images\mac_mini_m1.jpg" />

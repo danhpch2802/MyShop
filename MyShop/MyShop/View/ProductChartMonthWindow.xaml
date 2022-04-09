@@ -1,0 +1,83 @@
+﻿<Window x:Class="MyShop.ProductChartMonthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyShop"
+        mc:Ignorable="d"
+        Title="ProductChartMonthWindow" Height="700" Width="540"
+        Loaded="Window_Loaded">
+    <Canvas>
+        <TextBlock Text="Year:" Canvas.Left="50" Canvas.Top="40" FontSize="15"/>
+        <wpfTool:IntegerUpDown 
+            x:Name="_YearIntegerUpDown" Canvas.Left="150" Canvas.Top="40" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                              >
+        </wpfTool:IntegerUpDown>
+        
+        <DockPanel Height="450" Canvas.Top="120" Canvas.Left="20">
+            <StackPanel  >
+                <StackPanel Orientation="Horizontal" Margin="0,20">
+                    <DockPanel Width="500">
+                        <TextBox Name="searchBox" Width="200" Height="30" KeyDown="EnterClicked"/>
+                        <ComboBox Name ="searchComboBox" SelectedIndex="0" Background="White">
+                            <ComboBoxItem Name="searchById" Content="Search by ID"/>
+                            <ComboBoxItem Name="searchByName" Content="Search by Name"/>
+                        </ComboBox>
+                        <Button Content="Reload" HorizontalAlignment="Right" Width="80" Background="White" Click="reloadProduct">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </DockPanel>
+                </StackPanel>
+                <ListView x:Name="productsListView" Width="500" Height="300" Canvas.Left="156" Canvas.Top="17" 
+                          >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Width="400">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Width="100" Height="100"/>
+                                    <StackPanel Orientation="Vertical" >
+                                        <TextBlock VerticalAlignment="Center" FontSize="15">
+                                            <Run Text="ID:" Foreground="DodgerBlue"  FontWeight="Bold"/>
+                                            <Run Text="{Binding productID}"/>
+                                        </TextBlock>
+                                        <TextBlock VerticalAlignment="Center" FontSize="15">
+                                            <Run Text="Name:" Foreground="DodgerBlue"  FontWeight="Bold"/>
+                                            <Run Text="{Binding Name}"/>
+                                        </TextBlock>
+                                        <TextBlock  VerticalAlignment="Center" FontSize="15">
+                                            <Run Text="Price" Foreground="DodgerBlue"  FontWeight="Bold"/>
+                                            <Run Text="{Binding Price}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="15" >
+                                    <Run Text="x"/>
+                                    <Run Text="{Binding Amount}"/>
+                                </TextBlock>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </DockPanel>
+        <Button x:Name="submitBtn" Click="okButton_Click" Content="Submit" Canvas.Left="88" Canvas.Top="586" Height="34" Width="72" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="cancelBtn" Click="cancelBtn_Click" Content="Cancel" Canvas.Left="371" Canvas.Top="586" Height="34" Width="72" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Canvas>
+</Window>

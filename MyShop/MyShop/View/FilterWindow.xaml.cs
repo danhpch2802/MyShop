@@ -39,5 +39,11 @@ namespace MyShop
                 DialogResult = true;
             }
         }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+
+        }
     }
 }

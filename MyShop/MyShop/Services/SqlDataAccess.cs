@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MyShop
 {
-    internal class SqlDataAccess
+    public class SqlDataAccess
     {
         private SqlConnection _connection;
         public SqlDataAccess(string connectionString)
@@ -92,6 +92,116 @@ namespace MyShop
                 }
                
             
+        }
+
+        public RevenueSeries loadProductWeek(int month, int year, Product product)
+        {
+            var sql = "select DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, DonHang.NgayMua), 0), DonHang.NgayMua) + 1 as'Week', sum(ChiTietDonHang.SoLuong) as 'Quantity'" +
+                " from DonHang join ChiTietDonHang on (DonHang.DonHang_id = ChiTietDonHang.DonHang_id)" +
+                " where Year(DonHang.NgayMua) = @_year and MONTH(DonHang.NgayMua)= @_month and ChiTietDonHang.HangHoa_id = @_productid" +
+                " group by DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, DonHang.NgayMua), 0), DonHang.NgayMua) + 1";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_year", SqlDbType.Int).Value = year;
+            command.Parameters.Add("@_month", SqlDbType.Int).Value = month;
+            command.Parameters.Add("@_productid", SqlDbType.Int).Value = product.productID;
+            var reader = command.ExecuteReader();
+
+            var result = new RevenueSeries()
+            {
+                Quantity = new List<int>(),
+                Week = new List<int>(),
+            };
+            while (reader.Read())
+            {
+                var week = (int)reader["Week"];
+                var quantity = (int)reader["Quantity"];
+                result.Week.Add(week);
+                result.Quantity.Add(quantity);
+            }
+            reader.Close();
+            return result;
+        }
+
+        public RevenueSeries loadProductYear(Product product)
+        {
+            var sql = "select Year(DonHang.NgayMua) as 'Year', sum(ChiTietDonHang.SoLuong) as 'Quantity'" +
+                " from DonHang join ChiTietDonHang on (DonHang.DonHang_id = ChiTietDonHang.DonHang_id)" +
+                " where ChiTietDonHang.HangHoa_id = 1" +
+                " group by Year(DonHang.NgayMua)";
+            var command = new SqlCommand(sql, _connection);
+            var reader = command.ExecuteReader();
+
+            var result = new RevenueSeries()
+            {
+                Quantity = new List<int>(),
+                Year = new List<int>(),
+            };
+            while (reader.Read())
+            {
+                var year = (int)reader["Year"];
+                var quantity = (int)reader["Quantity"];
+                result.Year.Add(year);
+                result.Quantity.Add((int)quantity);
+            }
+            reader.Close();
+            return result;
+        }
+
+        public RevenueSeries loadProductMonth(int year, Product product)
+        {
+            var sql = "select Month(DonHang.NgayMua) as 'Month', sum(ChiTietDonHang.SoLuong) as 'Quantity'" +
+                " from DonHang join ChiTietDonHang on (DonHang.DonHang_id = ChiTietDonHang.DonHang_id)" +
+                " where Year(DonHang.NgayMua) = @_year and ChiTietDonHang.HangHoa_id = @_productid" +
+                " group by Month(DonHang.NgayMua)";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_year", SqlDbType.Int).Value = year;
+            command.Parameters.Add("@_productid", SqlDbType.Int).Value = product.productID;
+            var reader = command.ExecuteReader();
+
+            var result = new RevenueSeries()
+            {
+                Quantity = new List<int>(),
+
+                Month = new List<int>(),
+            };
+            while (reader.Read())
+            {
+                var month = (int)reader["Month"];
+                var quantity = (int)reader["Quantity"];
+                result.Month.Add(month);
+                result.Quantity.Add(quantity);
+
+            }
+            reader.Close();
+            return result;
+        }
+
+        public RevenueSeries loadProductDate(DateTime startDP, DateTime endDP, Product product)
+        {
+            var sql = "select DonHang.NgayMua as 'Date', sum(ChiTietDonHang.SoLuong) as 'Quantity'" +
+                " from DonHang join ChiTietDonHang on (DonHang.DonHang_id = ChiTietDonHang.DonHang_id)" +
+                " where @_startdate <= DonHang.NgayMua and @_enddate >= DonHang.NgayMua and ChiTietDonHang.HangHoa_id = @_productid" +
+                " group by DonHang.NgayMua";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_startdate", SqlDbType.DateTime).Value = startDP;
+            command.Parameters.Add("@_enddate", SqlDbType.DateTime).Value = endDP;
+            command.Parameters.Add("@_productid", SqlDbType.Int).Value = product.productID;
+            var reader = command.ExecuteReader();
+
+            var result = new RevenueSeries()
+            {
+                Date = new List<DateTime>(),
+                Quantity = new List<int>(),
+            };
+            while (reader.Read())
+            {
+                var date = (DateTime)reader["Date"];
+                var quantity = (int)reader["Quantity"];
+                result.Date.Add(date);
+                result.Quantity.Add(quantity);
+            }
+            reader.Close();
+            return result;
         }
 
         public RevenueSeries loadRevenueYear()

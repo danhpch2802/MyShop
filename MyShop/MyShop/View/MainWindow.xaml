@@ -60,7 +60,20 @@
                         </Fluent:MenuItem>
                         <Fluent:MenuItem Header="Month" Click="MonthRevenueChart">
                         </Fluent:MenuItem>
-                        <Fluent:MenuItem Header="Year" Click="YearRevenueChar">
+                        <Fluent:MenuItem Header="Year" Click="YearRevenueChart">
+                        </Fluent:MenuItem>
+                    </Fluent:DropDownButton>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox>
+                    <Fluent:DropDownButton Header="Product Chart" 
+                                LargeIcon="/Images/laptop.png" Width="90">
+                        <Fluent:MenuItem Header="Date" Click="DateProductChart">
+                        </Fluent:MenuItem>
+                        <Fluent:MenuItem Header="Week" Click="WeekProductChart">
+                        </Fluent:MenuItem>
+                        <Fluent:MenuItem Header="Month" Click="MonthProductChart">
+                        </Fluent:MenuItem>
+                        <Fluent:MenuItem Header="Year" Click="YearProductChart">
                         </Fluent:MenuItem>
                     </Fluent:DropDownButton>
                 </Fluent:RibbonGroupBox>

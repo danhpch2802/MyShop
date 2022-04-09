@@ -105,9 +105,10 @@ namespace MyShop
 
         private void addNewOrderClick(object sender, RoutedEventArgs e)
         {
-            _vm = ProductViewModel.loadProducts(products);
             var id = _bus.getNewestOrderID();
-            var AddOrderWindow = new AddOrderWindow(_vm, id);
+            var GetProduct = _bus.GetProducts();
+            var product_vm = ProductViewModel.loadProducts(GetProduct);
+            var AddOrderWindow = new AddOrderWindow(product_vm, id);
 
             AddOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             AddOrderWindow.Owner = this;
@@ -132,8 +133,6 @@ namespace MyShop
 
                     List<Order> orders = _bus.GetOrders();
                     orders_vm = OrderViewModel.loadOrders(orders);
-                    Load_Product();
-                    _vm = ProductViewModel.loadProducts(products);
                     orders_vm.FilterOrders = orders_vm.Orders
                 .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
                 .Take(_rowsOrderPerPage)
@@ -146,6 +145,10 @@ namespace MyShop
             currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
             orderDateGrid.ItemsSource = orders_vm.FilterOrders;
                 }
+            }
+            else
+            {
+                this.Show();
             }
         }
 
@@ -190,10 +193,11 @@ namespace MyShop
 
         private void editOrderClick(object sender, RoutedEventArgs e)
         {
-            _vm = ProductViewModel.loadProducts(products);
             var Order = (Order)orderDateGrid.SelectedItem;
+            var GetProduct = _bus.GetProducts();
+            var product_vm = ProductViewModel.loadProducts(GetProduct);
             var DetailOrder = _bus.loadDetailOrdersfromID(Order);
-            var EditOrderWindow = new EditOrderWindow(_vm, Order, DetailOrder);
+            var EditOrderWindow = new EditOrderWindow(product_vm, Order, DetailOrder);
 
             EditOrderWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             EditOrderWindow.Owner = this;
@@ -213,8 +217,6 @@ namespace MyShop
 
                 List<Order> orders = _bus.GetOrders();
                 orders_vm = OrderViewModel.loadOrders(orders);
-                Load_Product();
-                _vm = ProductViewModel.loadProducts(products);
 
                 orders_vm.FilterOrders = orders_vm.Orders
                                 .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
@@ -275,10 +277,10 @@ namespace MyShop
             orderDateGrid.ItemsSource = orders_vm.FilterOrders;
         }
         //Order tab End here
-
         //Revenue tab Start here
-       RevenueSeries rs = null;
-
+        //Revenue
+        RevenueSeries rs = null;
+        
        public void DateRevenueChart(object sender, RoutedEventArgs e)
         {
             var RevenueChartDateWindow = new RevenueChartDateWindow();
@@ -298,7 +300,7 @@ namespace MyShop
                     Values = new LiveCharts.ChartValues<int>(rs.Revenue)
                 };
 
-                var series2 = new LiveCharts.Wpf.ColumnSeries()
+                var series2 = new LineSeries
                 {
                     Title = "Profit",
                     Values = new LiveCharts.ChartValues<int>(rs.Profit)
@@ -335,7 +337,7 @@ namespace MyShop
                     Values = new LiveCharts.ChartValues<int>(rs.Revenue)
                 };
 
-                var series2 = new LiveCharts.Wpf.ColumnSeries()
+                var series2 = new LineSeries
                 {
                     Title = "Profit",
                     Values = new LiveCharts.ChartValues<int>(rs.Profit)
@@ -371,7 +373,7 @@ namespace MyShop
                     Values = new LiveCharts.ChartValues<int>(rs.Revenue)
                 };
 
-                var series2 = new LiveCharts.Wpf.ColumnSeries()
+                var series2 = new LineSeries
                 {
                     Title = "Profit",
                     Values = new LiveCharts.ChartValues<int>(rs.Profit)
@@ -388,7 +390,7 @@ namespace MyShop
                 axisLabel.Labels = formatDate;
             }
         }
-        public void YearRevenueChar(object sender,RoutedEventArgs e)
+        public void YearRevenueChart(object sender,RoutedEventArgs e)
         {
             rs = _bus.loadRevenueYear();
 
@@ -398,7 +400,7 @@ namespace MyShop
                 Values = new LiveCharts.ChartValues<int>(rs.Revenue)
             };
 
-            var series2 = new LiveCharts.Wpf.ColumnSeries()
+            var series2 = new LineSeries
             {
                 Title = "Profit",
                 Values = new LiveCharts.ChartValues<int>(rs.Profit)
@@ -413,6 +415,129 @@ namespace MyShop
                 formatDate.Add(date.ToString());
             }
             axisLabel.Labels = formatDate;
+        }
+        //Product
+        public void DateProductChart(object sender, RoutedEventArgs e)
+        {
+            var GetProduct = _bus.GetProducts();
+            var product_vm = ProductViewModel.loadProducts(GetProduct);
+            var ProductChartDateWindow = new ProductChartDateWindow(product_vm);
+            ProductChartDateWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ProductChartDateWindow.Owner = this;
+            var result = ProductChartDateWindow.ShowDialog();
+            if (result == true)
+            {
+                var startDP = ProductChartDateWindow.startDate;
+                var endDP = ProductChartDateWindow.endDate;
+                var product = ProductChartDateWindow.selectProduct;
+                rs = _bus.loadProductDate(startDP, endDP, product);
+
+                var series1 = new LineSeries
+                {
+                    Title = "Sold",
+                    Values = new LiveCharts.ChartValues<int>(rs.Quantity)
+                };
+                
+                RevenueChart.Series.Clear();
+                RevenueChart.Series.Add(series1);
+                var formatDate = new List<string>();
+                foreach (var date in rs.Date)
+                {
+                    var onlyDate = date.Date;
+                    formatDate.Add(onlyDate.ToString("d"));
+                }
+                axisLabel.Labels = formatDate;
+            }
+        }
+        public void WeekProductChart(object sender, RoutedEventArgs e)
+        {
+            var GetProduct = _bus.GetProducts();
+            var product_vm = ProductViewModel.loadProducts(GetProduct);
+            var ProductChartWeekWindow = new ProductChartWeekWindow(product_vm);
+            ProductChartWeekWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ProductChartWeekWindow.Owner = this;
+            var result = ProductChartWeekWindow.ShowDialog();
+            if (result == true)
+            {
+                var Month = ProductChartWeekWindow.Month;
+                var Year = ProductChartWeekWindow.Year;
+                var product = ProductChartWeekWindow.selectProduct;
+                rs = _bus.loadProductWeek(Month, Year, product);
+
+                var series1 = new LineSeries
+                {
+                    Title = "Sold",
+                    Values = new LiveCharts.ChartValues<int>(rs.Quantity)
+                };
+
+                RevenueChart.Series.Clear();
+                RevenueChart.Series.Add(series1);
+                var formatDate = new List<string>();
+                foreach (var date in rs.Week)
+                {
+                    formatDate.Add(date.ToString());
+                }
+                axisLabel.Labels = formatDate;
+            }
+        }
+        public void MonthProductChart(object sender,RoutedEventArgs e)
+        {
+            var GetProduct = _bus.GetProducts();
+            var product_vm = ProductViewModel.loadProducts(GetProduct);
+            var ProductChartMonthWindow = new ProductChartMonthWindow(product_vm);
+            ProductChartMonthWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ProductChartMonthWindow.Owner = this;
+            var result = ProductChartMonthWindow.ShowDialog();
+            if (result == true)
+            {
+                var Year = ProductChartMonthWindow.Year;
+                var product = ProductChartMonthWindow.selectProduct;
+                rs = _bus.loadProductMonth(Year, product);
+
+                var series1 = new LineSeries
+                {
+                    Title = "Sold",
+                    Values = new LiveCharts.ChartValues<int>(rs.Quantity)
+                };
+
+                RevenueChart.Series.Clear();
+                RevenueChart.Series.Add(series1);
+                var formatDate = new List<string>();
+                foreach (var date in rs.Month)
+                {
+                    formatDate.Add(date.ToString());
+                }
+                axisLabel.Labels = formatDate;
+            }
+        }
+        public void YearProductChart(object sender, RoutedEventArgs e)
+        {
+            var GetProduct = _bus.GetProducts();
+            var product_vm = ProductViewModel.loadProducts(GetProduct);
+            var ProductChartYearWindow = new ProductChartYearWindow(product_vm);
+            ProductChartYearWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ProductChartYearWindow.Owner = this;
+            var result = ProductChartYearWindow.ShowDialog();
+            if (result == true)
+            {
+                var product = ProductChartYearWindow.selectProduct;
+                rs = _bus.loadProductYear(product);
+
+                var series1 = new LineSeries
+                {
+                    Title = "Sold",
+                    Values = new LiveCharts.ChartValues<int>(rs.Quantity)
+                };
+
+                RevenueChart.Series.Clear();
+                RevenueChart.Series.Add(series1);
+                var formatDate = new List<string>();
+                foreach (var date in rs.Year)
+                {
+                    formatDate.Add(date.ToString());
+                }
+                axisLabel.Labels = formatDate;
+            }
         }
         //Revenue tab End here
 

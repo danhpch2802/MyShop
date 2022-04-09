@@ -198,3 +198,11 @@ C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\Vi
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\MonthRevenueWindow.baml
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\RevenueChartDateWindow.baml
 C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\WeekRevenueWindow.baml
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartDateWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartDateWindow.baml
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartWeekWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartWeekWindow.baml
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartMonthWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartMonthWindow.baml
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartYearWindow.g.cs
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\View\ProductChartYearWindow.baml
