@@ -14,7 +14,6 @@ namespace MyShop
         public string ordersInMonth { get; set; } = "12";
 
         public string totalProduct { get; set; } = "12";
-        public List<Product> SelectedProducts { get; set; } = new List<Product>();
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -25,6 +24,7 @@ namespace MyShop
             _vm.ordersInWeek = countOrderInWeek(orders) + "";
             _vm.ordersInMonth = countOrderInMonth(orders) + "";
             _vm.totalProduct = countProduct(products) + "";
+            
             return _vm;
 
         }

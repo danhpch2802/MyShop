@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace MyShop
 {
@@ -20,6 +21,12 @@ namespace MyShop
         public List<Product> GetProducts()
         {
             List<Product> result = _dao.GetProducts();
+
+            return result;
+        }
+        public BindingList<Product> GetTopProducts()
+        {
+            BindingList<Product> result = _dao.GetTopProducts();
 
             return result;
         }

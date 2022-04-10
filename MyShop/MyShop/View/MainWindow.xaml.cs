@@ -43,6 +43,7 @@ namespace MyShop
         // Order tab start here
         OrderViewModel orders_vm;
         List<Product> products;
+        BindingList<Product> top;
         int _totalOrder = 0;
         int _currentOrderPage = 0;
         int _totalOrderPages = 0;
@@ -135,9 +136,14 @@ namespace MyShop
 
                     List<Order> orders = _bus.GetOrders();
                     orders_vm = OrderViewModel.loadOrders(orders);
+
+                    
+                    //DashBoard
                     List<Product> products = _bus.GetProducts();
+                    topProductsList.ItemsSource = _bus.GetTopProducts();
                     dashViewModel = DashViewModel.load(orders, products);
                     this.DataContext = dashViewModel;
+                    //
                     orders_vm.FilterOrders = orders_vm.Orders
 
 
@@ -558,6 +564,7 @@ namespace MyShop
                 dao.Connect();
                 _bus = new Business(dao);
                 products = _bus.GetProducts();
+                top = _bus.GetTopProducts();
                 _vm = ProductViewModel.loadProducts(products);
                 productsListView.ItemsSource = _vm.Products; // Chua phan trang
             }
@@ -681,8 +688,10 @@ namespace MyShop
             Load_Order();
             Load_Product();
             dashViewModel = DashViewModel.load(orders, products);
+            topProductsList.ItemsSource = top;
             this.DataContext = dashViewModel;
             RevenueChart.Series = new SeriesCollection();
+            
             var password = "";
             var username = "";
             int lastScreen = 0;
@@ -746,6 +755,12 @@ namespace MyShop
             dao.Disconnect();
         }
 
-
+        private void ribbon_SelectedTabChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ribbon.SelectedTabIndex == 0)
+            {
+               
+            }
+        }
     }
 }

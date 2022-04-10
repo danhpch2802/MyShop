@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MyShop
 {
@@ -437,6 +438,49 @@ namespace MyShop
 
             List<Product> result = new List<Product>();
             
+            while (reader.Read())
+            {
+                var productID = (int)reader["HangHoa_id"];
+                var productImg = (string)reader["HangHoa_img"];
+                var productName = (string)reader["HangHoa_ten"];
+                var productCat = (string)reader["HangHoa_hieu"];
+                var productPrice = (decimal)reader["HangHoa_gia"];
+                var productAmount = (int)reader["HangHoa_soluong"];
+
+                var categories = new Category()
+                {
+                    Name = productCat
+                };
+
+                result.Add(new Product()
+                {
+                    productID = productID,
+                    Name = productName,
+                    Price = (int)productPrice,
+                    Image = productImg,
+                    Category = categories,
+                    Amount = productAmount
+                })
+                    ;
+            }
+
+            reader.Close();
+
+            return result;
+        }
+        public BindingList<Product> GetTopProducts()
+        {
+            var sql = "select TOP(5) HH.HangHoa_id,HH.HangHoa_img,HH.HangHoa_ten,HH.HangHoa_hieu,HH.HangHoa_gia,HH.HangHoa_soluong " 
+                        +"from HangHoa HH,ChiTietDonHang CT " 
+                        +"where HH.HangHoa_id = CT.HangHoa_id "
+                        +"Group by HH.HangHoa_id,HH.HangHoa_img,HH.HangHoa_ten,HH.HangHoa_hieu,HH.HangHoa_gia,HH.HangHoa_soluong "
+                        +"order by SUM(CT.SoLuong) DESC";
+            var command = new SqlCommand(sql, _connection);
+
+            var reader = command.ExecuteReader();
+
+            BindingList<Product> result = new BindingList<Product>();
+
             while (reader.Read())
             {
                 var productID = (int)reader["HangHoa_id"];

@@ -8,14 +8,14 @@
                      WindowStartupLocation="CenterScreen"
                      Closing="DataWindow_Closing"  >
     <DockPanel LastChildFill="True">
-        <Fluent:Ribbon DockPanel.Dock="Top" Name="ribbon">
+        <Fluent:Ribbon DockPanel.Dock="Top" Panel.ZIndex="0" Name="ribbon" SelectedTabChanged="ribbon_SelectedTabChanged">
 
-            <Fluent:RibbonTabItem Header="Home" Name="TabHome">
-
+            <Fluent:RibbonTabItem Header="Home" Name="TabHome" >
+                
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="Orders" Name="TabOrders">
-                <Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox >
                     <Fluent:Button Header="Add"
                                 LargeIcon="/Images/plus.png" 
                                    Width="50"
@@ -81,10 +81,28 @@
 
         </Fluent:Ribbon>
 
-        <Canvas DockPanel.Dock="Top" Height="350" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}">
-            <TextBlock FontSize="40" FontWeight="Bold" Text="{Binding ordersInWeek}" Canvas.Left="180" Canvas.Top="103" Width="84"/>
-            <TextBlock FontSize="40" FontWeight="Bold" Text="{Binding ordersInMonth}" Canvas.Left="541" Canvas.Top="103" Width="84"/>
-            <TextBlock FontSize="40" FontWeight="Bold" Text="{Binding totalProduct}" Canvas.Left="330" Canvas.Top="10" Width="140"/>
+        <Canvas DockPanel.Dock="Top" Panel.ZIndex="1000" Height="582" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabHome}">
+            <Canvas.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#7be9f6" Offset="0.0"/>
+                    <GradientStop Color="#f083da" Offset="1"/>
+                </LinearGradientBrush>
+            </Canvas.Background>
+            <Label FontSize="30"  FontWeight="Bold" Content="{Binding ordersInWeek}" ContentStringFormat="Orders in week : {0}" Canvas.Left="32" Canvas.Top="185" Width="309" Height="60"/>
+            <Label FontSize="30" FontWeight="Bold" Content="{Binding ordersInMonth}" ContentStringFormat="Orders in month : {0}" Canvas.Left="32" Canvas.Top="280" Width="309" Height="60"/>
+
+            <Label FontSize="30" FontWeight="Bold" Content="{Binding totalProduct}" ContentStringFormat="Total product : {0}" Canvas.Left="32" Width="309" Height="60" Canvas.Top="90"/>
+            <TextBlock FontSize="40" FontWeight="Bold" Text="Top 5 Products" Canvas.Left="544" Canvas.Top="17" Width="107"/>
+            <ListView Name ="topProductsList"  Width="390" Height="250" Canvas.Left="400" Canvas.Top="90">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Image}" Width="50" Height="50"/>
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Canvas>
 
         <StackPanel Orientation="Vertical" DockPanel.Dock="Top" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabOrders}">
