@@ -747,6 +747,10 @@ namespace MyShop
                 AppConfig.setValue(AppConfig.Entropy, entropyBase64);
                 
             }
+            if(result == false)
+            {
+                return;
+            }
         }
 
         

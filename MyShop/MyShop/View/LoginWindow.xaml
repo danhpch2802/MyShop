@@ -89,7 +89,7 @@
                 <TextBlock Name="textBlock" Margin="65,20,0,-30" Text=""/>
                 <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
                     <Button Width="100" Height="40" Click="Button_Click" BorderBrush="Transparent" Background="#7be9f6" Content="LOGIN" Margin="60,0,60,0"/>
-                    <Button Width="100" Height="40" Background="#7be9f6" BorderBrush="Transparent" Content="REGISTER" Click="Button_Click_1"/>
+                    <Button Width="100" Height="40" Background="#7be9f6" BorderBrush="Transparent" Content="CANCEL" Click="Button_Click_1"/>
                 </StackPanel>
 
             </StackPanel>

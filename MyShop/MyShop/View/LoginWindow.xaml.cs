@@ -132,69 +132,10 @@ namespace MyShop
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var connectionString =
-                "Server=.\\sqlexpress;Database=MyShop;Trusted_Connection=True;";
-
-            // Kết nối
-            var connection = new SqlConnection(connectionString);
-
-            try
-            {
-                connection.Open();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            // Sau khi kết nối thành công
-            var sql = "select * from TaiKhoan";
-            var command = new SqlCommand(sql, connection);
-
-            var reader = command.ExecuteReader();
-
-            List<TaiKhoan> taikhaons = new List<TaiKhoan>();
-
-            while (reader.Read())
-            {
-                var _id = (string)reader["TaiKhoan_id"];
-                var _name = (string)reader["TaiKhoan_username"];
-                var _password = (string)reader["TaiKhoan_password"];
-
-                TaiKhoan taikhoan = new TaiKhoan()
-                {
-                    id = _id,
-                    username = _name,
-                    password = _password
-                };
-                taikhaons.Add(taikhoan);
-            }
-
-
-            if (username_is_not_exit(userNameTextBox.Text, taikhaons) && passWordBox.Password!="")
-            {
-                string statement = "INSERT INTO TaiKhoan VALUES (@id,@name,@pass)";
+            
                 
-                SqlCommand cmd = new SqlCommand(statement, connection);
-                cmd.CommandType = CommandType.Text;
-                
-                cmd.Parameters.AddWithValue("@id", taikhaons.Count+"");
-                
-                cmd.Parameters.AddWithValue("@name", userNameTextBox.Text);
-                
-                cmd.Parameters.AddWithValue("@pass", passWordBox.Password);
-                
-                connection.Open();
-                cmd.ExecuteNonQuery();
-                
-                DialogResult = true;
-            }
-            else
-            {
-                textBlock.Text = "Password or UserName is wrong!";
-                userNameTextBox.Text = "";
-                passWordBox.Password = "";
-            }
+            DialogResult = false;
+            
         }
 
         private bool username_is_not_exit(string username, List<TaiKhoan> tk)

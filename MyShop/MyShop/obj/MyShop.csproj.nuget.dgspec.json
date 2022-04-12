@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\trant\\Downloads\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop\\MyShop\\MyShop.csproj": {}
+    "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\trant\\Downloads\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop\\MyShop\\MyShop.csproj": {
+    "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\trant\\Downloads\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop\\MyShop\\MyShop.csproj",
+        "projectUniqueName": "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
         "projectName": "MyShop",
-        "projectPath": "C:\\Users\\trant\\Downloads\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop\\MyShop\\MyShop.csproj",
+        "projectPath": "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
         "packagesPath": "C:\\Users\\trant\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\trant\\Downloads\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\\MyShop\\MyShop\\obj\\",
+        "outputPath": "C:\\Users\\trant\\Documents\\GitHub\\MyShop\\MyShop\\MyShop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
