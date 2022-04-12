@@ -4,16 +4,28 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\bbxmi\OneDrive\Documents\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\
+=======
+E:\Work\Github\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\
+>>>>>>> parent of 83085d0 (quantity per page)
 MyShop
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
+<<<<<<< HEAD
 C:\Users\bbxmi\OneDrive\Documents\MyShop\MyShop\MyShop\App.xaml
 141862196752
 
 31468931847
 2171997935586
+=======
+E:\Work\Github\MyShop\MyShop\MyShop\App.xaml
+141862196752
+
+29938831853
+217878633332
+>>>>>>> parent of 83085d0 (quantity per page)
 View\AddOrderWindow.xaml;View\AddProduct.xaml;View\DetailOrderWindow.xaml;View\EditOrderWindow.xaml;View\FilterWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\MonthRevenueWindow.xaml;View\ProductChartDateWindow.xaml;View\ProductChartMonthWindow.xaml;View\ProductChartWeekWindow.xaml;View\ProductChartYearWindow.xaml;View\RevenueChartDateWindow.xaml;View\WeekRevenueWindow.xaml;
 
 False

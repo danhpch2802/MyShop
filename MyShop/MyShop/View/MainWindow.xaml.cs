@@ -47,7 +47,7 @@ namespace MyShop
         int _totalOrder = 0;
         int _currentOrderPage = 0;
         int _totalOrderPages = 0;
-        int _rowsOrderPerPage = 5;
+        int _rowsOrderPerPage = 10;
         List<Order> orders;
         private void Load_Order()
         {
@@ -627,7 +627,6 @@ namespace MyShop
                 dao.Connect();
                 _bus = new Business(dao);
                 products = _bus.GetProducts();
-                rowperpage.Maximum = products.Count;
                 top = _bus.GetTopProducts();
                 _vm = ProductViewModel.loadProducts(products);
                 productsListView.ItemsSource = _vm.Products; // Chua phan trang
@@ -747,7 +746,6 @@ namespace MyShop
             AddProduct addWindow = new AddProduct();
             addWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             addWindow.Show();
-            rowperpage.Maximum = products.Count;
         }
 
         //Window
@@ -833,22 +831,5 @@ namespace MyShop
                
             }
         }
-        private void rowperpage_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            _rowsPerPage = (int)rowperpage.Value;
-        }
-
-        private void viewProduct_Click(object sender, RoutedEventArgs e)
-        {
-            _currentPage = 1;
-            _vm.SelectedProducts = _vm.Products
-                   .Skip((_currentPage - 1) * _rowsPerPage)
-                   .Take(_rowsPerPage)
-                   .ToList();
-            // ép cập nhật giao diện
-            productsListView.ItemsSource = _vm.SelectedProducts;
-            currentPagingTextBlock.Text = $"{_currentPage}/{_totalPages}";
-        }
-
     }
 }

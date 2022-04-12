@@ -1401,19 +1401,37 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\bbxmi\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\huuda\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+>>>>>>> parent of 83085d0 (quantity per page)
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\bbxmi\\OneDrive\\Documents\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
       "projectName": "MyShop",
       "projectPath": "C:\\Users\\bbxmi\\OneDrive\\Documents\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
       "packagesPath": "C:\\Users\\bbxmi\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\bbxmi\\OneDrive\\Documents\\MyShop\\MyShop\\MyShop\\obj\\",
+=======
+      "projectUniqueName": "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
+      "projectName": "MyShop",
+      "projectPath": "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\MyShop.csproj",
+      "packagesPath": "C:\\Users\\huuda\\.nuget\\packages\\",
+      "outputPath": "E:\\Work\\Github\\MyShop\\MyShop\\MyShop\\obj\\",
+>>>>>>> parent of 83085d0 (quantity per page)
       "projectStyle": "PackageReference",
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\bbxmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\huuda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+>>>>>>> parent of 83085d0 (quantity per page)
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1470,6 +1488,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+<<<<<<< HEAD
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
@@ -1488,6 +1507,8 @@
             "version": "[5.0.0, 5.0.0]"
           }
         ],
+=======
+>>>>>>> parent of 83085d0 (quantity per page)
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -1496,7 +1517,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   },
