@@ -11,6 +11,7 @@
     <None Remove="Images\alienware_m15.jpg" />
     <None Remove="Images\chart.png" />
     <None Remove="Images\Filter.png" />
+    <None Remove="Images\icon.png" />
     <None Remove="Images\imac_24.jpg" />
     <None Remove="Images\laptop.png" />
     <None Remove="Images\logo.png" />
@@ -49,6 +50,7 @@
     <Resource Include="Images\alienware_m15.jpg" />
     <Resource Include="Images\chart.png" />
     <Resource Include="Images\Filter.png" />
+    <Resource Include="Images\icon.png" />
     <Resource Include="Images\imac_24.jpg" />
     <Resource Include="Images\laptop.png" />
     <Resource Include="Images\logo.png" />
