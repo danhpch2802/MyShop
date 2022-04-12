@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         
         Title="AddOrderWindow" Height="700" Width="1100"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+>
     <StackPanel Orientation="Horizontal">
         <DockPanel Height="700">
             <StackPanel Margin="30 30 0 0" >

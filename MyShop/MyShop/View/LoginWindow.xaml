@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyShop"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="600" Width="400" Loaded="Window_Loaded">
+        Title="LoginWindow" Height="600" Width="400" Loaded="Window_Loaded"
+        ResizeMode="NoResize">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>

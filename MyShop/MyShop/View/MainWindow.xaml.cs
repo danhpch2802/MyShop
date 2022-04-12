@@ -717,7 +717,7 @@ namespace MyShop
             }
 
             var screen = new LoginWindow(username, password);
-
+            this.Hide();
             screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             screen.Owner = this;
             var result = screen.ShowDialog();
@@ -726,6 +726,7 @@ namespace MyShop
 
             if (result == true)
             {
+                this.Show();
 
                 var passwordInBytesSave = Encoding.UTF8.GetBytes(screen.pass);
 
