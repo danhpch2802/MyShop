@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace MyShop
 {
+    public class Category: INotifyPropertyChanged
+    {
+        public string Name { get; set; }
+        public List<Product> Products { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+    }
     public class Product: INotifyPropertyChanged
     {
         public int productID { get; set; }

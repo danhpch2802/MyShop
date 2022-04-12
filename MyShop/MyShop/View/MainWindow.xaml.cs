@@ -42,12 +42,12 @@ namespace MyShop
 
         // Order tab start here
         OrderViewModel orders_vm;
-        List<Product> products=new List<Product>();
+        List<Product> products;
         BindingList<Product> top;
         int _totalOrder = 0;
         int _currentOrderPage = 0;
         int _totalOrderPages = 0;
-        int _rowsOrderPerPage = 10;
+        int _rowsOrderPerPage = 5;
         List<Order> orders;
         private void Load_Order()
         {
@@ -80,9 +80,6 @@ namespace MyShop
                 MessageBox.Show("Cannot connect to db");
             }
         }
-
-        
-
         private void filterClick(object sender, RoutedEventArgs e)
         {
             var filterWindow = new FilterWindow();
@@ -525,53 +522,6 @@ namespace MyShop
                 }
                 axisLabel.Labels = formatDate;
             }
-
-            Load_Order();
-            Load_Categories();
-            Load_Product();
-
-            //var password = "";
-
-            //try
-            //{
-            //    var cypherText = AppConfig.getValue(AppConfig.Password);
-            //    var cypherTextInBytes = Convert.FromBase64String(cypherText!);
-
-            //    var entropyText = AppConfig.getValue(AppConfig.Entropy);
-            //    var entropyTextInBytes = Convert.FromBase64String(entropyText);
-
-            //    var passwordInBytes = ProtectedData.Unprotect(cypherTextInBytes,
-            //        entropyTextInBytes, DataProtectionScope.CurrentUser);
-            //    password = Encoding.UTF8.GetString(passwordInBytes);
-            //} catch (Exception ex)
-            //{
-            //  MessageBox.Show(ex.Message);
-            //}
-            //var screen = new LoginWindow(AppConfig.getValue(AppConfig.Username), password);
-
-            //screen.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            //screen.Owner = this;
-            //var result = screen.ShowDialog();
-
-            //if (result == true)
-            //{
-            //    var passwordInBytesSave = Encoding.UTF8.GetBytes(password);
-
-            //    var entropy = new byte[20];
-            //    using (var rng = new RNGCryptoServiceProvider())
-            //    {
-            //        rng.GetBytes(entropy);
-            //    }
-            //    var entropyBase64 = Convert.ToBase64String(entropy);
-
-            //    var cypherTextSave = ProtectedData.Protect(passwordInBytesSave, entropy,
-            //        DataProtectionScope.CurrentUser);
-            //    var cypherTextBase64 = Convert.ToBase64String(cypherTextSave);
-
-            //    AppConfig.setValue(AppConfig.Password, cypherTextBase64);
-            //    AppConfig.setValue(AppConfig.Entropy, entropyBase64);
-            //}
-
         }
         public void YearProductChart(object sender, RoutedEventArgs e)
         {
@@ -604,40 +554,23 @@ namespace MyShop
         }
         //Revenue tab End here
 
-
         //Product
-        private void Load_Product()
+        private void Load_Product() //dao da duoc khai bao o tren
         {
-            products = _bus.GetProducts();
-            var products_vm = ProductViewModel.loadProducts(products);
-            productsListView.ItemsSource = products;
-        }
-
-        List<Category> categories = new List<Category>();
-        private void Load_Categories()
-        {
-            categories = _bus.GetCategories();
-            foreach (var p in products)
+            string? connectionString = AppConfig.ConnectionString();
+            var dao = new SqlDataAccess(connectionString!);
+            if (dao.CanConnect())
             {
-                for (int i = 0; i < categories.Count; i++)
-                {
-                    if (p.Category.Name == categories[i].Name)
-                        categories[i].Products.Add(p);
-                }
                 dao.Connect();
                 _bus = new Business(dao);
                 products = _bus.GetProducts();
+                rowperpage.Maximum = products.Count;
                 top = _bus.GetTopProducts();
                 _vm = ProductViewModel.loadProducts(products);
                 productsListView.ItemsSource = _vm.Products; // Chua phan trang
-
             }
-            var categories_vm = CategoryViewModel.loadCategories(categories);
-            categoriesComboBox.ItemsSource = categories_vm.Categories;
         }
-
-
-        // Product Tab
+        List<Category>? _categories = null; // Không biết fix sao
         ProductViewModel _vm = new ProductViewModel();
         int _totalItems = 0;
         int _currentPage = 0;
@@ -659,7 +592,9 @@ namespace MyShop
         private void loadExcelFile_Click(object sender, RoutedEventArgs e)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            
+            _categories = new List<Category>();
+            string? connectionString = AppConfig.ConnectionString();
+            var dao = new SqlDataAccess(connectionString!); // dao gọi rồi
             var datascreen = new OpenFileDialog();
             if (datascreen.ShowDialog() == true)
             {
@@ -699,10 +634,10 @@ namespace MyShop
                         row++;
                         cell = tab.Cells[$"{column}{row}"];
                     }
-                    categories.Add(cat); // Model
+                    _categories.Add(cat); // Model
                 }
             }
-            categoriesComboBox.ItemsSource = categories;
+            categoriesComboBox.ItemsSource = _categories;
             productsListView.ItemsSource = _vm.SelectedProducts;
         }
 
@@ -726,7 +661,7 @@ namespace MyShop
             if (i >= 0)
             {
                 // Thay đổi view model
-                _vm.Products = categories![i].Products;
+                _vm.Products = _categories![i].Products;
                 _vm.SelectedProducts = _vm.Products
                     .Skip((_currentPage - 1) * _rowsPerPage)
                     .Take(_rowsPerPage)
@@ -746,6 +681,7 @@ namespace MyShop
             AddProduct addWindow = new AddProduct();
             addWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             addWindow.Show();
+            rowperpage.Maximum = products.Count;
         }
 
         //Window
@@ -753,9 +689,7 @@ namespace MyShop
         {
             Load_Order();
             Load_Product();
-            Load_Categories();
-            
-            //dashViewModel = DashViewModel.load(orders, products);
+            dashViewModel = DashViewModel.load(orders, products);
             topProductsList.ItemsSource = top;
             this.DataContext = dashViewModel;
             RevenueChart.Series = new SeriesCollection();
@@ -831,5 +765,22 @@ namespace MyShop
                
             }
         }
+        private void rowperpage_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            _rowsPerPage = (int)rowperpage.Value;
+        }
+
+        private void viewProduct_Click(object sender, RoutedEventArgs e)
+        {
+            _currentPage = 1;
+            _vm.SelectedProducts = _vm.Products
+                   .Skip((_currentPage - 1) * _rowsPerPage)
+                   .Take(_rowsPerPage)
+                   .ToList();
+            // ép cập nhật giao diện
+            productsListView.ItemsSource = _vm.SelectedProducts;
+            currentPagingTextBlock.Text = $"{_currentPage}/{_totalPages}";
+        }
+
     }
 }

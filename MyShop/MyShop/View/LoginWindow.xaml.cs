@@ -72,7 +72,6 @@ namespace MyShop
             try
             {
                 connection.Open();
-                connection.Close();
             }
             catch (Exception ex)
             {

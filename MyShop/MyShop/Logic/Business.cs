@@ -31,12 +31,6 @@ namespace MyShop
             return result;
         }
 
-        public List<Category> GetCategories()
-        {
-            List<Category> result = _dao.GetCategories();
-            return result;
-        }
-
         public void removeOrder(Order order)
         {
              _dao.removeOrder(order);

@@ -7,8 +7,4 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MyShop
-<<<<<<< HEAD
-build_property.ProjectDir = C:\Users\bbxmi\OneDrive\Documents\MyShop\MyShop\MyShop\
-=======
-build_property.ProjectDir = E:\Work\Github\MyShop\MyShop\MyShop\
->>>>>>> parent of 83085d0 (quantity per page)
+build_property.ProjectDir = C:\Users\trant\Downloads\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\MyShop-83085d0010709981bb9fc71a498ad6427fd32ae1\MyShop\MyShop\

@@ -19,7 +19,6 @@ namespace MyShop
     /// </summary>
     public partial class AddProduct : Window
     {
-        SqlDataAccess _dao;
         public AddProduct()
         {
             InitializeComponent();
@@ -37,13 +36,7 @@ namespace MyShop
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            string Name = productNameTextBox.Text;
-            int Price = int.Parse(productPriceTextBox.Text);
-            string Category = productCategoryTextBox.Text;
-            int Amount = int.Parse(productAmountTextBox.Text);
-            string Image = productImageTextBox.Text;
 
-            _dao.addDataToDatabase(Image, Name, Category, Price, Amount);
         }
 
         private void browseImage_Click(object sender, RoutedEventArgs e)
