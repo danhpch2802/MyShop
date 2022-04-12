@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -17,6 +18,7 @@ namespace MyShop
         public SqlDataAccess(string connectionString)
         {
             _connection = new SqlConnection(connectionString);
+
         }
 
         public bool CanConnect()
@@ -433,11 +435,9 @@ namespace MyShop
         {
             var sql = "select * from [HangHoa]";
             var command = new SqlCommand(sql, _connection);
-
             var reader = command.ExecuteReader();
-
             List<Product> result = new List<Product>();
-            
+
             while (reader.Read())
             {
                 var productID = (int)reader["HangHoa_id"];
@@ -446,12 +446,10 @@ namespace MyShop
                 var productCat = (string)reader["HangHoa_hieu"];
                 var productPrice = (decimal)reader["HangHoa_gia"];
                 var productAmount = (int)reader["HangHoa_soluong"];
-
                 var categories = new Category()
                 {
                     Name = productCat
                 };
-
                 result.Add(new Product()
                 {
                     productID = productID,
@@ -460,21 +458,18 @@ namespace MyShop
                     Image = productImg,
                     Category = categories,
                     Amount = productAmount
-                })
-                    ;
+                });
             }
-
             reader.Close();
-
             return result;
         }
         public BindingList<Product> GetTopProducts()
         {
-            var sql = "select TOP(5) HH.HangHoa_id,HH.HangHoa_img,HH.HangHoa_ten,HH.HangHoa_hieu,HH.HangHoa_gia,HH.HangHoa_soluong " 
-                        +"from HangHoa HH,ChiTietDonHang CT " 
-                        +"where HH.HangHoa_id = CT.HangHoa_id "
-                        +"Group by HH.HangHoa_id,HH.HangHoa_img,HH.HangHoa_ten,HH.HangHoa_hieu,HH.HangHoa_gia,HH.HangHoa_soluong "
-                        +"order by SUM(CT.SoLuong) DESC";
+            var sql = "select TOP(5) HH.HangHoa_id,HH.HangHoa_img,HH.HangHoa_ten,HH.HangHoa_hieu,HH.HangHoa_gia,HH.HangHoa_soluong "
+                        + "from HangHoa HH,ChiTietDonHang CT "
+                        + "where HH.HangHoa_id = CT.HangHoa_id "
+                        + "Group by HH.HangHoa_id,HH.HangHoa_img,HH.HangHoa_ten,HH.HangHoa_hieu,HH.HangHoa_gia,HH.HangHoa_soluong "
+                        + "order by SUM(CT.SoLuong) DESC";
             var command = new SqlCommand(sql, _connection);
 
             var reader = command.ExecuteReader();
@@ -508,12 +503,34 @@ namespace MyShop
             }
 
             reader.Close();
+            return result;
+        }
 
+        public List<Category> GetCategories()
+        {
+            var sql = "select * from [Hieu]";
+            var command = new SqlCommand(sql, _connection);
+            var reader = command.ExecuteReader();
+            List<Category> result = new List<Category>();
+
+            while (reader.Read())
+            {
+                var categoryID = (int)reader["Hieu_id"];
+                var categoryName = (string)reader["Hieu_ten"];
+                result.Add(new Category()
+                {
+                    CategoryId = categoryID,
+                    Name = categoryName,
+                    Products = new List<Product>()
+                });
+            }
+            reader.Close();
             return result;
         }
 
         public void addDataToDatabase(string img, string name, string pcat, int price, int amount)
         {
+            _connection.Open();
             // Send to database
             var sql = "SET IDENTITY_INSERT [dbo].[HangHoa] OFF; " +
                 "BEGIN " +
@@ -533,6 +550,7 @@ namespace MyShop
 
         public void deleteDataFromDatabase(string img, string name, string pcat, int price, int amount)
         {
+            _connection.Open();
             // Delete from database
             var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name) " +
                 "BEGIN " +
@@ -550,6 +568,7 @@ namespace MyShop
 
         public void editDataInDatabase(string img, string name, string pcat, int price, int amount)
         {
+            _connection.Open();
             // Edit data in database
             var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name) " +
                 "BEGIN " +

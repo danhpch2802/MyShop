@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\
+C:\Users\bbxmi\OneDrive\Documents\MyShop\MyShop\MyShop\obj\Debug\net5.0-windows\
 MyShop
 none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
-C:\Users\trant\Documents\GitHub\MyShop\MyShop\MyShop\App.xaml
+C:\Users\bbxmi\OneDrive\Documents\MyShop\MyShop\MyShop\App.xaml
 141862196752
 
-29938831853
-217-2008196925
+31468931847
+2171997935586
 View\AddOrderWindow.xaml;View\AddProduct.xaml;View\DetailOrderWindow.xaml;View\EditOrderWindow.xaml;View\FilterWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\MonthRevenueWindow.xaml;View\ProductChartDateWindow.xaml;View\ProductChartMonthWindow.xaml;View\ProductChartWeekWindow.xaml;View\ProductChartYearWindow.xaml;View\RevenueChartDateWindow.xaml;View\WeekRevenueWindow.xaml;
 
-False
+True
 
