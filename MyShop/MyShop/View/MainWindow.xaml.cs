@@ -557,20 +557,33 @@ namespace MyShop
         //Product
         private void Load_Product() //dao da duoc khai bao o tren
         {
-            string? connectionString = AppConfig.ConnectionString();
-            var dao = new SqlDataAccess(connectionString!);
-            if (dao.CanConnect())
-            {
-                dao.Connect();
-                _bus = new Business(dao);
-                products = _bus.GetProducts();
-                rowperpage.Maximum = products.Count;
-                top = _bus.GetTopProducts();
-                _vm = ProductViewModel.loadProducts(products);
-                productsListView.ItemsSource = _vm.Products; // Chua phan trang
-            }
+            products = _bus.GetProducts();
+            var products_vm = ProductViewModel.loadProducts(products);
+            productsListView.ItemsSource = products;
         }
-        List<Category>? _categories = null; // Không biết fix sao
+
+        List<Category> categories = new List<Category>();
+        private void Load_Categories()
+        {
+            categories = _bus.GetCategories();
+            foreach (var p in products)
+            {
+                for (int i = 0; i < categories.Count; i++)
+                {
+                    if (p.Category.Name == categories[i].Name)
+                        categories[i].Products.Add(p);
+                }
+            }
+
+            products = _bus.GetProducts();
+            rowperpage.Maximum = products.Count;
+            top = _bus.GetTopProducts();
+            _vm = ProductViewModel.loadProducts(products);
+            productsListView.ItemsSource = _vm.Products;
+            var categories_vm = CategoryViewModel.loadCategories(categories);
+            categoriesComboBox.ItemsSource = categories_vm.Categories;
+        }
+
         ProductViewModel _vm = new ProductViewModel();
         int _totalItems = 0;
         int _currentPage = 0;
@@ -592,9 +605,6 @@ namespace MyShop
         private void loadExcelFile_Click(object sender, RoutedEventArgs e)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            _categories = new List<Category>();
-            string? connectionString = AppConfig.ConnectionString();
-            var dao = new SqlDataAccess(connectionString!); // dao gọi rồi
             var datascreen = new OpenFileDialog();
             if (datascreen.ShowDialog() == true)
             {
@@ -619,7 +629,6 @@ namespace MyShop
                         int price = tab.Cells[$"F{row}"].IntValue;
                         string image = tab.Cells[$"C{row}"].StringValue;
                         int amount = tab.Cells[$"G{row}"].IntValue;
-                        string pcategory = tab.Cells[$"E{row}"].StringValue;
                         var p = new Product()
                         {
                             Name = name,
@@ -629,15 +638,15 @@ namespace MyShop
                             Category = cat,
                         };
                         // Insert data to SQL Database
-                        dao.addDataToDatabase(p.Image, p.Name, pcategory, p.Price, p.Amount);
+                        dao.addDataToDatabase(p);
                         cat.Products.Add(p);
                         row++;
                         cell = tab.Cells[$"{column}{row}"];
                     }
-                    _categories.Add(cat); // Model
+                    categories.Add(cat); // Model
                 }
             }
-            categoriesComboBox.ItemsSource = _categories;
+            categoriesComboBox.ItemsSource = categories;
             productsListView.ItemsSource = _vm.SelectedProducts;
         }
 
@@ -661,7 +670,7 @@ namespace MyShop
             if (i >= 0)
             {
                 // Thay đổi view model
-                _vm.Products = _categories![i].Products;
+                _vm.Products = categories![i].Products;
                 _vm.SelectedProducts = _vm.Products
                     .Skip((_currentPage - 1) * _rowsPerPage)
                     .Take(_rowsPerPage)
@@ -689,6 +698,7 @@ namespace MyShop
         {
             Load_Order();
             Load_Product();
+            Load_Categories();
             dashViewModel = DashViewModel.load(orders, products);
             topProductsList.ItemsSource = top;
             this.DataContext = dashViewModel;
@@ -786,5 +796,45 @@ namespace MyShop
             currentPagingTextBlock.Text = $"{_currentPage}/{_totalPages}";
         }
 
+        private void deleteItem_Click(object sender, RoutedEventArgs e)
+        {
+            var p = (Product)productsListView.SelectedItem;
+            var result = MessageBox.Show($"Are you sure you want to delete this item?", "Delete Confirm", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                dao.deleteDataFromDatabase(p);
+                MessageBox.Show("Delete Successful!", "Delete Confirm", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                //Do nothing
+            }
+        }
+
+        private void editItem_Click(object sender, RoutedEventArgs e)
+        {
+            EditProductWindow editWindow = new EditProductWindow();
+            editWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            editWindow.Show();
+        }
+
+        private void refreshClick_Product(object sender, RoutedEventArgs e)
+        {
+            categoriesComboBox.SelectedIndex = -1;
+            List<Product> products = _bus.GetProducts();
+            _vm = ProductViewModel.loadProducts(products);
+
+            _vm.SelectedProducts = _vm.Products
+                .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                .Take(_rowsOrderPerPage)
+                .ToList();
+            _currentOrderPage = 1;
+
+            _totalOrder = _vm.Products.Count;
+            _totalOrderPages = _vm.Products.Count / _rowsOrderPerPage +
+                (_vm.Products.Count % _rowsOrderPerPage == 0 ? 0 : 1);
+            currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+            productsListView.ItemsSource = _vm.SelectedProducts;
+        }
     }
 }

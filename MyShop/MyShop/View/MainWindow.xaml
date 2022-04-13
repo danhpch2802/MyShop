@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent" xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
-                     Title="MainWindow" Height="500" Width="800" WindowState="Normal"
+                     Title="MainWindow" Height="550" Width="800" WindowState="Normal"
                      Loaded="Window_Loaded"
                      WindowStartupLocation="CenterScreen"
                      Closing="DataWindow_Closing" 
@@ -51,9 +51,18 @@
             <Fluent:RibbonTabItem Header="Products" Name="TabProducts">
                 <Fluent:RibbonGroupBox>
                     <Fluent:Button Header="Add" Click="addNewProductManager"
-                                LargeIcon="/Images/plus.png" />
-                    <Fluent:Button Header="Delete" 
-                                LargeIcon="/Images/remove.png" />
+                                LargeIcon="/Images/plus.png"
+                                   Width="50"
+                                   Padding="0,20,0,0"
+                                   Height="100"/>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox>
+                    <Fluent:Button Header="Refresh"
+                                LargeIcon="/Images/refresh.png" 
+                                   Width="50"
+                                   Padding="0,20,0,0"
+                                   Height="100"
+                                   Click="refreshClick_Product"/>
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
@@ -175,14 +184,20 @@
                 <TextBlock FontSize="15" HorizontalAlignment="Right">
                                 <Run Foreground="DodgerBlue" FontWeight="Bold" Text="Quantity per page :"/>
                                  <wpfx:IntegerUpDown x:Name="rowperpage"                                     
-                                       Width="50" Value="5" Increment="1" Minimum="1" Maximum="7" ValueChanged="rowperpage_ValueChanged">
+                                       Width="50" Value="10" Increment="1" Minimum="1" ValueChanged="rowperpage_ValueChanged">
                                  </wpfx:IntegerUpDown>
                     <Button Name="viewProduct" Content="View" Width="40"  Height="25" Click="viewProduct_Click"/>
                 </TextBlock>
                 <ListView x:Name="productsListView" Width="500" Height="250" Canvas.Left="156" Canvas.Top="17">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Delete" Click="deleteItem_Click"/>
+                                        <MenuItem Header="Edit" Click="editItem_Click"/>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <Image Source="{Binding Image}" Width="50" Height="50"/>
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
                             </StackPanel>
@@ -195,12 +210,8 @@
                     <Button x:Name="nextButton" Width="80" Height="35" Content="&gt;" Click="nextButton_Click"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0 -80 10 0" Height="186">
+            <StackPanel Orientation="Vertical" Margin="25 0 10 0" Height="186">
                 <Button Name="loadExcelFile"  Content="Load Excel File..." Width="100" Height="35" Click="loadExcelFile_Click" Margin="0 0 0 20"/>
-                <Label Content="Search By Name:" HorizontalAlignment="Center"/>
-                <TextBox Name="searchByName" Width="200" Height="30"/>
-                <Label Content="Filter By Price:" HorizontalAlignment="Center"/>
-                <TextBox Name="filterByPrice" Width="200" Height="30"/>
             </StackPanel>
         </DockPanel>
 

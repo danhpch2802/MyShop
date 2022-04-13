@@ -16,24 +16,28 @@ using System.Windows.Shapes;
 namespace MyShop
 {
     /// <summary>
-    /// Interaction logic for AddProduct.xaml
+    /// Interaction logic for EditProductWindow.xaml
     /// </summary>
-    public partial class AddProduct : Window
+    public partial class EditProductWindow : Window
     {
         SqlDataAccess dao;
         Business _bus = null;
-        public AddProduct()
+
+        public EditProductWindow()
         {
             InitializeComponent();
         }
 
-        private void addButton_Click(object sender, RoutedEventArgs e)
+        private void editButton_Click(object sender, RoutedEventArgs e) 
         {
+            var selectedProduct = (Product)((MainWindow)Application.Current.MainWindow).productsListView.SelectedItem;
+
             string Name = productNameTextBox.Text;
             int Price = int.Parse(productPriceTextBox.Text);
             string Category = productCategoryTextBox.Text;
             int Amount = int.Parse(productAmountTextBox.Text);
             string Image = productImageTextBox.Text;
+
             var categories = new Category()
             {
                 Name = Category
@@ -46,29 +50,7 @@ namespace MyShop
                 Image = Image,
                 Amount = Amount
             };
-            dao.addDataToDatabase(p);
-            MessageBox.Show("Product has been added!");
-        }
-
-        private void browseImage_Click(object sender, RoutedEventArgs e)
-        {
-            //Create a new instance of openFileDialog
-            OpenFileDialog res = new OpenFileDialog();
-
-            //Filter
-            res.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
-
-            //When the user select the file
-            if (res.ShowDialog() == true)
-            {
-                var filePath = res.FileName;
-                productImageTextBox.Text = filePath;
-            }
-        }
-
-        private void editCategory(object sender, MouseButtonEventArgs e)
-        {
-
+            dao.editDataInDatabase(p, selectedProduct.Name);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -85,6 +67,22 @@ namespace MyShop
             else
             {
                 MessageBox.Show("Cannot connect to db");
+            }
+        }
+
+        private void browseImage_Click(object sender, RoutedEventArgs e)
+        {
+            //Create a new instance of openFileDialog
+            OpenFileDialog res = new OpenFileDialog();
+
+            //Filter
+            res.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
+
+            //When the user select the file
+            if (res.ShowDialog() == true)
+            {
+                var filePath = res.FileName;
+                productImageTextBox.Text = filePath;
             }
         }
     }

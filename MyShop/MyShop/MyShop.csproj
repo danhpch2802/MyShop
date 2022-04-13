@@ -2,21 +2,26 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Images\alienware_m15.jpg" />
     <None Remove="Images\chart.png" />
     <None Remove="Images\Filter.png" />
+    <None Remove="Images\hp15_ryzen.jpg" />
+    <None Remove="Images\hp_pavilion_14.jpg" />
     <None Remove="Images\icon.png" />
     <None Remove="Images\imac_24.jpg" />
     <None Remove="Images\laptop.png" />
     <None Remove="Images\logo.png" />
     <None Remove="Images\macbook_pro_14.jpg" />
     <None Remove="Images\mac_mini_m1.jpg" />
+    <None Remove="Images\msi_gf63.jpg" />
+    <None Remove="Images\msi_pulse_gl66.jpg" />
     <None Remove="Images\plus.png" />
     <None Remove="Images\refresh.png" />
     <None Remove="Images\remove.png" />
@@ -50,12 +55,24 @@
     <Resource Include="Images\alienware_m15.jpg" />
     <Resource Include="Images\chart.png" />
     <Resource Include="Images\Filter.png" />
+    <Resource Include="Images\hp15_ryzen.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\hp_pavilion_14.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\icon.png" />
     <Resource Include="Images\imac_24.jpg" />
     <Resource Include="Images\laptop.png" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\macbook_pro_14.jpg" />
     <Resource Include="Images\mac_mini_m1.jpg" />
+    <Resource Include="Images\msi_gf63.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\msi_pulse_gl66.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\plus.png" />
     <Resource Include="Images\refresh.png" />
     <Resource Include="Images\remove.png" />

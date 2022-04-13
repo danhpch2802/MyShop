@@ -24,6 +24,13 @@ namespace MyShop
 
             return result;
         }
+
+        public List<Category> GetCategories()
+        {
+            List<Category> result = _dao.GetCategories();
+            return result;
+        }
+
         public BindingList<Product> GetTopProducts()
         {
             BindingList<Product> result = _dao.GetTopProducts();

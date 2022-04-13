@@ -512,7 +512,28 @@ namespace MyShop
             return result;
         }
 
-        public void addDataToDatabase(string img, string name, string pcat, int price, int amount)
+        public List<Category> GetCategories()
+        {
+            var sql = "select * from [Hieu]";
+            var command = new SqlCommand(sql, _connection);
+            var reader = command.ExecuteReader();
+            List<Category> result = new List<Category>();
+            while (reader.Read())
+            {
+                var categoryID = (int)reader["Hieu_id"];
+                var categoryName = (string)reader["Hieu_ten"];
+                result.Add(new Category()
+                {
+                    CategoryId = categoryID,
+                    Name = categoryName,
+                    Products = new List<Product>()
+                });
+            }
+            reader.Close();
+            return result;
+        }
+
+        public void addDataToDatabase(Product p)
         {
             // Send to database
             var sql = "SET IDENTITY_INSERT [dbo].[HangHoa] OFF; " +
@@ -523,15 +544,15 @@ namespace MyShop
                     "END " +
                 "END ";
             var command = new SqlCommand(sql, _connection);
-            command.Parameters.Add("@_img", SqlDbType.VarChar).Value = img;
-            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = name;
-            command.Parameters.Add("@_pcat", SqlDbType.VarChar).Value = pcat;
-            command.Parameters.Add("@_price", SqlDbType.Decimal).Value = price;
-            command.Parameters.Add("@_amount", SqlDbType.Int).Value = amount;
+            command.Parameters.Add("@_img", SqlDbType.VarChar).Value = p.Image;
+            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = p.Name;
+            command.Parameters.Add("@_pcat", SqlDbType.VarChar).Value = p.Category.Name;
+            command.Parameters.Add("@_price", SqlDbType.Decimal).Value = p.Price;
+            command.Parameters.Add("@_amount", SqlDbType.Int).Value = p.Amount;
             command.ExecuteNonQuery();
         }
 
-        public void deleteDataFromDatabase(string img, string name, string pcat, int price, int amount)
+        public void deleteDataFromDatabase(Product p)
         {
             // Delete from database
             var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name) " +
@@ -540,27 +561,30 @@ namespace MyShop
                 "WHERE HangHoa_ten = @_name AND HangHoa_hieu = @_pcat " +
                 "END";
             var command = new SqlCommand(sql, _connection);
-            command.Parameters.Add("@_img", SqlDbType.VarChar).Value = img;
-            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = name;
-            command.Parameters.Add("@_pcat", SqlDbType.VarChar).Value = pcat;
-            command.Parameters.Add("@_price", SqlDbType.Decimal).Value = price;
-            command.Parameters.Add("@_amount", SqlDbType.Int).Value = amount;
+            command.Parameters.Add("@_img", SqlDbType.VarChar).Value = p.Image;
+            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = p.Name;
+            command.Parameters.Add("@_pcat", SqlDbType.VarChar).Value = p.Category.Name;
+            command.Parameters.Add("@_price", SqlDbType.Decimal).Value = p.Price;
+            command.Parameters.Add("@_amount", SqlDbType.Int).Value = p.Amount;
             command.ExecuteNonQuery();
         }
 
-        public void editDataInDatabase(string img, string name, string pcat, int price, int amount)
+        public void editDataInDatabase(Product p, string productName)
         {
             // Edit data in database
-            var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name) " +
+            var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @product_name) " +
                 "BEGIN " +
                 "UPDATE HangHoa " +
-                "SET HangHoa_ten = @_name, HangHoa_hieu = @_pcat, HangHoa_img = @_img, HangHoa_gia = @_price, HangHoa_soluong = @_amount ";
+                "SET HangHoa_ten = @_name, HangHoa_hieu = @_pcat, HangHoa_img = @_img, HangHoa_gia = @_price, HangHoa_soluong = @_amount "+
+                "WHERE HangHoa_ten = @product_name " +
+                "END ";
             var command = new SqlCommand(sql, _connection);
-            command.Parameters.Add("@_img", SqlDbType.VarChar).Value = img;
-            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = name;
-            command.Parameters.Add("@_pcat", SqlDbType.VarChar).Value = pcat;
-            command.Parameters.Add("@_price", SqlDbType.Decimal).Value = price;
-            command.Parameters.Add("@_amount", SqlDbType.Int).Value = amount;
+            command.Parameters.Add("@product_name", SqlDbType.NVarChar).Value = productName;
+            command.Parameters.Add("@_img", SqlDbType.VarChar).Value = p.Image;
+            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = p.Name;
+            command.Parameters.Add("@_pcat", SqlDbType.VarChar).Value = p.Category.Name;
+            command.Parameters.Add("@_price", SqlDbType.Decimal).Value = p.Price;
+            command.Parameters.Add("@_amount", SqlDbType.Int).Value = p.Amount;
             command.ExecuteNonQuery();
         }
 

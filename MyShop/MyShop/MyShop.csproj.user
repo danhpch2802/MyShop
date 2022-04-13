@@ -14,6 +14,9 @@
     <Compile Update="View\EditOrderWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\EditProductWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\FilterWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -50,6 +53,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\EditOrderWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\EditProductWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\MonthRevenueWindow.xaml">
