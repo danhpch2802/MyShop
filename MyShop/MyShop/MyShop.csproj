@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\add-category.png" />
     <None Remove="Images\alienware_m15.jpg" />
     <None Remove="Images\chart.png" />
     <None Remove="Images\Filter.png" />
@@ -20,10 +21,12 @@
     <None Remove="Images\logo.png" />
     <None Remove="Images\macbook_pro_14.jpg" />
     <None Remove="Images\mac_mini_m1.jpg" />
+    <None Remove="Images\manage-category.png" />
     <None Remove="Images\msi_gf63.jpg" />
     <None Remove="Images\msi_pulse_gl66.jpg" />
     <None Remove="Images\plus.png" />
     <None Remove="Images\refresh.png" />
+    <None Remove="Images\remove-category.png" />
     <None Remove="Images\remove.png" />
     <None Remove="Images\xps_13_pro.jpg" />
     <None Remove="Images\zenbook_duo.jpg" />
@@ -52,6 +55,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\add-category.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\alienware_m15.jpg" />
     <Resource Include="Images\chart.png" />
     <Resource Include="Images\Filter.png" />
@@ -67,6 +73,9 @@
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\macbook_pro_14.jpg" />
     <Resource Include="Images\mac_mini_m1.jpg" />
+    <Resource Include="Images\manage-category.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\msi_gf63.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -75,6 +84,9 @@
     </Resource>
     <Resource Include="Images\plus.png" />
     <Resource Include="Images\refresh.png" />
+    <Resource Include="Images\remove-category.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\remove.png" />
     <Resource Include="Images\xps_13_pro.jpg" />
     <Resource Include="Images\zenbook_duo.jpg" />

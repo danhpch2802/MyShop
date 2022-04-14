@@ -670,8 +670,10 @@ namespace MyShop
                         cell = tab.Cells[$"{column}{row}"];
                     }
                     categories.Add(cat); // Model
+                    dao.addCategoryToDatabase(cat);
                 }
             }
+            //Load_Categories();
             categoriesComboBox.ItemsSource = categories;
             productsListView.ItemsSource = _vm.SelectedProducts;
         }
@@ -851,16 +853,31 @@ namespace MyShop
             _vm = ProductViewModel.loadProducts(products);
 
             _vm.SelectedProducts = _vm.Products
-                .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
-                .Take(_rowsOrderPerPage)
+                .Skip((_currentPage - 1) * _rowsPerPage)
+                .Take(_rowsPerPage)
                 .ToList();
             _currentOrderPage = 1;
 
-            _totalOrder = _vm.Products.Count;
-            _totalOrderPages = _vm.Products.Count / _rowsOrderPerPage +
-                (_vm.Products.Count % _rowsOrderPerPage == 0 ? 0 : 1);
-            currentOrderPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+            _totalItems = _vm.Products.Count;
+            _totalPages = _vm.Products.Count / _rowsPerPage +
+                (_vm.Products.Count % _rowsPerPage == 0 ? 0 : 1);
+            currentPagingTextBlock.Text = $"{_currentPage}/{_totalPages}";
             productsListView.ItemsSource = _vm.SelectedProducts;
+        }
+
+        private void addNewCategoryManager(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void removeCategoryManager(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void editCategoryManager(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

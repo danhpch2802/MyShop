@@ -66,11 +66,6 @@ namespace MyShop
             }
         }
 
-        private void editCategory(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             string? connectionString = AppConfig.ConnectionString();

@@ -533,6 +533,21 @@ namespace MyShop
             return result;
         }
 
+        public void addCategoryToDatabase(Category c)
+        {
+            // Send to database
+            var sql = "SET IDENTITY_INSERT [dbo].[Hieu] OFF; " +
+                "BEGIN " +
+                    "IF NOT EXISTS (SELECT * FROM Hieu WHERE Hieu_ten = @_name) " +
+                    "BEGIN " +
+                    "INSERT INTO Hieu(Hieu_ten) VALUES(@_name) " +
+                    "END " +
+                "END ";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = c.Name;
+            command.ExecuteNonQuery();
+        }
+
         public void addDataToDatabase(Product p)
         {
             // Send to database

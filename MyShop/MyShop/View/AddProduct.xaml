@@ -146,8 +146,6 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button Width="100" Height="40" Click="addButton_Click" Foreground="White" Background="#cc2b5e" Content="Add Product" Margin="0 0 0 0"/>
                     </StackPanel>
-                    <TextBlock Text="Edit Category..." HorizontalAlignment="Center" Padding="0 10 0 0" Foreground="White" FontSize="13" 
-                               FontWeight="Medium" PreviewMouseDown="editCategory" TextDecorations="Underline"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
