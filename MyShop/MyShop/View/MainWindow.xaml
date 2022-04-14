@@ -57,6 +57,14 @@
                                    Height="100"/>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox>
+                    <Fluent:Button Header="Filter"
+                                LargeIcon="/Images/Filter.png" 
+                                   Width="50"
+                                   Padding="0,20,0,0"
+                                   Height="100"
+                                   Click="filterProductByPriceClick"/>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox>
                     <Fluent:Button Header="Refresh"
                                 LargeIcon="/Images/refresh.png" 
                                    Width="50"

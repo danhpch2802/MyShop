@@ -106,6 +106,32 @@ namespace MyShop
             }
         }
 
+        private void filterProductByPriceClick(object sender, RoutedEventArgs e)
+        {
+            var filterWindow = new FilterByPrice();
+
+            filterWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            filterWindow.Owner = this;
+            var result = filterWindow.ShowDialog();
+            if (result == true)
+            {
+                int fromPrice = int.Parse(filterWindow.startPrice.Text);
+                int toPrice = int.Parse(filterWindow.endPrice.Text);
+                _vm.SelectedProducts = _vm.Products.FindAll(x => fromPrice <= x.Price && x.Price <= toPrice);
+                _vm.SelectedProducts = _vm.SelectedProducts
+                                .Skip((_currentOrderPage - 1) * _rowsOrderPerPage)
+                                .Take(_rowsOrderPerPage)
+                                .ToList();
+                _currentOrderPage = 1;
+
+                _totalOrder = _vm.SelectedProducts.Count;
+                _totalOrderPages = _vm.SelectedProducts.Count / _rowsOrderPerPage +
+                    (_vm.Products.Count % _rowsOrderPerPage == 0 ? 0 : 1);
+                currentPagingTextBlock.Text = $"{_currentOrderPage}/{_totalOrderPages}";
+                productsListView.ItemsSource = _vm.SelectedProducts;
+            }
+        }
+
         private void addNewOrderClick(object sender, RoutedEventArgs e)
         {
             var id = _bus.getNewestOrderID();
