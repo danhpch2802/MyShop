@@ -674,6 +674,7 @@ namespace MyShop
                 }
             }
             //Load_Categories();
+            MessageBox.Show("Excel file loaded successfully");
             categoriesComboBox.ItemsSource = categories;
             productsListView.ItemsSource = _vm.SelectedProducts;
         }
@@ -850,7 +851,9 @@ namespace MyShop
         {
             categoriesComboBox.SelectedIndex = -1;
             List<Product> products = _bus.GetProducts();
+            List<Category> categories = _bus.GetCategories();
             _vm = ProductViewModel.loadProducts(products);
+
 
             _vm.SelectedProducts = _vm.Products
                 .Skip((_currentPage - 1) * _rowsPerPage)
@@ -862,20 +865,34 @@ namespace MyShop
             _totalPages = _vm.Products.Count / _rowsPerPage +
                 (_vm.Products.Count % _rowsPerPage == 0 ? 0 : 1);
             currentPagingTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            categoriesComboBox.ItemsSource = categories;
             productsListView.ItemsSource = _vm.SelectedProducts;
         }
 
         private void addNewCategoryManager(object sender, RoutedEventArgs e)
         {
-
+            var addCateWindow = new AddCategory();
+            addCateWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            addCateWindow.Show();
         }
 
-        private void removeCategoryManager(object sender, RoutedEventArgs e)
+        private void removeCategory(object sender, RoutedEventArgs e)
         {
-
+            var deleteCateWindow = new DeleteCategory();
+            deleteCateWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            var result = deleteCateWindow.ShowDialog();
+            if (result == true)
+            {
+                List<Category> categories = _bus.GetCategories();
+                categoriesComboBox.ItemsSource = categories;
+            }
+            else
+            {
+                //Do nothing
+            }
         }
 
-        private void editCategoryManager(object sender, RoutedEventArgs e)
+        private void editCategory(object sender, RoutedEventArgs e)
         {
 
         }

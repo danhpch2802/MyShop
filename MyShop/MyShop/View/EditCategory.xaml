@@ -1,0 +1,26 @@
+﻿<Window x:Class="MyShop.EditCategory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyShop"
+        mc:Ignorable="d"
+        Title="EditCategory" Height="200" Width="350" Loaded="Window_Loaded">
+    <Canvas>
+        <StackPanel Orientation="Horizontal" Canvas.Left="31" Canvas.Top="39">
+            <TextBlock Text="Category Name To Edit:" FontSize="15"/>
+            <TextBox x:Name="categoryName" Margin="20 0 0 0" FontSize="15" Width="100"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Canvas.Left="31" Canvas.Top="70">
+            <TextBlock Text="Change This To:" FontSize="15"/>
+            <TextBox x:Name="categoryNameTo" Margin="72 0 0 0" FontSize="15" Width="100"/>
+        </StackPanel>
+        <Button x:Name="confirmBtn" Click="confirmButton_Click" Content="Confirm" Canvas.Left="139" Canvas.Top="114" Height="34" Width="72" Background="White" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Canvas>
+</Window>

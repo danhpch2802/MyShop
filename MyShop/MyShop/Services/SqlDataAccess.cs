@@ -518,6 +518,7 @@ namespace MyShop
             var command = new SqlCommand(sql, _connection);
             var reader = command.ExecuteReader();
             List<Category> result = new List<Category>();
+
             while (reader.Read())
             {
                 var categoryID = (int)reader["Hieu_id"];
@@ -535,7 +536,6 @@ namespace MyShop
 
         public void addCategoryToDatabase(Category c)
         {
-            // Send to database
             var sql = "SET IDENTITY_INSERT [dbo].[Hieu] OFF; " +
                 "BEGIN " +
                     "IF NOT EXISTS (SELECT * FROM Hieu WHERE Hieu_ten = @_name) " +
@@ -548,9 +548,36 @@ namespace MyShop
             command.ExecuteNonQuery();
         }
 
+        public void deleteCategoryFromDatabase(Category c)
+        {
+            var sql = "IF EXISTS (SELECT * FROM Hieu WHERE Hieu_ten = @_name) " +
+                "BEGIN " +
+                "DELETE FROM Hieu " +
+                "WHERE Hieu_ten = @_name " +
+                "END";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = c.Name;
+            command.ExecuteNonQuery();
+        }
+
+        // Missing products in each category
+        public void editCategoryInDatabase(Category c, string categoryName)
+        {
+            // Edit data in database
+            var sql = "IF EXISTS (SELECT * FROM Hieu WHERE Hieu_ten = @category_name) " +
+                "BEGIN " +
+                "UPDATE Hieu " +
+                "SET Hieu_ten = @_name" +
+                "WHERE HangHoa_ten = @product_name" +
+                "END ";
+            var command = new SqlCommand(sql, _connection);
+            command.Parameters.Add("@category_name", SqlDbType.NVarChar).Value = categoryName;
+            command.Parameters.Add("@_name", SqlDbType.NVarChar).Value = c.Name;
+            command.ExecuteNonQuery();
+        }
+
         public void addDataToDatabase(Product p)
         {
-            // Send to database
             var sql = "SET IDENTITY_INSERT [dbo].[HangHoa] OFF; " +
                 "BEGIN " +
                     "IF NOT EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name AND HangHoa_hieu = @_pcat) " +
@@ -569,7 +596,6 @@ namespace MyShop
 
         public void deleteDataFromDatabase(Product p)
         {
-            // Delete from database
             var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name) " +
                 "BEGIN " +
                 "DELETE FROM HangHoa " +
@@ -586,7 +612,6 @@ namespace MyShop
 
         public void editDataInDatabase(Product p, string productName)
         {
-            // Edit data in database
             var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @product_name) " +
                 "BEGIN " +
                 "UPDATE HangHoa " +

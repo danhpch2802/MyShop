@@ -2,13 +2,22 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="View\AddCategory.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\AddOrderWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AddProduct.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\DeleteCategory.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\DetailOrderWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\EditCategory.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\EditOrderWindow.xaml.cs">
@@ -46,13 +55,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="View\AddCategory.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\AddOrderWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AddProduct.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\DeleteCategory.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\DetailOrderWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\EditCategory.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\EditOrderWindow.xaml">

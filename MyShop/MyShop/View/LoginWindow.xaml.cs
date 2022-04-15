@@ -64,7 +64,7 @@ namespace MyShop
         {
 
             var connectionString =
-                "Server=.\\sqlexpress;Database=MyShop;Trusted_Connection=True;";
+                "Server=.\\KHOIDOAN;Database=MyShop;Trusted_Connection=True;";
 
             // Kết nối
             var connection = new SqlConnection(connectionString);

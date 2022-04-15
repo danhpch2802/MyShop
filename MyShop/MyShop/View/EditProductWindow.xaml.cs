@@ -51,6 +51,7 @@ namespace MyShop
                 Amount = Amount
             };
             dao.editDataInDatabase(p, selectedProduct.Name);
+            MessageBox.Show("Update Successful!", "Update Confirm", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -14,19 +14,14 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border CornerRadius="10" Grid.RowSpan="3">
-                <Border.Background>
-                    <LinearGradientBrush>
-                        <GradientStop Color="#ffafbd" Offset="0.5"/>
-                        <GradientStop Color="#ffc3a0" Offset="0.1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
+                
             </Border>
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="Add New Product"
                            FontWeight="DemiBold"
                            FontFamily="helvetica"
                            FontSize="40"
-                           Foreground="White"
+                           Foreground="Black"
                            HorizontalAlignment="Center"/>
             </StackPanel>
             <StackPanel Grid.Row="1" >
@@ -40,7 +35,7 @@
                              Text=""
                              FontSize="12"
                              HorizontalAlignment="Center"
-                             Foreground="White"
+                             Foreground="Black"
                              Background="Transparent"
                              BorderThickness="0"
                              Width="150"
@@ -49,7 +44,7 @@
                              Margin="30,10,30,-5"/>
                             <Border Width="150"
                         Height="2"
-                        Background="White"
+                        Background="Black"
                         Opacity="0.5"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="0 10 0 0">
@@ -60,7 +55,7 @@
                              Text=""
                              FontSize="12"
                              HorizontalAlignment="Center"
-                             Foreground="White"
+                             Foreground="Black"
                              Background="Transparent"
                              BorderThickness="0"
                              Width="150"
@@ -69,7 +64,7 @@
                              Margin="30,10,30,-5"/>
                             <Border Width="150"
                         Height="2"
-                        Background="White"
+                        Background="Black"
                                     Opacity="0.5"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="0 10 0 0">
@@ -80,7 +75,7 @@
                              Text=""
                              FontSize="12"
                              HorizontalAlignment="Center"
-                             Foreground="White"
+                             Foreground="Black"
                              Background="Transparent"
                              BorderThickness="0"
                              Width="150"
@@ -89,7 +84,7 @@
                              Margin="30,10,30,-5"/>
                             <Border Width="150"
                         Height="2"
-                        Background="White"
+                        Background="Black"
                         Opacity="0.5"/>
                         </StackPanel>
                     </StackPanel>
@@ -105,7 +100,7 @@
                              Text=""
                              FontSize="12"
                              HorizontalAlignment="Center"
-                             Foreground="White"
+                             Foreground="Black"
                              Background="Transparent"
                              BorderThickness="0"
                              Width="150"
@@ -114,7 +109,7 @@
                              Margin="30,10,30,-5"/>
                         <Border Width="170"
                         Height="2"
-                        Background="White"
+                        Background="Black"
                         Opacity="0.5"
                         Margin="0,0,30,0"/>
                         <StackPanel Orientation="Vertical">
@@ -125,7 +120,7 @@
                              Text=""
                              FontSize="12"
                              HorizontalAlignment="Center"
-                             Foreground="White"
+                             Foreground="Black"
                              Background="Transparent"
                              BorderThickness="0"
                              Width="150"
@@ -134,7 +129,7 @@
                              Margin="30,10,30,-5"/>
                             <Border Width="170"
                         Height="2"
-                        Background="White"
+                        Background="Black"
                         Opacity="0.5"
                         Margin="0,0,30,0"/>
                         </StackPanel>
