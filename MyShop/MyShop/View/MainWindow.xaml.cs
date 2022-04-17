@@ -674,7 +674,9 @@ namespace MyShop
                 }
             }
             
-            MessageBox.Show("Excel file loaded successfully");
+            MessageBox.Show("Excel file loaded successfully! Please refresh the page.", "Load Excel File", MessageBoxButton.OK, MessageBoxImage.Information);
+            Load_Product();
+            Load_Categories();
             categoriesComboBox.ItemsSource = categories;
             productsListView.ItemsSource = _vm.SelectedProducts;
         }
@@ -848,17 +850,22 @@ namespace MyShop
         private void editItem_Click(object sender, RoutedEventArgs e)
         {
             Product p = (Product)productsListView.SelectedItem;
+            string pName = p.Name;
+
+            Product newProduct = new Product();
             EditProductWindow editWindow = new EditProductWindow(p);
             editWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             var result = editWindow.ShowDialog();
             if (result == true)
             {
                 var info = editWindow.ProductToEdit;
-                p.Name = info.Name;
-                p.Price = info.Price;
-                p.Category = info.Category;
-                p.Image = info.Image;
-                p.Amount = info.Amount;
+                newProduct.Name = info.Name;
+                newProduct.Price = info.Price;
+                newProduct.Category = info.Category;
+                newProduct.Image = info.Image;
+                newProduct.Amount = info.Amount;
+
+                dao.editDataInDatabase(newProduct, pName);
 
                 Load_Product();
                 Load_Categories();

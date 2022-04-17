@@ -550,7 +550,7 @@ namespace MyShop
 
         public void deleteCategoryFromDatabase(Category c)
         {
-            var sql = "IF EXISTS (SELECT * FROM Hieu WHERE Hieu_ten = @_name) " +
+            var sql =
                 "BEGIN " +
                 "DELETE FROM Hieu " +
                 "WHERE Hieu_ten = @_name " +
@@ -596,7 +596,7 @@ namespace MyShop
 
         public void deleteDataFromDatabase(Product p)
         {
-            var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @_name) " +
+            var sql =
                 "BEGIN " +
                 "DELETE FROM HangHoa " +
                 "WHERE HangHoa_ten = @_name AND HangHoa_hieu = @_pcat " +
@@ -612,7 +612,7 @@ namespace MyShop
 
         public void editDataInDatabase(Product p, string productName)
         {
-            var sql = "IF EXISTS (SELECT * FROM HangHoa WHERE HangHoa_ten = @product_name) " +
+            var sql =
                 "BEGIN " +
                 "UPDATE HangHoa " +
                 "SET HangHoa_ten = @_name, HangHoa_hieu = @_pcat, HangHoa_img = @_img, HangHoa_gia = @_price, HangHoa_soluong = @_amount "+

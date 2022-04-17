@@ -36,17 +36,6 @@ namespace MyShop
 
         private void editButton_Click(object sender, RoutedEventArgs e) 
         {
-            var selectedProduct = (Product)((MainWindow)Application.Current.MainWindow).productsListView.SelectedItem;
-
-            var p = new Product()
-            {
-                Name = productNameTextBox.Text,
-                Price = int.Parse(productPriceTextBox.Text),
-                Category = (Category)categoriesComboBox.SelectedItem,
-                Image = productImageTextBox.Text,
-                Amount = int.Parse(productAmountTextBox.Text),
-            };
-            dao.editDataInDatabase(p, selectedProduct.Name);
             MessageBox.Show("Update Successful!", "Update Confirm", MessageBoxButton.OK, MessageBoxImage.Information);
             DialogResult = true;
         }
@@ -63,6 +52,25 @@ namespace MyShop
                 _bus = new Business(dao);
                 categories = _bus.GetCategories();
                 categoriesComboBox.ItemsSource = categories;
+
+                int countNotFound = 0;
+
+                for (int i = 0; i < categories.Count; i++)
+                {
+                    if (ProductToEdit.Category.Name == categories[i].Name)
+                    {
+                        categoriesComboBox.SelectedIndex = i;
+                    }
+                    else 
+                    {
+                        countNotFound++;
+                    }
+                }
+                if (countNotFound == categories.Count)
+                {
+                    MessageBox.Show("Category of this product has been changed or removed.\nPlease choose a different category for this product.", "Category Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
             }
             else
             {

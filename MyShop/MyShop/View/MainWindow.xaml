@@ -223,8 +223,10 @@
                                         <MenuItem Header="Edit" Click="editItem_Click"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
+                                <TextBlock Text="{Binding Category.Name}" VerticalAlignment="Center" FontWeight="Bold" Margin="0 0 10 0"/>
                                 <Image Source="{Binding Image}" Width="50" Height="50"/>
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Price}" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="Red" Margin="10 0 0 0"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

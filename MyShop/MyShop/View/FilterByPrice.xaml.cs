@@ -30,7 +30,7 @@ namespace MyShop
         {
             if (startPrice == null || endPrice == null)
             {
-                MessageBox.Show("Please fill in both fields");
+                MessageBox.Show("Please fill in both fields", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             else
