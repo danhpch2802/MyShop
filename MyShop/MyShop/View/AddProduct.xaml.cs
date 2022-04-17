@@ -27,22 +27,21 @@ namespace MyShop
             InitializeComponent();
         }
 
+        List<Category> categories;
+        List<Product> products;
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
             string Name = productNameTextBox.Text;
             int Price = int.Parse(productPriceTextBox.Text);
-            string Category = productCategoryTextBox.Text;
+            Category selected = (Category)categoriesComboBox.SelectedItem;
             int Amount = int.Parse(productAmountTextBox.Text);
             string Image = productImageTextBox.Text;
-            var categories = new Category()
-            {
-                Name = Category
-            };
+
             var p = new Product()
             {
                 Name = Name,
                 Price = Price,
-                Category = categories,
+                Category = selected,
                 Image = Image,
                 Amount = Amount
             };
@@ -76,6 +75,9 @@ namespace MyShop
                 dao.Disconnect();
                 dao.Connect();
                 _bus = new Business(dao);
+                products = _bus.GetProducts();
+                categories = _bus.GetCategories();
+                categoriesComboBox.ItemsSource = categories;
             }
             else
             {

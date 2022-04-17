@@ -29,21 +29,14 @@ namespace MyShop
 
         private void confirmButton_Click(object sender, RoutedEventArgs e)
         {
-            var oldName = categoryName.Text;
-            var newName = categoryNameTo.Text;
-            // Search Category Name
-            List<Category> categories = category_vm.Categories.FindAll(x => x.Name.ToLower().Contains(oldName.ToLower()));
-            foreach (Category c in categories)
-            {
-                if (oldName == c.Name)
-                {
-                    c.Name = newName;
-                    dao.editCategoryInDatabase(c, newName);
-                }
-            }
+            Category oldCategory = (Category)categoriesComboBox.SelectedItem;
+            var newName = newCategoryName.Text;
+            dao.editCategoryInDatabase(oldCategory, newName);
             MessageBox.Show("Category has been updated");
-        }
 
+            DialogResult = true;
+        }
+        List<Category> categories;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             string? connectionString = AppConfig.ConnectionString();
@@ -54,6 +47,8 @@ namespace MyShop
                 dao.Disconnect();
                 dao.Connect();
                 _bus = new Business(dao);
+                categories = _bus.GetCategories();
+                categoriesComboBox.ItemsSource = categories;
             }
             else
             {

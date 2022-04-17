@@ -30,6 +30,7 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock HorizontalAlignment="Center" Text="Product Name:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e"/>
                             <TextBox FontFamily="Helvetica"
+                                     Text="{Binding Name}"
                              Name="productNameTextBox"
                              FontWeight="Light"
                              FontSize="12"
@@ -50,6 +51,7 @@
                             <TextBlock HorizontalAlignment="Center" Text="Price:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e"/>
                             <TextBox FontFamily="Helvetica"
                              Name="productPriceTextBox"
+                                     Text="{Binding Price}"
                              FontWeight="Light"
                              FontSize="12"
                              HorizontalAlignment="Center"
@@ -67,22 +69,13 @@
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="0 10 0 0">
                             <TextBlock HorizontalAlignment="Center" Text="Category:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e"/>
-                            <TextBox FontFamily="Helvetica"
-                             Name="productCategoryTextBox"
-                             FontWeight="Light"
-                             FontSize="12"
-                             HorizontalAlignment="Center"
-                             Foreground="Black"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             Width="150"
-                             HorizontalContentAlignment="Left"
-                             Height="25"
-                             Margin="30,10,30,-5"/>
-                            <Border Width="150"
-                        Height="2"
-                        Background="Black"
-                        Opacity="0.5"/>
+                            <ComboBox Name="categoriesComboBox" Width="100" Height="25" Margin="0 10 0 0" SelectedItem="{Binding Category}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
@@ -93,6 +86,7 @@
                         </StackPanel>
                         <TextBox FontFamily="Helvetica"
                              Name="productImageTextBox"
+                                 Text="{Binding Image}"
                              FontWeight="Light"
                              FontSize="12"
                              HorizontalAlignment="Center"
@@ -112,6 +106,7 @@
                             <TextBlock VerticalAlignment="Center" Text="Amount:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e" Margin="0 10 0 0"/>
                             <TextBox FontFamily="Helvetica"
                              Name="productAmountTextBox"
+                                     Text="{Binding Amount}"
                              FontWeight="Light"
                              FontSize="12"
                              HorizontalAlignment="Center"

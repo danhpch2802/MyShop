@@ -26,6 +26,7 @@ namespace MyShop
         {
             InitializeComponent();
         }
+        List<Category> categories;
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
@@ -34,9 +35,9 @@ namespace MyShop
             {
                 Name = catName
             };
-            dao.GetCategories().Add(categories);
             dao.addCategoryToDatabase(categories);
             MessageBox.Show("Category has been added!");
+            DialogResult = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -49,6 +50,7 @@ namespace MyShop
                 dao.Disconnect();
                 dao.Connect();
                 _bus = new Business(dao);
+                categories = _bus.GetCategories();
             }
             else
             {

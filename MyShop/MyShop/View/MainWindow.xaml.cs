@@ -612,7 +612,7 @@ namespace MyShop
 
         ProductViewModel _vm = new ProductViewModel();
         int _totalItems = 0;
-        int _currentPage = 0;
+        int _currentPage = 1;
         int _totalPages = 0;
         int _rowsPerPage = 10;
         private void nextButton_Click(object sender, RoutedEventArgs e)
@@ -673,7 +673,7 @@ namespace MyShop
                     dao.addCategoryToDatabase(cat);
                 }
             }
-            //Load_Categories();
+            
             MessageBox.Show("Excel file loaded successfully");
             categoriesComboBox.ItemsSource = categories;
             productsListView.ItemsSource = _vm.SelectedProducts;
@@ -822,6 +822,9 @@ namespace MyShop
                    .ToList();
             // ép cập nhật giao diện
             productsListView.ItemsSource = _vm.SelectedProducts;
+            _totalItems = _vm.Products.Count;
+            _totalPages = _vm.Products.Count / _rowsPerPage +
+                (_vm.Products.Count % _rowsPerPage == 0 ? 0 : 1);
             currentPagingTextBlock.Text = $"{_currentPage}/{_totalPages}";
         }
 
@@ -833,6 +836,8 @@ namespace MyShop
             {
                 dao.deleteDataFromDatabase(p);
                 MessageBox.Show("Delete Successful!", "Delete Confirm", MessageBoxButton.OK, MessageBoxImage.Information);
+                Load_Product();
+                Load_Categories();
             }
             else
             {
@@ -842,16 +847,35 @@ namespace MyShop
 
         private void editItem_Click(object sender, RoutedEventArgs e)
         {
-            EditProductWindow editWindow = new EditProductWindow();
+            Product p = (Product)productsListView.SelectedItem;
+            EditProductWindow editWindow = new EditProductWindow(p);
             editWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            editWindow.Show();
+            var result = editWindow.ShowDialog();
+            if (result == true)
+            {
+                var info = editWindow.ProductToEdit;
+                p.Name = info.Name;
+                p.Price = info.Price;
+                p.Category = info.Category;
+                p.Image = info.Image;
+                p.Amount = info.Amount;
+
+                Load_Product();
+                Load_Categories();
+            }
+            else
+            {
+                //Do nothing
+            }
         }
 
         private void refreshClick_Product(object sender, RoutedEventArgs e)
         {
             categoriesComboBox.SelectedIndex = -1;
-            List<Product> products = _bus.GetProducts();
-            List<Category> categories = _bus.GetCategories();
+            //List<Product> products = _bus.GetProducts();
+            //List<Category> categories = _bus.GetCategories();
+            Load_Product();
+            Load_Categories();
             _vm = ProductViewModel.loadProducts(products);
 
 
@@ -873,7 +897,16 @@ namespace MyShop
         {
             var addCateWindow = new AddCategory();
             addCateWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            addCateWindow.Show();
+            var result = addCateWindow.ShowDialog();
+            if (result == true)
+            {
+                Load_Product();
+                Load_Categories();
+            }
+            else
+            {
+                //Do nothing
+            }
         }
 
         private void removeCategory(object sender, RoutedEventArgs e)
@@ -883,8 +916,8 @@ namespace MyShop
             var result = deleteCateWindow.ShowDialog();
             if (result == true)
             {
-                List<Category> categories = _bus.GetCategories();
-                categoriesComboBox.ItemsSource = categories;
+                Load_Product();
+                Load_Categories();
             }
             else
             {
@@ -894,7 +927,18 @@ namespace MyShop
 
         private void editCategory(object sender, RoutedEventArgs e)
         {
-
+            var editCateWindow = new EditCategory();
+            editCateWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            var result = editCateWindow.ShowDialog();
+            if (result == true)
+            {
+                Load_Product();
+                Load_Categories();
+            }
+            else
+            {
+                //Do nothing
+            }
         }
     }
 }

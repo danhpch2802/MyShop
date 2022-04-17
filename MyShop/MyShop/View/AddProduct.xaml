@@ -69,23 +69,13 @@
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="0 10 0 0">
                             <TextBlock HorizontalAlignment="Center" Text="Category:" TextDecorations="Underline" FontWeight="Bold" Foreground="#cc2b5e"/>
-                            <TextBox FontFamily="Helvetica"
-                             Name="productCategoryTextBox"
-                             FontWeight="Light"
-                             Text=""
-                             FontSize="12"
-                             HorizontalAlignment="Center"
-                             Foreground="Black"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             Width="150"
-                             HorizontalContentAlignment="Left"
-                             Height="25"
-                             Margin="30,10,30,-5"/>
-                            <Border Width="150"
-                        Height="2"
-                        Background="Black"
-                        Opacity="0.5"/>
+                            <ComboBox Name="categoriesComboBox" Width="100" Height="25" Margin="0 10 0 0">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">

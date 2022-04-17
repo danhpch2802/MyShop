@@ -207,7 +207,7 @@
                 </ComboBox>
 
                 <TextBlock FontSize="15" HorizontalAlignment="Right">
-                                <Run Foreground="DodgerBlue" FontWeight="Bold" Text="Quantity per page :"/>
+                                <Run Foreground="DodgerBlue" FontWeight="Bold" Text="Quantity per page :" BaselineAlignment="Center"/>
                                  <wpfx:IntegerUpDown x:Name="rowperpage"                                     
                                        Width="50" Value="5" Increment="1" Minimum="1" ValueChanged="rowperpage_ValueChanged">
                                  </wpfx:IntegerUpDown>
@@ -230,14 +230,32 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="previousButton" Width="80" Height="35" Content="&lt;" Click="prevButton_Click"/>
+                    <Button x:Name="previousButton" Width="80" Height="35" Content="&lt;" Click="prevButton_Click" Background="White">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                     <TextBlock Name="currentPagingTextBlock" Width="80" Text="0/0" TextAlignment="Center" VerticalAlignment="Center"/>
-                    <Button x:Name="nextButton" Width="80" Height="35" Content="&gt;" Click="nextButton_Click"/>
+                    <Button x:Name="nextButton" Width="80" Height="35" Content="&gt;" Click="nextButton_Click" Background="White">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="25 0 10 0" Height="186">
-                <Button Name="loadExcelFile"  Content="Load Excel File..." Width="100" Height="35" Click="loadExcelFile_Click" Margin="0 0 0 20"/>
-            </StackPanel>
+            
+                <Button Name="loadExcelFile"  Content="Load Excel File..." Width="100" Height="35" Click="loadExcelFile_Click" Margin="20 0 0 20" Background="White" FontWeight="Bold">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
         </DockPanel>
 
         <Canvas DockPanel.Dock="Top" Panel.ZIndex="1000" Height="582" Visibility="{Binding IsSelected,Converter={StaticResource BooleanToVisibilityConverter}, ElementName=TabRevenue}">

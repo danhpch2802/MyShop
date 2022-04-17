@@ -564,11 +564,11 @@ namespace MyShop
         public void editCategoryInDatabase(Category c, string categoryName)
         {
             // Edit data in database
-            var sql = "IF EXISTS (SELECT * FROM Hieu WHERE Hieu_ten = @category_name) " +
+            var sql = 
                 "BEGIN " +
                 "UPDATE Hieu " +
-                "SET Hieu_ten = @_name" +
-                "WHERE HangHoa_ten = @product_name" +
+                "SET Hieu_ten = @category_name " +
+                "WHERE Hieu_ten = @_name " +
                 "END ";
             var command = new SqlCommand(sql, _connection);
             command.Parameters.Add("@category_name", SqlDbType.NVarChar).Value = categoryName;

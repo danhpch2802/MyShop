@@ -30,7 +30,7 @@ namespace MyShop
         {
             if (startPrice == null || endPrice == null)
             {
-                MessageBox.Show("Please choose both start and end date");
+                MessageBox.Show("Please fill in both fields");
             }
 
             else

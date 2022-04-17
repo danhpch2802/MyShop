@@ -23,35 +23,32 @@ namespace MyShop
         SqlDataAccess dao;
         Business _bus = null;
 
-        public EditProductWindow()
+        public Product ProductToEdit { get; set; }
+
+        public EditProductWindow(Product p)
         {
             InitializeComponent();
+            ProductToEdit = p;
+            this.DataContext = ProductToEdit;
         }
+
+        List<Category> categories;
 
         private void editButton_Click(object sender, RoutedEventArgs e) 
         {
             var selectedProduct = (Product)((MainWindow)Application.Current.MainWindow).productsListView.SelectedItem;
 
-            string Name = productNameTextBox.Text;
-            int Price = int.Parse(productPriceTextBox.Text);
-            string Category = productCategoryTextBox.Text;
-            int Amount = int.Parse(productAmountTextBox.Text);
-            string Image = productImageTextBox.Text;
-
-            var categories = new Category()
-            {
-                Name = Category
-            };
             var p = new Product()
             {
-                Name = Name,
-                Price = Price,
-                Category = categories,
-                Image = Image,
-                Amount = Amount
+                Name = productNameTextBox.Text,
+                Price = int.Parse(productPriceTextBox.Text),
+                Category = (Category)categoriesComboBox.SelectedItem,
+                Image = productImageTextBox.Text,
+                Amount = int.Parse(productAmountTextBox.Text),
             };
             dao.editDataInDatabase(p, selectedProduct.Name);
             MessageBox.Show("Update Successful!", "Update Confirm", MessageBoxButton.OK, MessageBoxImage.Information);
+            DialogResult = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -64,6 +61,8 @@ namespace MyShop
                 dao.Disconnect();
                 dao.Connect();
                 _bus = new Business(dao);
+                categories = _bus.GetCategories();
+                categoriesComboBox.ItemsSource = categories;
             }
             else
             {
